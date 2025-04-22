@@ -1,374 +1,277 @@
+import logging
 import os
+import sqlite3
 import json
-import re
 import numpy as np
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple
+from typing import List, Dict, Optional
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
-import spacy
-import logging
-import logging.config
-import filelock
-
-nlp = spacy.load("en_core_web_sm")
 
 class FeedbackManager:
-    """Manages feedback for query-table mappings.
-
-    Stores and retrieves feedback to improve table identification accuracy
-    using embeddings and pattern matching.
-    """
-
+    """Manages feedback storage and retrieval using SQLite for thread-safe operations."""
+    
     def __init__(self, db_name: str):
-        """Initialize with database name.
+        """Initialize with database name and logging.
 
         Args:
-            db_name (str): Name of the database.
+            db_name: Name of the database.
         """
-        # Ensure logs directory exists
-        os.makedirs("logs", exist_ok=True)
-        logging_config_path = "app-config/logging_config.ini"
-        if os.path.exists(logging_config_path):
-            try:
-                logging.config.fileConfig(logging_config_path, disable_existing_loggers=False)
-            except Exception as e:
-                print(f"Error loading logging config: {e}")
-        
-        self.logger = logging.getLogger("feedback")
+        self.logger = logging.getLogger("feedback_manager")
         self.db_name = db_name
-        self.model = SentenceTransformer('all-distilroberta-v1')
         self.feedback_dir = os.path.join("feedback_cache", db_name)
         os.makedirs(self.feedback_dir, exist_ok=True)
-        self.feedback_cache = {}
-        self.pattern_cache = {}
+        self.db_path = os.path.join(self.feedback_dir, "feedback.db")
+        self.embedder = None
+        self.feedback_cache = []
+        
+        try:
+            self.embedder = SentenceTransformer('all-distilroberta-v1')
+            self.logger.debug("Loaded SentenceTransformer for feedback")
+        except Exception as e:
+            self.logger.error(f"Error loading SentenceTransformer: {e}")
+            self.embedder = None
+        
+        self._init_db()
         self._load_feedback_cache()
         self.logger.debug(f"Initialized FeedbackManager for {db_name}")
 
+    def _init_db(self):
+        """Initialize SQLite database for feedback storage."""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS feedback (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        query TEXT NOT NULL,
+                        tables TEXT NOT NULL,
+                        timestamp TEXT NOT NULL,
+                        embedding BLOB NOT NULL
+                    )
+                """)
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS query_counts (
+                        query TEXT PRIMARY KEY,
+                        count INTEGER NOT NULL
+                    )
+                """)
+                conn.commit()
+            self.logger.debug(f"Initialized SQLite database at {self.db_path}")
+        except Exception as e:
+            self.logger.error(f"Error initializing SQLite database: {e}")
+
     def _load_feedback_cache(self):
-        """Load feedback from cache with file locking."""
-        with filelock.FileLock(os.path.join(self.feedback_dir, "feedback.lock")):
-            self.feedback_cache.clear()
-            self.pattern_cache.clear()
-            
-            for fname in os.listdir(self.feedback_dir):
-                if fname.endswith("_meta.json"):
-                    try:
-                        with open(os.path.join(self.feedback_dir, fname)) as f:
-                            meta = json.load(f)
-                            if 'query' not in meta or 'tables' not in meta or 'timestamp' not in meta:
-                                self.logger.warning(f"Skipping invalid feedback file {fname}")
-                                continue
-                            normalized_tables = [t.lower() for t in meta.get('tables', [])]
-                            query_lower = meta['query'].lower()
-                            
-                            self.feedback_cache[query_lower] = {
-                                'query': meta['query'],
-                                'tables': normalized_tables,
-                                'timestamp': meta['timestamp'],
-                                'count': meta.get('count', 1)
-                            }
-                            
-                            pattern = self._extract_query_pattern(meta['query'])
-                            if pattern not in self.pattern_cache:
-                                self.pattern_cache[pattern] = {
-                                    'tables': normalized_tables,
-                                    'timestamp': meta['timestamp'],
-                                    'count': meta.get('count', 1)
-                                }
-                            else:
-                                self.pattern_cache[pattern]['count'] += meta.get('count', 1)
-                        self.logger.debug(f"Loaded feedback file {fname}")
-                    except Exception as e:
-                        self.logger.error(f"Error loading feedback file {fname}: {e}")
+        """Load feedback data from SQLite database."""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT id, query, tables, timestamp, embedding FROM feedback")
+                self.feedback_cache = [
+                    {
+                        "id": row[0],
+                        "query": row[1],
+                        "tables": json.loads(row[2]),
+                        "timestamp": row[3],
+                        "embedding": np.frombuffer(row[4], dtype=np.float32)
+                    }
+                    for row in cursor.fetchall()
+                ]
+            self.logger.debug(f"Loaded {len(self.feedback_cache)} feedback entries")
+        except Exception as e:
+            self.logger.error(f"Error loading feedback cache: {e}")
+            self.feedback_cache = []
 
-    def _extract_query_pattern(self, query: str) -> str:
-        """Extract a generalized pattern from a query.
+    def store_feedback(self, query: str, tables: List[str], schema_dict: Dict):
+        """Store feedback for a query-table mapping.
 
         Args:
-            query (str): The query string.
-
-        Returns:
-            str: The extracted pattern.
+            query: The query string.
+            tables: List of table names.
+            schema_dict: Schema dictionary for validation.
         """
-        doc = nlp(query.lower())
-        pattern = []
-        skip_next = False
-        
-        for i, token in enumerate(doc):
-            if skip_next:
-                skip_next = False
-                continue
-                
-            if token.text in ('=', '!=') and i > 0:
-                pattern.append(f"{doc[i-1].lemma_}=[CONDITION]")
-                skip_next = True
-            elif token.like_num and re.match(r'\d{4}', token.text):
-                pattern.append('[YEAR]')
-            elif token.text.lower() in ('between', 'from', 'to') and i + 1 < len(doc) and doc[i+1].like_num:
-                pattern.append('[DATE_RANGE]')
-                skip_next = True
-            elif token.like_num:
-                pattern.append('[VALUE]')
-            elif token.is_quote:
-                pattern.append('[LITERAL]')
-            else:
-                pattern.append(token.lemma_)
-        
-        pattern_str = ' '.join(pattern)
-        self.logger.debug(f"Extracted pattern: {pattern_str}")
-        return pattern_str
-
-    def store_feedback(self, query: str, correct_tables: List[str], schema_dict: Dict) -> bool:
-        """Store feedback for a query with validated tables.
-
-        Args:
-            query (str): The query string.
-            correct_tables (List[str]): List of correct tables.
-            schema_dict (Dict): Schema dictionary for validation.
-
-        Returns:
-            bool: True if feedback is stored successfully, False otherwise.
-        """
-        with filelock.FileLock(os.path.join(self.feedback_dir, "feedback.lock")):
-            valid_tables, invalid_tables = self.validate_tables(correct_tables, schema_dict)
+        try:
+            if not tables or not query:
+                self.logger.warning("Empty query or tables, skipping feedback storage")
+                return
             
-            if invalid_tables:
-                self.logger.warning(f"Invalid tables: {invalid_tables}")
-                print(f"Invalid tables: {invalid_tables}")
-                return False
-                
+            # Validate tables
+            valid_tables = []
+            for table in tables:
+                schema, table_name = table.split('.', 1)
+                if schema in schema_dict["tables"] and table_name in schema_dict["tables"][schema]:
+                    valid_tables.append(table)
+                else:
+                    self.logger.warning(f"Invalid table {table} in feedback")
+            
             if not valid_tables:
-                self.logger.warning(f"No valid tables for query: {query}")
-                print(f"No valid tables provided for query: {query}")
-                return False
-                
-            normalized_tables = [t.lower() for t in valid_tables]
-            existing = self._find_exact_match(query)
+                self.logger.warning("No valid tables in feedback")
+                return
             
-            if existing:
-                self._update_feedback(existing, normalized_tables, query)
+            # Generate embedding
+            embedding = None
+            if self.embedder:
+                embedding = self.embedder.encode([query])[0]
             else:
-                self._create_new_feedback(query, normalized_tables)
+                embedding = np.zeros(768, dtype=np.float32)
             
-            self._load_feedback_cache()
-            self.logger.info(f"Stored feedback for query: {query}, tables: {normalized_tables}")
-            return True
-
-    def validate_tables(self, tables: List[str], schema_dict: Dict) -> Tuple[List[str], List[str]]:
-        """Validate tables against the schema.
-
-        Args:
-            tables (List[str]): List of table names (schema.table).
-            schema_dict (Dict): Schema dictionary.
-
-        Returns:
-            Tuple[List[str], List[str]]: Valid and invalid table lists.
-        """
-        valid_tables = []
-        invalid_tables = []
-        
-        schema_map = {s.lower(): s for s in schema_dict['tables']}
-        table_maps = {
-            s: {t.lower(): t for t in schema_dict['tables'][s]} 
-            for s in schema_dict['tables']
-        }
-        
-        for table in tables:
-            parts = table.split('.')
-            if len(parts) != 2:
-                self.logger.debug(f"Invalid table format: {table}")
-                invalid_tables.append(table)
-                continue
-                
-            schema_part, table_part = parts
-            schema_lower = schema_part.lower()
-            table_lower = table_part.lower()
+            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+                cursor = conn.cursor()
+                cursor.execute(
+                    "INSERT INTO feedback (query, tables, timestamp, embedding) VALUES (?, ?, datetime('now'), ?)",
+                    (query, json.dumps(valid_tables), embedding.tobytes())
+                )
+                cursor.execute(
+                    "INSERT OR REPLACE INTO query_counts (query, count) VALUES (?, COALESCE((SELECT count + 1 FROM query_counts WHERE query = ?), 1))",
+                    (query, query)
+                )
+                conn.commit()
             
-            if schema_lower not in schema_map:
-                self.logger.debug(f"Schema not found: {schema_lower}")
-                invalid_tables.append(table)
-                continue
-                
-            actual_schema = schema_map[schema_lower]
-            
-            if table_lower not in table_maps[actual_schema]:
-                self.logger.debug(f"Table not found: {table_lower} in schema: {actual_schema}")
-                invalid_tables.append(table)
-                continue
-                
-            actual_table = table_maps[actual_schema][table_lower]
-            valid_tables.append(f"{actual_schema}.{actual_table}")
-                
-        self.logger.debug(f"Valid tables: {valid_tables}, Invalid: {invalid_tables}")
-        return valid_tables, invalid_tables
-
-    def _find_exact_match(self, query: str) -> Optional[str]:
-        """Find existing feedback for a query.
-
-        Args:
-            query (str): The query string.
-
-        Returns:
-            Optional[str]: Feedback ID if found, None otherwise.
-        """
-        query_lower = query.lower()
-        for fname in os.listdir(self.feedback_dir):
-            if fname.endswith("_meta.json"):
-                try:
-                    with open(os.path.join(self.feedback_dir, fname)) as f:
-                        meta = json.load(f)
-                        if 'query' in meta and meta['query'].lower() == query_lower:
-                            self.logger.debug(f"Found exact match for query: {query}")
-                            return fname.replace("_meta.json", "")
-                except Exception:
-                    continue
-        return None
-
-    def _update_feedback(self, feedback_id: str, tables: List[str], query: str):
-        """Update existing feedback entry.
-
-        Args:
-            feedback_id (str): ID of the feedback entry.
-            tables (List[str]): Updated tables.
-            query (str): The query string.
-        """
-        meta_path = os.path.join(self.feedback_dir, f"{feedback_id}_meta.json")
-        try:
-            with open(meta_path, 'r+') as f:
-                meta = json.load(f)
-                meta['tables'] = tables
-                meta['timestamp'] = datetime.now().isoformat()
-                meta['count'] = meta.get('count', 1) + 1
-                f.seek(0)
-                json.dump(meta, f)
-                f.truncate()
-            self.logger.debug(f"Updated feedback {feedback_id}")
+            self._load_feedback_cache()  # Refresh cache
+            self.logger.debug(f"Stored feedback for query: {query}, tables: {valid_tables}")
         except Exception as e:
-            self.logger.error(f"Error updating feedback {feedback_id}: {e}")
+            self.logger.error(f"Error storing feedback: {e}")
 
-    def _create_new_feedback(self, query: str, tables: List[str]):
-        """Create a new feedback entry.
-
-        Args:
-            query (str): The query string.
-            tables (List[str]): Associated tables.
-        """
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        try:
-            embedding = self.model.encode(query)
-            np.save(os.path.join(self.feedback_dir, f"{timestamp}_emb.npy"), embedding)
-            with open(os.path.join(self.feedback_dir, f"{timestamp}_meta.json"), 'w') as f:
-                json.dump({
-                    'query': query,
-                    'tables': tables,
-                    'timestamp': datetime.now().isoformat(),
-                    'count': 1
-                }, f)
-            self.logger.debug(f"Created new feedback for query: {query}")
-        except Exception as e:
-            self.logger.error(f"Error creating feedback for query {query}: {e}")
-
-    def get_similar_feedback(self, query: str, threshold: float = 0.7) -> Optional[List[Dict]]:
-        """Retrieve similar feedback based on query similarity.
+    def get_similar_feedback(self, query: str, threshold: float = 0.7) -> Optional[Dict]:
+        """Retrieve feedback for similar queries.
 
         Args:
-            query (str): The query string.
-            threshold (float): Similarity threshold (default: 0.7).
+            query: The query string.
+            threshold: Similarity threshold for matching.
 
         Returns:
-            Optional[List[Dict]]: List of similar feedback entries, or None if none found.
+            Dict: Feedback data if similar query found, None otherwise.
         """
-        with filelock.FileLock(os.path.join(self.feedback_dir, "feedback.lock")):
-            try:
-                query_lower = query.lower()
-                if query_lower in self.feedback_cache and self.feedback_cache[query_lower]['tables']:
-                    self.logger.debug(f"Exact feedback match for query: {query}")
-                    return [{
-                        'similarity': 1.0,
-                        'query': self.feedback_cache[query_lower]['query'],
-                        'tables': self.feedback_cache[query_lower]['tables'],
-                        'timestamp': self.feedback_cache[query_lower]['timestamp'],
-                        'type': 'exact',
-                        'count': self.feedback_cache[query_lower]['count']
-                    }]
-
-                pattern = self._extract_query_pattern(query)
-                if pattern in self.pattern_cache and self.pattern_cache[pattern]['tables']:
-                    self.logger.debug(f"Pattern match for query: {query}")
-                    return [{
-                        'similarity': 1.0,
-                        'query': query,
-                        'tables': self.pattern_cache[pattern]['tables'],
-                        'timestamp': self.pattern_cache[pattern]['timestamp'],
-                        'type': 'pattern',
-                        'pattern': pattern,
-                        'count': self.pattern_cache[pattern]['count']
-                    }]
-
-                query_emb = self.model.encode(query).reshape(1, -1)
-                feedback_items = []
-                
-                for fname in os.listdir(self.feedback_dir):
-                    if fname.endswith("_emb.npy"):
-                        emb_path = os.path.join(self.feedback_dir, fname)
-                        meta_path = emb_path.replace("_emb.npy", "_meta.json")
-                        
-                        if os.path.exists(meta_path):
-                            try:
-                                with open(meta_path) as f:
-                                    meta = json.load(f)
-                                if not meta.get('tables') or 'query' not in meta:
-                                    continue
-                                stored_emb = np.load(emb_path)
-                                similarity = cosine_similarity(query_emb, stored_emb.reshape(1, -1))[0][0]
-                                
-                                if similarity >= threshold:
-                                    feedback_items.append({
-                                        "similarity": similarity,
-                                        "query": meta["query"],
-                                        "tables": meta["tables"],
-                                        "timestamp": meta["timestamp"],
-                                        "type": "semantic",
-                                        "count": meta.get('count', 1)
-                                    })
-                            except Exception:
-                                continue
-                
-                feedback_items.sort(key=lambda x: x["similarity"], reverse=True)
-                self.logger.debug(f"Similar feedback: {feedback_items}")
-                return feedback_items if feedback_items else None
-            
-            except Exception as e:
-                self.logger.error(f"Feedback retrieval error: {e}")
+        try:
+            if not self.feedback_cache or not self.embedder:
+                self.logger.debug("No feedback cache or embedder available")
                 return None
+            
+            query_embedding = self.embedder.encode([query])[0]
+            similarities = [
+                (entry, cosine_similarity([query_embedding], [entry["embedding"]])[0][0])
+                for entry in self.feedback_cache
+            ]
+            
+            similarities.sort(key=lambda x: x[1], reverse=True)
+            if similarities and similarities[0][1] >= threshold:
+                entry = similarities[0][0]
+                self.logger.debug(f"Found similar feedback for query: {query}, similarity: {similarities[0][1]}")
+                return {
+                    "query": entry["query"],
+                    "tables": entry["tables"],
+                    "timestamp": entry["timestamp"]
+                }
+            
+            self.logger.debug(f"No similar feedback found for query: {query}")
+            return None
+        except Exception as e:
+            self.logger.error(f"Error in get_similar_feedback: {e}")
+            return None
 
-    def get_top_queries(self, n: int) -> List[Tuple[str, int]]:
-        """Get the top N most frequent queries.
+    def get_top_queries(self, limit: int = 5) -> List[tuple]:
+        """Get the most frequent queries.
 
         Args:
-            n (int): Number of queries to return.
+            limit: Number of queries to return.
 
         Returns:
-            List[Tuple[str, int]]: List of (query, count) tuples.
+            List of (query, count) tuples.
         """
-        top_queries = [
-            (meta['query'], meta['count'])
-            for query, meta in self.feedback_cache.items()
-            if meta['tables'] and 'query' in meta
-        ]
-        top_queries.sort(key=lambda x: (-x[1], x[0]))
-        self.logger.debug(f"Top {n} queries: {top_queries[:n]}")
-        return top_queries[:n]
+        try:
+            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+                cursor = conn.cursor()
+                cursor.execute(
+                    "SELECT query, count FROM query_counts ORDER BY count DESC LIMIT ?",
+                    (limit,)
+                )
+                top_queries = cursor.fetchall()
+            self.logger.debug(f"Retrieved {len(top_queries)} top queries")
+            return top_queries
+        except Exception as e:
+            self.logger.error(f"Error getting top queries: {e}")
+            return []
 
     def clear_feedback(self):
         """Clear all feedback data."""
-        with filelock.FileLock(os.path.join(self.feedback_dir, "feedback.lock")):
-            try:
-                for fname in os.listdir(self.feedback_dir):
-                    if fname.endswith(("_meta.json", "_emb.npy")):
-                        os.remove(os.path.join(self.feedback_dir, fname))
+        try:
+            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+                cursor = conn.cursor()
+                cursor.execute("DELETE FROM feedback")
+                cursor.execute("DELETE FROM query_counts")
+                conn.commit()
+            self.feedback_cache = []
+            self.logger.info("Cleared all feedback")
+        except Exception as e:
+            self.logger.error(f"Error clearing feedback: {e}")
+
+    def export_feedback(self, export_dir: str):
+        """Export feedback data to a directory.
+
+        Args:
+            export_dir: Directory to export feedback files.
+        """
+        try:
+            os.makedirs(export_dir, exist_ok=True)
+            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT id, query, tables, timestamp FROM feedback")
+                copied = False
+                for row in cursor.fetchall():
+                    id_, query, tables, timestamp = row
+                    meta = {
+                        "query": query,
+                        "tables": json.loads(tables),
+                        "timestamp": timestamp
+                    }
+                    meta_file = os.path.join(export_dir, f"feedback_{id_}_meta.json")
+                    with open(meta_file, 'w') as f:
+                        json.dump(meta, f, indent=2)
+                    copied = True
+                if copied:
+                    self.logger.info(f"Exported feedback to {export_dir}")
+                else:
+                    self.logger.info("No feedback to export")
+        except Exception as e:
+            self.logger.error(f"Error exporting feedback: {e}")
+
+    def import_feedback(self, import_dir: str):
+        """Import feedback data from a directory.
+
+        Args:
+            import_dir: Directory containing feedback files.
+        """
+        try:
+            if not os.path.exists(import_dir):
+                self.logger.error(f"Import directory {import_dir} does not exist")
+                return
+            
+            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+                cursor = conn.cursor()
+                copied = False
+                for fname in os.listdir(import_dir):
+                    if fname.endswith("_meta.json"):
+                        with open(os.path.join(import_dir, fname)) as f:
+                            meta = json.load(f)
+                        if 'query' not in meta or 'tables' not in meta or 'timestamp' not in meta:
+                            self.logger.warning(f"Skipping invalid feedback file: {fname}")
+                            continue
+                        
+                        embedding = self.embedder.encode([meta['query']])[0] if self.embedder else np.zeros(768, dtype=np.float32)
+                        cursor.execute(
+                            "INSERT INTO feedback (query, tables, timestamp, embedding) VALUES (?, ?, ?, ?)",
+                            (meta['query'], json.dumps(meta['tables']), meta['timestamp'], embedding.tobytes())
+                        )
+                        cursor.execute(
+                            "INSERT OR REPLACE INTO query_counts (query, count) VALUES (?, COALESCE((SELECT count + 1 FROM query_counts WHERE query = ?), 1))",
+                            (meta['query'], meta['query'])
+                        )
+                        copied = True
+                conn.commit()
+            
+            if copied:
                 self._load_feedback_cache()
-                self.logger.info("Feedback cleared")
-            except Exception as e:
-                self.logger.error(f"Error clearing feedback: {e}")
+                self.logger.info(f"Imported feedback from {import_dir}")
+            else:
+                self.logger.info("No valid feedback files to import")
+        except Exception as e:
+            self.logger.error(f"Error importing feedback: {e}")

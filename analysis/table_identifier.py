@@ -2,6 +2,8 @@ import logging
 import pandas as pd
 import os
 import numpy as np
+import json
+import csv
 from typing import List, Tuple, Dict
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -9,25 +11,26 @@ from sklearn.metrics.pairwise import cosine_similarity
 class TableIdentifier:
     """Identifies relevant tables from natural language queries using NLP and feedback."""
     
-    def __init__(self, schema_dict: Dict, feedback_manager, pattern_manager):
+    def __init__(self, schema_dict: Dict, feedback_manager, pattern_manager, db_name: str):
         """Initialize with schema, feedback, and pattern manager.
 
         Args:
             schema_dict: Schema dictionary from SchemaManager.
             feedback_manager: FeedbackManager instance.
             pattern_manager: PatternManager instance.
+            db_name: Name of the database.
         """
         self.logger = logging.getLogger("table_identifier")
         self.schema_dict = schema_dict
         self.feedback_manager = feedback_manager
         self.pattern_manager = pattern_manager
+        self.db_name = db_name
         self.training_data = []
         self.weights = {}
         self.model = None
         self.embedder = None
         
         try:
-            # Initialize SentenceTransformer
             self.embedder = SentenceTransformer('all-distilroberta-v1')
             self.logger.debug("Loaded SentenceTransformer: all-distilroberta-v1")
         except Exception as e:
@@ -35,10 +38,9 @@ class TableIdentifier:
             self.embedder = None
         
         try:
-            # Load training CSV
             csv_path = os.path.join("app-config", "training_data.csv")
             if os.path.exists(csv_path):
-                df = pd.read_csv(csv_path, on_bad_lines='skip')
+                df = pd.read_csv(csv_path, quoting=csv.QUOTE_ALL, on_bad_lines='warn')
                 self.training_data = df.values.tolist()
                 self.logger.debug(f"Loaded {len(self.training_data)} training records from {csv_path}")
             else:
@@ -47,7 +49,6 @@ class TableIdentifier:
             self.logger.error(f"Error loading CSV: {str(e)}")
             self.training_data = []
         
-        # Initialize weights for tables
         self._initialize_weights()
         self.logger.debug("Initialized TableIdentifier")
 
@@ -80,13 +81,11 @@ class TableIdentifier:
                 query_embedding = self.embedder.encode([query])[0]
                 table_scores = []
                 for table in self.weights:
-                    # Simplified: assume table names as proxies for embeddings
                     table_embedding = self.embedder.encode([table])[0]
                     score = cosine_similarity([query_embedding], [table_embedding])[0][0]
                     weighted_score = score * self.weights[table]
                     table_scores.append((table, weighted_score))
                 
-                # Sort by score and select top tables
                 table_scores.sort(key=lambda x: x[1], reverse=True)
                 top_tables = [table for table, score in table_scores[:5]]
                 confidence = max(score for table, score in table_scores[:5]) if table_scores else 0.0
@@ -149,16 +148,15 @@ class TableIdentifier:
         try:
             for table in tables:
                 if table in self.weights:
-                    self.weights[table] *= 1.1  # Increase weight for confirmed tables
+                    self.weights[table] *= 1.1
                     self.logger.debug(f"Increased weight for {table} to {self.weights[table]}")
                 else:
                     self.weights[table] = 1.0
                     self.logger.debug(f"Initialized weight for new table {table}")
             
-            # Decrease weights for non-selected tables
             for table in self.weights:
                 if table not in tables:
-                    self.weights[table] *= 0.95  # Decrease weight
+                    self.weights[table] *= 0.95
                     self.logger.debug(f"Decreased weight for {table} to {self.weights[table]}")
         except Exception as e:
             self.logger.error(f"Error updating weights: {e}")

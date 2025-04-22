@@ -380,9 +380,9 @@ class DatabaseAnalyzerCLI:
                     dst = os.path.join(feedback_dir, fname)
                     shutil.copy2(src, dst)
                     emb_fname = fname.replace("_meta.json", "_emb.npy")
-                    emp_src = os.path.join(import_dir, emb_fname)
-                    if os.path.exists(emp_src):
-                        shutil.copy2(emp_src, os.path.join(feedback_dir, emb_fname))
+                    emb_src = os.path.join(import_dir, emb_fname)
+                    if os.path.exists(emb_src):
+                        shutil.copy2(emb_src, os.path.join(feedback_dir, emb_fname))
                     copied = True
             if copied:
                 self.analyzer.feedback_manager._load_feedback_cache()
