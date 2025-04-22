@@ -27,3 +27,4 @@ Select configuration: 3
 2025-04-22 15:40:26 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
 2025-04-22 15:40:29 - table_identifier - WARNING - Training CSV not found at app-config\training_data.csv
 2025-04-22 15:40:29 - analyzer - INFO - Connected to BikeStores
+

@@ -4,20 +4,20 @@
       "database": "adventureworks",
       "username": "sa",
 	  "driver": "ODBC Driver 17 for SQL Server",
-      "password": ""
+      "password": "S0rry!43"
     },
     "ADWORKS2019_DB": {
       "server": "localhost",
       "database": "AdventureWorksDW2019",
       "username": "sa",
 	  "driver": "ODBC Driver 17 for SQL Server",
-      "password": ""
+      "password": "S0rry!43"
     },
     "BIKES_DB": {
       "server": "localhost",
       "database": "BikeStores",
       "username": "sa",
 	  "driver": "ODBC Driver 17 for SQL Server",
-      "password": ""
+      "password": "S0rry!43"
     }
   }

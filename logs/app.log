@@ -43,3 +43,82 @@
 2025-04-22 15:40:50 - table_identifier - ERROR - Error saving model: [Errno 2] No such file or directory: 'models/BikeStores_model.json'
 2025-04-22 15:40:50 - connection - INFO - Closing database connection
 2025-04-22 15:40:50 - analyzer - INFO - Application shutdown
+2025-04-22 15:52:49 - connection - DEBUG - Initialized DatabaseConnection
+2025-04-22 15:52:49 - config - DEBUG - Initialized DBConfigManager
+2025-04-22 15:52:49 - analyzer - DEBUG - Initialized DatabaseAnalyzer
+2025-04-22 15:52:49 - interface - DEBUG - Initialized DatabaseAnalyzerCLI
+2025-04-22 15:52:49 - interface - INFO - Starting Database Schema Analyzer
+2025-04-22 15:53:01 - config - DEBUG - Loaded configurations from app-config/database_configurations.json
+2025-04-22 15:53:01 - analyzer - DEBUG - Loaded 3 configurations
+2025-04-22 15:53:03 - analyzer - DEBUG - Set config: BikeStores
+2025-04-22 15:53:03 - interface - DEBUG - Selected configuration: BikeStores
+2025-04-22 15:53:03 - connection - INFO - Connected to database: BikeStores
+2025-04-22 15:53:03 - analyzer - DEBUG - Initializing managers for BikeStores
+2025-04-22 15:53:03 - schema - DEBUG - Initialized SchemaManager for BikeStores
+2025-04-22 15:53:03 - schema - INFO - SchemaManager version: 2025-04-22 with 42S22 fix
+2025-04-22 15:53:03 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'table_creation_date'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'column_modified_date'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'last_update'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]No column name was specified for column 1 of 't'. (8155)")
+2025-04-22 15:53:03 - schema - DEBUG - Latest schema change: inf, Cache mtime: 1745316618.465224
+2025-04-22 15:53:03 - analyzer - DEBUG - Building fresh schema
+2025-04-22 15:53:03 - schema - DEBUG - Detected database type: sqlserver
+2025-04-22 15:53:04 - schema - DEBUG - Schema validation completed
+2025-04-22 15:53:04 - schema - DEBUG - Saved schema to schema_cache\BikeStores\schema.json
+2025-04-22 15:53:04 - patterns - DEBUG - Loaded patterns from app-config/global_patterns.json
+2025-04-22 15:53:04 - patterns - DEBUG - Initialized PatternManager with 0 patterns
+2025-04-22 15:53:04 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 15:53:04 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 15:53:08 - feedback - DEBUG - Initialized FeedbackManager for BikeStores
+2025-04-22 15:53:10 - nlp_pipeline - DEBUG - Loading patterns
+2025-04-22 15:53:10 - nlp_pipeline - DEBUG - Patterns loaded
+2025-04-22 15:53:10 - nlp_pipeline - DEBUG - Initialized NLPPipeline
+2025-04-22 15:53:10 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 15:53:10 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 15:53:12 - name_match_manager - DEBUG - Initialized NameMatchManager for BikeStores
+2025-04-22 15:53:12 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 15:53:12 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 15:53:16 - table_identifier - DEBUG - Loaded SentenceTransformer: all-distilroberta-v1
+2025-04-22 15:53:16 - table_identifier - WARNING - Training CSV not found at app-config\training_data.csv
+2025-04-22 15:53:16 - table_identifier - DEBUG - Initialized weights for 12 tables
+2025-04-22 15:53:16 - table_identifier - DEBUG - Initialized TableIdentifier
+2025-04-22 15:53:16 - query_processor - DEBUG - Initialized QueryProcessor for BikeStores
+2025-04-22 15:53:16 - analyzer - DEBUG - Managers initialized
+2025-04-22 15:53:16 - analyzer - INFO - Connected to BikeStores
+2025-04-22 15:53:16 - interface - INFO - Successfully connected to database
+2025-04-22 15:53:19 - feedback - DEBUG - Top 3 queries: []
+2025-04-22 15:53:50 - query_processor - DEBUG - Processing query: show me the products
+2025-04-22 15:53:50 - table_identifier - DEBUG - Identifying tables for query: show me the products
+2025-04-22 15:53:50 - feedback - DEBUG - Extracted pattern: show I the product
+2025-04-22 15:53:51 - feedback - DEBUG - Similar feedback: []
+2025-04-22 15:53:51 - table_identifier - DEBUG - Embedding-based tables: ['production.products', 'production.brands', 'production.stocks', 'sales.stores', 'sales.orders'], confidence: 0.49236905574798584
+2025-04-22 15:53:51 - nlp_pipeline - DEBUG - Analyzing query: show me the products
+2025-04-22 15:53:51 - nlp_pipeline - DEBUG - Analysis result: {'entities': [], 'tokens': ['product'], 'matches': [], 'dependencies': [('show', 'ROOT', 'show'), ('me', 'dative', 'show'), ('the', 'det', 'products'), ('products', 'dobj', 'show')], 'relations': [('products', 'dobj', 'show')]}
+2025-04-22 15:53:51 - name_match_manager - DEBUG - Generated embeddings for 1 tokens
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 1
+2025-04-22 15:53:51 - name_match_manager - DEBUG - Generated embeddings for 1 tokens
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 1
+2025-04-22 15:53:51 - name_match_manager - DEBUG - Generated embeddings for 1 tokens
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 1
+2025-04-22 15:53:51 - name_match_manager - DEBUG - Generated embeddings for 1 tokens
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 1
+2025-04-22 15:53:51 - name_match_manager - DEBUG - Generated embeddings for 1 tokens
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 4
+2025-04-22 15:53:51 - table_identifier - DEBUG - Increased weight for production.products to 1.1
+2025-04-22 15:53:51 - table_identifier - DEBUG - Increased weight for production.brands to 1.1
+2025-04-22 15:53:51 - table_identifier - DEBUG - Increased weight for production.stocks to 1.1
+2025-04-22 15:53:51 - table_identifier - DEBUG - Increased weight for sales.stores to 1.1
+2025-04-22 15:53:51 - table_identifier - DEBUG - Increased weight for sales.orders to 1.1
+2025-04-22 15:53:51 - table_identifier - DEBUG - Decreased weight for production.categories to 0.95
+2025-04-22 15:53:51 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.95
+2025-04-22 15:53:51 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.95
+2025-04-22 15:53:51 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.95
+2025-04-22 15:53:51 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.95
+2025-04-22 15:53:51 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.95
+2025-04-22 15:53:51 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.95
+2025-04-22 15:53:51 - query_processor - INFO - Identified tables: ['production.products', 'production.brands', 'production.stocks', 'sales.stores', 'sales.orders'], Confidence: 0.49236905574798584
+2025-04-22 15:53:51 - analyzer - DEBUG - Query: show me the products, Tables: ['production.products', 'production.brands', 'production.stocks', 'sales.stores', 'sales.orders'], Confidence: 0.49236905574798584
+2025-04-22 15:53:51 - interface - INFO - Suggested tables for query 'show me the products': ['production.products', 'production.brands', 'production.stocks', 'sales.stores', 'sales.orders']
+2025-04-22 15:54:13 - interface - INFO - User rejected tables for query 'show me the products': ['production.products', 'production.brands', 'production.stocks', 'sales.stores', 'sales.orders']
+2025-04-22 15:54:13 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
+2025-04-22 15:54:24 - interface - DEBUG - Selected manual tables: ['production.products']
+2025-04-22 15:54:24 - interface - INFO - Updated feedback with tables: ['production.products']
+2025-04-22 15:54:24 - feedback - DEBUG - Valid tables: ['production.products'], Invalid: []
+2025-04-22 15:54:25 - feedback - DEBUG - Created new feedback for query: show me the products
