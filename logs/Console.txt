@@ -1,0 +1,700 @@
+2025-04-22 23:28:43 - interface - INFO - Starting Database Schema Analyzer
+=== Database Schema Analyzer ===
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations        
+4. Manage Feedback
+5. Exit
+Select option: 1
+Config path [default: app-config/database_configurations.json]: 
+
+Available Configurations:
+1. ADWORKS_DB
+2. ADWORKS2019_DB
+3. BIKES_DB
+4. Cancel
+Select configuration: 3
+2025-04-22 23:28:53 - connection - INFO - Connected to database: BikeStores
+2025-04-22 23:28:53 - schema - INFO - SchemaManager version: 2025-04-22 with 42S22 fix
+[PRASAD]: Below error is repetitive in all attempts. Why don't you find an alternate solution or fix it? 
+2025-04-22 23:28:53 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'table_creation_date'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'column_modified_date'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'last_update'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]No column name was specified for column 1 of 't'. (8155)")
+2025-04-22 23:28:53 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 23:28:53 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 23:29:00 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 23:29:00 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 23:29:03 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 23:29:03 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 23:29:06 - table_identifier - WARNING - Training CSV not found at app-config\training_data.csv
+2025-04-22 23:29:07 - analyzer - INFO - Connected to BikeStores
+2025-04-22 23:29:07 - interface - INFO - Successfully connected to database
+Successfully connected!
+
+=== BikeStores Schema Analyzer ===
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations
+4. Manage Feedback
+5. Exit
+Select option: 2
+
+Example Queries:
+1. total sales amount at storename 'Baldwin Bikes' (used 2 times)
+2. show me the products (used 1 times)
+3. what production categories are available (used 1 times)
+
+Enter query (or 'back'): what products are available
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  1.02it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.55it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.58it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.55it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.46it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.25it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.05it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.55it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.68it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.40it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 142.85it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.31it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.50it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 62.67it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.15it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.56it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 99.94it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.45it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.27it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.42it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.16it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 110.98it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.75it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.43it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.36it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.71it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.48it/s] 
+2025-04-22 23:29:38 - table_identifier - ERROR - Error identifying tables: 'PatternManager' object has no attribute 'match_pattern'
+2025-04-22 23:29:38 - interface - WARNING - Low confidence (0.0) for query 'what products are available'
+[PRASAD]: I see error on PatternManager object. Why the program is still low confidence on the above query, because products term is a direct match 
+Low confidence. Please select tables manually:
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): production.products
+2025-04-22 23:29:54 - interface - INFO - Manually selected tables for query 'what products are available': ['production.products']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.86it/s] 
+2025-04-22 23:29:55 - analyzer - INFO - Updated feedback for query: what products are available
+
+Enter query (or 'back'): what products are available
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.57it/s]
+2025-04-22 23:29:59 - interface - INFO - Suggested tables for query 'what products are available': ['production.products'], confidence: 0.9
+
+Suggested Tables:
+1. production.products
+
+Correct? (Y/N): Y
+2025-04-22 23:30:03 - interface - INFO - Confirmed tables for query 'what products are available': ['production.products']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.54it/s] 
+2025-04-22 23:30:03 - analyzer - INFO - Confirmed tables for query: what products are available
+
+Enter query (or 'back'): total sales amount at storename 'Baldwin Bikes'
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.92it/s]
+2025-04-22 23:30:20 - interface - INFO - Suggested tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+
+Suggested Tables:
+1. sales.stores
+2. sales.orders
+3. sales.order_items
+
+Correct? (Y/N): y
+2025-04-22 23:30:34 - interface - INFO - Confirmed tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.65it/s] 
+2025-04-22 23:30:35 - analyzer - INFO - Confirmed tables for query: total sales amount at storename 'Baldwin Bikes'
+
+Enter query (or 'back'): what production categories are available
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.87it/s]
+2025-04-22 23:31:03 - interface - INFO - Suggested tables for query 'what production categories are available': ['production.categories'], confidence: 0.9
+
+Suggested Tables:
+1. production.categories
+
+Correct? (Y/N): y
+2025-04-22 23:31:06 - interface - INFO - Confirmed tables for query 'what production categories are available': ['production.categories']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.42it/s] 
+2025-04-22 23:31:06 - analyzer - INFO - Confirmed tables for query: what production categories are available
+
+Enter query (or 'back'): get me store details of Baldwin Bikes
+2025-04-22 23:31:15 - interface - WARNING - Non-English query detected: get me store details of Baldwin Bikes (language: af)
+2025-04-22 23:31:15 - interface - WARNING - Invalid query: get me store details of Baldwin Bikes
+Please enter a meaningful query in English.
+[PRASAD]: why the query "get me store details of Baldwin Bikes" was invalid query. This query is asking details of a particular store name. This type of statements needs to be identified and resolved using advanced NLP techniques
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): total sales amount at storename 'Baldwin Bikes'
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.87it/s]
+2025-04-22 23:31:58 - interface - INFO - Suggested tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+[PRASAD]: Here it was able to identify.
+Suggested Tables:
+1. sales.stores
+2. sales.orders
+3. sales.order_items
+
+Correct? (Y/N): y
+2025-04-22 23:32:03 - interface - INFO - Confirmed tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.37it/s] 
+2025-04-22 23:32:04 - analyzer - INFO - Confirmed tables for query: total sales amount at storename 'Baldwin Bikes'
+
+Enter query (or 'back'): get me store details of Baldwin Bikes
+2025-04-22 23:32:17 - interface - WARNING - Non-English query detected: get me store details of Baldwin Bikes (language: af)
+2025-04-22 23:32:17 - interface - WARNING - Invalid query: get me store details of Baldwin Bikes
+Please enter a meaningful query in English.
+[PRASAD]: why the query "get me store details of Baldwin Bikes" was invalid query. This query is asking details of a particular store name. This type of statements needs to be identified and resolved using advanced NLP techniques
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): what
+2025-04-22 23:32:37 - interface - WARNING - Single-word query: what
+2025-04-22 23:32:37 - interface - WARNING - Invalid query: what
+Please enter a meaningful query in English.
+[PRASAD]: This is ok
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): chitti babu emchestunnav 
+2025-04-22 23:33:05 - interface - WARNING - Non-English query detected: chitti babu emchestunnav (language: it)
+2025-04-22 23:33:05 - interface - WARNING - Invalid query: chitti babu emchestunnav
+Please enter a meaningful query in English.
+[PRASAD]: This is ok
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): Show me all stores with store names
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.85it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 40.05it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 38.52it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 35.83it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 90.95it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.56it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.13it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.02it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.25it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.33it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.75it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.10it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 71.61it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.01it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.20it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.52it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.89it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.08it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 99.91it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.05it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.78it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.45it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.04it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.19it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.25it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.92it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 142.73it/s] 
+2025-04-22 23:33:15 - table_identifier - ERROR - Error identifying tables: 'PatternManager' object has no attribute 'match_pattern'
+2025-04-22 23:33:15 - interface - WARNING - Low confidence (0.0) for query 'Show me all stores with store names'
+[PRASAD]: This is not ok. Why low confidence? It has to look matching terms for storename or store_name or store from metadata so that logic detects store details are present in sales.stores, remember that no HARD CODING should be used.
+Low confidence. Please select tables manually:
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): sales.stores
+2025-04-22 23:33:49 - interface - INFO - Manually selected tables for query 'Show me all stores with store names': ['sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.97it/s] 
+2025-04-22 23:33:50 - analyzer - INFO - Updated feedback for query: Show me all stores with store names
+
+Enter query (or 'back'): sonia
+2025-04-22 23:34:03 - interface - WARNING - Single-word query: sonia
+2025-04-22 23:34:03 - interface - WARNING - Invalid query: sonia
+Please enter a meaningful query in English.
+[PRASAD]: Ok
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): I like you
+2025-04-22 23:34:10 - interface - WARNING - Non-English query detected: I like you (language: sw)
+2025-04-22 23:34:10 - interface - WARNING - Invalid query: I like you
+Please enter a meaningful query in English.
+
+[PRASAD]: Ok, is "I like you" a different language than English? Just a check.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): what you are doing now?
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.89it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 40.11it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 38.60it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.34it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.37it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.07it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.42it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 142.94it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.38it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.14it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.23it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 77.12it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.35it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.16it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.20it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.35it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.57it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.41it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.33it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.35it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.30it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.33it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.84it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.09it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.32it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.79it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.23it/s]
+2025-04-22 23:34:29 - table_identifier - ERROR - Error identifying tables: 'PatternManager' object has no attribute 'match_pattern'
+2025-04-22 23:34:29 - interface - WARNING - Low confidence (0.0) for query 'what you are doing now?'
+
+Low confidence. Please select tables manually:
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'):
+[PRASAD]: The above query 'what you are doing now?' does not make any sense with the dbs metadata nor it matches the existing column terms or table name terms, then why it is exhibiting low confidence and asking feedback?
+Enter query (or 'back'): 12345
+2025-04-22 23:34:49 - interface - WARNING - Single-word query: 12345
+2025-04-22 23:34:49 - interface - WARNING - Invalid query: 12345
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+[PRASAD]: Ok.
+Enter query (or 'back'): +919666666201
+2025-04-22 23:34:58 - interface - WARNING - Single-word query: +919666666201
+2025-04-22 23:34:58 - interface - WARNING - Invalid query: +919666666201
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+[PRASAD]: Ok.
+
+Enter query (or 'back'): store
+2025-04-22 23:35:09 - interface - WARNING - Single-word query: store
+2025-04-22 23:35:09 - interface - WARNING - Invalid query: store
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+[PRASAD]: Ok.
+
+Enter query (or 'back'): stores in india
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.97it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 40.08it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 38.61it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 37.14it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 66.88it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.26it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.80it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.82it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.38it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.83it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.83it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.36it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.55it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.37it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.35it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.20it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.16it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.31it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.28it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.34it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.28it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.73it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.61it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.46it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.74it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.25it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 166.61it/s] 
+2025-04-22 23:35:17 - table_identifier - ERROR - Error identifying tables: 'PatternManager' object has no attribute 'match_pattern'
+2025-04-22 23:35:17 - interface - WARNING - Low confidence (0.0) for query 'stores in india'
+
+[PRASAD]: Why low confidence. Stores is term that can be matched with table name term. India is a Coutry name that may exist in data of table column.
+Low confidence. Please select tables manually:
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): stores in india
+2025-04-22 23:35:30 - interface - WARNING - Invalid manual table selection
+Invalid selection, please try again
+
+Enter query (or 'back'): stores in USA
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.87it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 40.05it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 40.10it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 40.11it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.45it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.41it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.27it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.26it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 110.96it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.25it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.92it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 90.99it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.25it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.45it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.32it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 90.89it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.59it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.28it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.88it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.37it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.60it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.78it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.34it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.37it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 90.90it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.78it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 99.98it/s] 
+2025-04-22 23:35:43 - table_identifier - ERROR - Error identifying tables: 'PatternManager' object has no attribute 'match_pattern'
+2025-04-22 23:35:43 - interface - WARNING - Low confidence (0.0) for query 'stores in USA'
+
+Low confidence. Please select tables manually:
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): sales.stores    
+2025-04-22 23:36:19 - interface - INFO - Manually selected tables for query 'stores in USA': ['sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.90it/s] 
+2025-04-22 23:36:19 - analyzer - INFO - Updated feedback for query: stores in USA
+
+[PRASAD]: Why low confidence. Stores is term that can be matched with table name term. USA is a Coutry name that may exist in data of table column.
+Enter query (or 'back'): stores in india
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.46it/s]
+2025-04-22 23:36:22 - interface - INFO - Suggested tables for query 'stores in india': ['sales.stores'], confidence: 0.9
+
+Suggested Tables:
+1. sales.stores
+[PRASAD]: It worked after earlier training.
+Correct? (Y/N): y
+2025-04-22 23:36:25 - interface - INFO - Confirmed tables for query 'stores in india': ['sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.45it/s] 
+2025-04-22 23:36:26 - analyzer - INFO - Confirmed tables for query: stores in india
+
+Enter query (or 'back'): list all products by categories and brand names
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.35it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.34it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.42it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.43it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 86.39it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.48it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.26it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.35it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.30it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.16it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.57it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.40it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 87.26it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.34it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.28it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.41it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.28it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.38it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.24it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.31it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.26it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.56it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.26it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.22it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.26it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.39it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.27it/s] 
+2025-04-22 23:36:33 - table_identifier - ERROR - Error identifying tables: 'PatternManager' object has no attribute 'match_pattern'
+2025-04-22 23:36:33 - interface - WARNING - Low confidence (0.0) for query 'list all products by categories and brand names'
+
+[PRASAD]: Why low confidence? products, categories, brand are matching terms right from metadata. Please remember, no HARD CODE based fixes should be applied.
+Low confidence. Please select tables manually:
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): production.categories,production.brands,production.products
+2025-04-22 23:36:45 - interface - INFO - Manually selected tables for query 'list all products by categories and brand names': ['production.categories', 'production.brands', 'production.products']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.79it/s] 
+2025-04-22 23:36:46 - analyzer - INFO - Updated feedback for query: list all products by categories and brand names
+
+Enter query (or 'back'): how many orders were delivered in 2016
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.42it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.31it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.34it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.58it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.54it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.46it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.61it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.15it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.82it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.08it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.18it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.16it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.38it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.25it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.17it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.11it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.77it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.43it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.04it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.41it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.85it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.24it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 99.95it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 142.66it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.25it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 99.99it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.43it/s] 
+2025-04-22 23:36:54 - table_identifier - ERROR - Error identifying tables: 'PatternManager' object has no attribute 'match_pattern'
+2025-04-22 23:36:54 - interface - WARNING - Low confidence (0.0) for query 'how many orders were delivered in 2016'
+[PRASAD]: Why low confidence? orders term can be searched in metadata and value based, dates based, years based,date range based, numbers and numbers range based, string literals based Patterns need to be identified.  
+Low confidence. Please select tables manually:
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): sales.orders
+2025-04-22 23:37:04 - interface - INFO - Manually selected tables for query 'how many orders were delivered in 2016': ['sales.orders']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.88it/s] 
+2025-04-22 23:37:05 - analyzer - INFO - Updated feedback for query: how many orders were delivered in 2016
+
+Enter query (or 'back'): orders processed between Jan-15-2016 and Jan-14-2017
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 30.35it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.36it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.44it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.58it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 47.74it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.55it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 77.12it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.14it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.55it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.23it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.54it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.42it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 71.62it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 47.74it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.21it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 47.76it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.26it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.26it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 77.11it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.54it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.35it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.41it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.15it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.41it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.56it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.48it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.24it/s] 
+2025-04-22 23:37:11 - table_identifier - ERROR - Error identifying tables: 'PatternManager' object has no attribute 'match_pattern'
+2025-04-22 23:37:11 - interface - WARNING - Low confidence (0.0) for query 'orders processed between Jan-15-2016 and Jan-14-2017'
+[PRASAD]: Why low confidence? orders term can be searched in metadata and value based, dates based, years based,date range based, numbers and numbers range based, string literals based Patterns need to be identified.  
+Low confidence. Please select tables manually:
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): sales.orders
+2025-04-22 23:37:16 - interface - INFO - Manually selected tables for query 'orders processed between Jan-15-2016 and Jan-14-2017': ['sales.orders']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.39it/s] 
+2025-04-22 23:37:16 - analyzer - INFO - Updated feedback for query: orders processed between Jan-15-2016 and Jan-14-2017
+
+Enter query (or 'back'): how many employees works for all stores
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.87it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 38.51it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 38.52it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.57it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.06it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.62it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.67it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.20it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.47it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.50it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.57it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 99.95it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.37it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.28it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.33it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.86it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 90.73it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.27it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 142.55it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 99.96it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.79it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.46it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.89it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.02it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.70it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.15it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.80it/s] 
+2025-04-22 23:37:33 - table_identifier - ERROR - Error identifying tables: 'PatternManager' object has no attribute 'match_pattern'
+2025-04-22 23:37:33 - interface - WARNING - Low confidence (0.0) for query 'how many employees works for all stores'
+[PRASAD]: Why low confidence? employees , stores are the relevant terms that can be matched from metadata.
+Low confidence. Please select tables manually:
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): sales.staffs,sales.stores
+2025-04-22 23:37:40 - interface - INFO - Manually selected tables for query 'how many employees works for all stores': ['sales.staffs', 'sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.70it/s] 
+2025-04-22 23:37:40 - analyzer - INFO - Updated feedback for query: how many employees works for all stores
+
+Enter query (or 'back'): how much staff works for all stores
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.42it/s]
+2025-04-22 23:37:48 - interface - INFO - Suggested tables for query 'how much staff works for all stores': ['sales.staffs', 'sales.stores'], confidence: 0.9
+
+Suggested Tables:
+1. sales.staffs
+2. sales.stores
+
+Correct? (Y/N): y
+2025-04-22 23:37:54 - interface - INFO - Confirmed tables for query 'how much staff works for all stores': ['sales.staffs', 'sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.42it/s] 
+2025-04-22 23:37:54 - analyzer - INFO - Confirmed tables for query: how much staff works for all stores
+
+Enter query (or 'back'): back
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations
+4. Manage Feedback
+5. Exit
+Select option: 5
+2025-04-22 23:38:14 - interface - INFO - Exiting application
+Exiting...
+2025-04-22 23:38:14 - connection - INFO - Closing database connection
+2025-04-22 23:38:14 - analyzer - INFO - Application shutdown

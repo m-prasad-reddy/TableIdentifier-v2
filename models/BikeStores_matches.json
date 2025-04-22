@@ -1,0 +1,14 @@
+{
+  "production.categories": 0.6882481116545163,
+  "production.brands": 0.5943960964289002,
+  "production.products": 0.796918866126282,
+  "production.stocks": 0.5133420832795047,
+  "sales.customers": 0.5133420832795047,
+  "sales.stores": 1.4324861373322677,
+  "sales.staffs": 0.6882481116545162,
+  "sales.orders": 0.9227481607778005,
+  "sales.order_items": 0.6882481116545163,
+  "dbo.sysdiagrams": 0.5133420832795047,
+  "hr.candidates": 0.5133420832795047,
+  "hr.employees": 0.5133420832795047
+}

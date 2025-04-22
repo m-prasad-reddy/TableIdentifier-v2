@@ -11,6 +11,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 class TableIdentifier:
     """Identifies relevant tables from natural language queries using NLP and feedback."""
     
+    _embedder = None  # Class-level SentenceTransformer to avoid redundant loading
+    
     def __init__(self, schema_dict: Dict, feedback_manager, pattern_manager, name_match_manager, db_name: str):
         """Initialize with schema, feedback, pattern, and name match managers.
 
@@ -29,14 +31,15 @@ class TableIdentifier:
         self.db_name = db_name
         self.training_data = []
         self.weights = {}
-        self.embedder = None
         
-        try:
-            self.embedder = SentenceTransformer('all-distilroberta-v1')
-            self.logger.debug("Loaded SentenceTransformer: all-distilroberta-v1")
-        except Exception as e:
-            self.logger.error(f"Error loading SentenceTransformer: {e}")
-            self.embedder = None
+        if TableIdentifier._embedder is None:
+            try:
+                TableIdentifier._embedder = SentenceTransformer('all-distilroberta-v1')
+                self.logger.debug("Loaded SentenceTransformer: all-distilroberta-v1")
+            except Exception as e:
+                self.logger.error(f"Error loading SentenceTransformer: {e}")
+                TableIdentifier._embedder = None
+        self.embedder = TableIdentifier._embedder
         
         try:
             csv_path = os.path.join("app-config", "training_data.csv")

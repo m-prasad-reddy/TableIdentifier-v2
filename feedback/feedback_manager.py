@@ -10,6 +10,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 class FeedbackManager:
     """Manages feedback storage and retrieval using SQLite for thread-safe operations."""
     
+    _embedder = None  # Class-level SentenceTransformer to avoid redundant loading
+    
     def __init__(self, db_name: str):
         """Initialize with database name and logging.
 
@@ -21,16 +23,17 @@ class FeedbackManager:
         self.feedback_dir = os.path.join("feedback_cache", db_name)
         os.makedirs(self.feedback_dir, exist_ok=True)
         self.db_path = os.path.join(self.feedback_dir, "feedback.db")
-        self.embedder = None
+        
+        if FeedbackManager._embedder is None:
+            try:
+                FeedbackManager._embedder = SentenceTransformer('all-distilroberta-v1')
+                self.logger.debug("Loaded SentenceTransformer for feedback")
+            except Exception as e:
+                self.logger.error(f"Error loading SentenceTransformer: {e}")
+                FeedbackManager._embedder = None
+        self.embedder = FeedbackManager._embedder
+        
         self.feedback_cache = []
-        
-        try:
-            self.embedder = SentenceTransformer('all-distilroberta-v1')
-            self.logger.debug("Loaded SentenceTransformer for feedback")
-        except Exception as e:
-            self.logger.error(f"Error loading SentenceTransformer: {e}")
-            self.embedder = None
-        
         self._init_db()
         self._load_feedback_cache()
         self.logger.debug(f"Initialized FeedbackManager for {db_name}")

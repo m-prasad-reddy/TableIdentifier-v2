@@ -8,6 +8,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 class NameMatchManager:
     """Manages matching of query terms to schema entities with synonym persistence."""
     
+    _embedder = None  # Class-level SentenceTransformer to avoid redundant loading
+    
     def __init__(self, db_name: str):
         """Initialize with database name and logging.
 
@@ -18,14 +20,15 @@ class NameMatchManager:
         self.db_name = db_name
         self.matches_path = os.path.join("app-config", f"{db_name}_dynamic_name_matches.json")
         self.synonyms = {}
-        self.embedder = None
         
-        try:
-            self.embedder = SentenceTransformer('all-distilroberta-v1')
-            self.logger.debug("Loaded SentenceTransformer for name matching")
-        except Exception as e:
-            self.logger.error(f"Error loading SentenceTransformer: {e}")
-            self.embedder = None
+        if NameMatchManager._embedder is None:
+            try:
+                NameMatchManager._embedder = SentenceTransformer('all-distilroberta-v1')
+                self.logger.debug("Loaded SentenceTransformer for name matching")
+            except Exception as e:
+                self.logger.error(f"Error loading SentenceTransformer: {e}")
+                NameMatchManager._embedder = None
+        self.embedder = NameMatchManager._embedder
         
         self._load_synonyms()
         self.logger.debug(f"Initialized NameMatchManager for {db_name}")
