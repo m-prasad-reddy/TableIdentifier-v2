@@ -1,6 +1,6 @@
-2025-04-23 02:22:31 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-23 02:22:31 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-23 02:22:37 - interface - INFO - Starting Database Schema Analyzer
+2025-04-23 02:43:53 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-23 02:43:53 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-23 02:43:58 - interface - INFO - Starting Database Schema Analyzer
 === Database Schema Analyzer ===
 
 Main Menu:
@@ -14,19 +14,19 @@ Config path [default: app-config/database_configurations.json]:
 
 Available Configurations:
 1. ADWORKS_DB
-2. ADWORKS2019_DB
+2. ADWORKS2019_DB        
 3. BIKES_DB
 4. Cancel
 Select configuration: 3
-2025-04-23 02:22:58 - connection - INFO - Connected to database: BikeStores
-2025-04-23 02:22:58 - schema - INFO - SchemaManager version: 2025-04-23 with enhanced 42S22 fix
-2025-04-23 02:22:58 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)"). Falling back to information_schema.tables
-2025-04-23 02:22:58 - schema - ERROR - Fallback schema mtime query failed: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
-2025-04-23 02:22:59 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-23 02:22:59 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-23 02:23:03 - analyzer - ERROR - Connection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were givenConnection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were given
-2025-04-23 02:23:03 - interface - ERROR - Connection failed: Unable to establish database connection
-Connection failed: Unable to establish database connection
+2025-04-23 02:44:10 - connection - INFO - Connected to database: BikeStores
+2025-04-23 02:44:10 - schema - INFO - SchemaManager version: 2025-04-23 with 42S22 resolution
+2025-04-23 02:44:11 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-23 02:44:11 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-23 02:44:16 - table_identifier - WARNING - Training CSV not found at app-config\training_data.csv
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00,  4.87it/s]
+2025-04-23 02:44:17 - analyzer - INFO - Connected to BikeStores
+2025-04-23 02:44:17 - interface - INFO - Successfully connected to database
+Successfully connected!
 
 === BikeStores Schema Analyzer ===
 
@@ -37,43 +37,547 @@ Main Menu:
 4. Manage Feedback
 5. Exit
 Select option: 2
-2025-04-23 02:23:17 - interface - ERROR - Feedback manager not initialized
-Feedback manager not initialized. Please reconnect to the database.
 
-Main Menu:
-1. Connect to Database
-2. Query Mode
-3. Reload Configurations
-4. Manage Feedback
-5. Exit
-Select option: 1
-Config path [default: app-config/database_configurations.json]: 
+Example Queries:
+1. total sales amount at storename 'Baldwin Bikes' (used 4 times)
+2. what products are available (used 2 times)
+3. what production categories are available (used 2 times)
 
-Available Configurations:
-1. ADWORKS_DB
-2. ADWORKS2019_DB
-3. BIKES_DB
-4. Cancel
-Select configuration: 1
-2025-04-23 02:23:39 - connection - INFO - Connected to database: adventureworks
-2025-04-23 02:23:39 - schema - INFO - SchemaManager version: 2025-04-23 with enhanced 42S22 fix
-2025-04-23 02:23:39 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)"). Falling back to information_schema.tables
-2025-04-23 02:23:39 - schema - ERROR - Fallback schema mtime query failed: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
-2025-04-23 02:23:43 - analyzer - ERROR - Connection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were givenConnection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were given
-2025-04-23 02:23:43 - interface - ERROR - Connection failed: Unable to establish database connection
-Connection failed: Unable to establish database connection
+Enter query (or 'back'): what products can I look into
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.79it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 21.04it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.27it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 36.68it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.36it/s]
+2025-04-23 02:44:49 - interface - INFO - Suggested tables for query 'what products can I look into': ['production.products'], confidence: 0.8
 
-=== adventureworks Schema Analyzer ===
+Suggested Tables:
+1. production.products
 
-Main Menu:
-1. Connect to Database
-2. Query Mode
-3. Reload Configurations
-4. Manage Feedback
-5. Exit
-Select option: 2
-2025-04-23 02:23:45 - interface - ERROR - Feedback manager not initialized
-Feedback manager not initialized. Please reconnect to the database.
+Correct? (Y/N): Y
+2025-04-23 02:44:52 - interface - INFO - Confirmed tables for query 'what products can I look into': ['production.products']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.40it/s] 
+2025-04-23 02:44:52 - analyzer - INFO - Confirmed tables for query: what products can I look into
+
+Enter query (or 'back'): which products are produced
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.08it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.57it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.24it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 34.65it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.23it/s] 
+2025-04-23 02:45:17 - interface - INFO - Suggested tables for query 'which products are produced': ['production.products'], confidence: 0.8
+
+Suggested Tables:
+1. production.products
+
+Correct? (Y/N): y
+2025-04-23 02:45:19 - interface - INFO - Confirmed tables for query 'which products are produced': ['production.products']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.53it/s] 
+2025-04-23 02:45:19 - analyzer - INFO - Confirmed tables for query: which products are produced
+
+Enter query (or 'back'): how many bike stores are available?
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.09it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.48it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.29it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 34.67it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.30it/s] 
+2025-04-23 02:45:39 - interface - INFO - Suggested tables for query 'how many bike stores are available?': ['sales.stores'], confidence: 0.8
+
+Suggested Tables:
+1. sales.stores
+
+Correct? (Y/N): y
+2025-04-23 02:45:43 - interface - INFO - Confirmed tables for query 'how many bike stores are available?': ['sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.57it/s] 
+2025-04-23 02:45:43 - analyzer - INFO - Confirmed tables for query: how many bike stores are available?
+
+Enter query (or 'back'): SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.97it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 19.04it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.41it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 34.98it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.32it/s] 
+2025-04-23 02:46:05 - interface - INFO - Suggested tables for query 'SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES': ['production.products', 'sales.stores'], confidence: 0.8
+
+Suggested Tables:
+1. production.products
+2. sales.stores
+
+Correct? (Y/N): n
+2025-04-23 02:47:01 - interface - INFO - User rejected tables for query 'SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES': ['production.products', 'sales.stores']
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): production.products,production.stocks,sales.stores
+2025-04-23 02:47:22 - interface - INFO - Updated feedback with tables: ['production.products', 'production.stocks', 'sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.89it/s] 
+2025-04-23 02:47:22 - analyzer - INFO - Updated feedback for query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES
+
+Enter query (or 'back'): Show me customer names
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.02it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.42it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.29it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 34.92it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.60it/s] 
+2025-04-23 02:47:46 - interface - INFO - Suggested tables for query 'Show me customer names': ['dbo.sysdiagrams'], confidence: 0.8
+
+Suggested Tables:
+1. dbo.sysdiagrams
+
+Correct? (Y/N): N
+2025-04-23 02:47:51 - interface - INFO - User rejected tables for query 'Show me customer names': ['dbo.sysdiagrams']
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): 5
+2025-04-23 02:48:40 - interface - INFO - Updated feedback with tables: ['sales.customers']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.94it/s] 
+2025-04-23 02:48:43 - analyzer - INFO - Updated feedback for query: Show me customer names
+
+Enter query (or 'back'): SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.09it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.35it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.17it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 34.65it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.47it/s] 
+2025-04-23 02:49:34 - interface - INFO - Suggested tables for query 'SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS': ['production.products', 'sales.stores'], confidence: 0.8
+
+Suggested Tables:
+1. production.products
+2. sales.stores
+
+Correct? (Y/N): n
+2025-04-23 02:50:24 - interface - INFO - User rejected tables for query 'SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS': ['production.products', 'sales.stores']
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): production.products,production.stocks,sales.stores
+2025-04-23 02:50:43 - interface - INFO - Updated feedback with tables: ['production.products', 'production.stocks', 'sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.95it/s] 
+2025-04-23 02:50:43 - analyzer - INFO - Updated feedback for query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS
+
+Enter query (or 'back'): Show me customer names
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.02it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.10it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.32it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 33.80it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.25it/s] 
+2025-04-23 02:51:14 - interface - INFO - Suggested tables for query 'Show me customer names': ['dbo.sysdiagrams'], confidence: 0.8
+
+Suggested Tables:
+1. dbo.sysdiagrams
+
+Correct? (Y/N): n
+2025-04-23 02:51:21 - interface - INFO - User rejected tables for query 'Show me customer names': ['dbo.sysdiagrams']
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): sales.customers
+2025-04-23 02:51:27 - interface - INFO - Updated feedback with tables: ['sales.customers']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.55it/s] 
+2025-04-23 02:51:27 - analyzer - INFO - Updated feedback for query: Show me customer names
+
+Enter query (or 'back'): get me store details of Baldwin Bikes
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  4.13it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 19.32it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 167.06it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 35.65it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.57it/s] 
+2025-04-23 02:51:41 - interface - INFO - Suggested tables for query 'get me store details of Baldwin Bikes': ['sales.stores'], confidence: 0.9
+
+Suggested Tables:
+1. sales.stores
+
+Correct? (Y/N): y
+2025-04-23 02:51:48 - interface - INFO - Confirmed tables for query 'get me store details of Baldwin Bikes': ['sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.37it/s] 
+2025-04-23 02:51:48 - analyzer - INFO - Confirmed tables for query: get me store details of Baldwin Bikes
+
+Enter query (or 'back'): total sales amount at storename 'Baldwin Bikes'
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.03it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 12.19it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.20it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 35.26it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.92it/s] 
+2025-04-23 02:51:51 - interface - INFO - Suggested tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+
+Suggested Tables:
+1. sales.stores
+2. sales.orders
+3. sales.order_items
+
+Correct? (Y/N): y
+2025-04-23 02:51:55 - interface - INFO - Confirmed tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 31.33it/s] 
+2025-04-23 02:51:56 - analyzer - INFO - Confirmed tables for query: total sales amount at storename 'Baldwin Bikes'
+
+Enter query (or 'back'): total sales amount at storename=Baldwin Bikes
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.20it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 13.31it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.59it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 34.47it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.31it/s] 
+2025-04-23 02:52:02 - interface - INFO - Suggested tables for query 'total sales amount at storename=Baldwin Bikes': ['sales.stores', 'sales.orders', 
+'sales.order_items'], confidence: 0.9
+
+Suggested Tables:
+1. sales.stores
+2. sales.orders
+3. sales.order_items
+
+Correct? (Y/N): y
+2025-04-23 02:52:10 - interface - INFO - Confirmed tables for query 'total sales amount at storename=Baldwin Bikes': ['sales.stores', 'sales.orders', 
+'sales.order_items']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.35it/s] 
+2025-04-23 02:52:10 - analyzer - INFO - Confirmed tables for query: total sales amount at storename=Baldwin Bikes
+
+Enter query (or 'back'): total sales amount at storename 'Baldwin Bikes'
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.29it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 16.00it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 110.90it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 35.81it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.20it/s] 
+2025-04-23 02:52:18 - interface - INFO - Suggested tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+
+Suggested Tables:
+1. sales.stores
+2. sales.orders
+3. sales.order_items
+
+Correct? (Y/N): y
+2025-04-23 02:52:20 - interface - INFO - Confirmed tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.42it/s] 
+2025-04-23 02:52:20 - analyzer - INFO - Confirmed tables for query: total sales amount at storename 'Baldwin Bikes'
+
+Enter query (or 'back'): what
+2025-04-23 02:52:27 - interface - WARNING - Single-word query: what
+2025-04-23 02:52:27 - interface - WARNING - Invalid query: what
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): chitti emi chestunnav
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.11it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.64it/s] 
+2025-04-23 02:52:46 - analyzer - WARNING - Query not relevant to schema (max similarity: 0.2176271677017212): chitti emi chestunnav
+2025-04-23 02:52:46 - interface - WARNING - Query not relevant to schema: chitti emi chestunnav
+2025-04-23 02:52:46 - interface - WARNING - Invalid query: chitti emi chestunnav
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): sonia
+2025-04-23 02:53:08 - interface - WARNING - Single-word query: sonia
+2025-04-23 02:53:08 - interface - WARNING - Invalid query: sonia
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): I like you
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.07it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.30it/s] 
+2025-04-23 02:53:16 - analyzer - WARNING - Query not relevant to schema (max similarity: 0.1577650010585785): I like you
+2025-04-23 02:53:16 - interface - WARNING - Query not relevant to schema: I like you
+2025-04-23 02:53:16 - interface - WARNING - Invalid query: I like you
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): what you are doing now?
+2025-04-23 02:53:38 - analyzer - WARNING - No meaningful tokens in query: what you are doing now?
+2025-04-23 02:53:38 - interface - WARNING - Query not relevant to schema: what you are doing now?
+2025-04-23 02:53:38 - interface - WARNING - Invalid query: what you are doing now?
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): what did you do last night at bike stores?
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.03it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.69it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.26it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 33.04it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.79it/s] 
+2025-04-23 02:53:57 - interface - INFO - Suggested tables for query 'what did you do last night at bike stores?': ['sales.stores'], confidence: 0.8
+
+Suggested Tables:
+1. sales.stores
+
+Correct? (Y/N): N
+2025-04-23 02:54:21 - interface - INFO - User rejected tables for query 'what did you do last night at bike stores?': ['sales.stores']
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'):
+
+Enter query (or 'back'): 12345
+2025-04-23 02:54:35 - interface - WARNING - Single-word query: 12345
+2025-04-23 02:54:35 - interface - WARNING - Invalid query: 12345
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): 111 123 143
+2025-04-23 02:54:42 - interface - WARNING - Query lacks meaningful structure: 111 123 143
+2025-04-23 02:54:42 - interface - WARNING - Invalid query: 111 123 143
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): +919666666201
+2025-04-23 02:54:48 - interface - WARNING - Single-word query: +919666666201
+2025-04-23 02:54:48 - interface - WARNING - Invalid query: +919666666201
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): store
+2025-04-23 02:54:54 - interface - WARNING - Single-word query: store
+2025-04-23 02:54:54 - interface - WARNING - Invalid query: store
+Please enter a meaningful query in English.
+
+Please enter a meaningful query in English. Examples:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+4. Find orders placed in the last month
+5. Show stock availability for all products
+
+Enter query (or 'back'): stores in USA
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.04it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 15.83it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 83.56it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 37.14it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.33it/s] 
+2025-04-23 02:55:02 - interface - INFO - Suggested tables for query 'stores in USA': ['sales.stores'], confidence: 0.9
+
+Suggested Tables:
+1. sales.stores
+
+Correct? (Y/N): Y
+2025-04-23 02:55:04 - interface - INFO - Confirmed tables for query 'stores in USA': ['sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.58it/s] 
+2025-04-23 02:55:04 - analyzer - INFO - Confirmed tables for query: stores in USA
+
+Enter query (or 'back'): India stores
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.19it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 11.43it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.67it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 35.80it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.20it/s] 
+2025-04-23 02:55:14 - interface - INFO - Suggested tables for query 'India stores': ['sales.stores'], confidence: 0.9
+
+Suggested Tables:
+1. sales.stores
+
+Correct? (Y/N): Y
+2025-04-23 02:55:18 - interface - INFO - Confirmed tables for query 'India stores': ['sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 35.80it/s] 
+2025-04-23 02:55:19 - analyzer - INFO - Confirmed tables for query: India stores
+
+Enter query (or 'back'): list all products by categories and brand names
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  4.03it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 19.16it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.10it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 35.39it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.35it/s] 
+2025-04-23 02:55:31 - interface - INFO - Suggested tables for query 'list all products by categories and brand names': ['production.categories', 'production.brands', 'production.products'], confidence: 0.9
+
+Suggested Tables:
+1. production.categories
+2. production.brands
+3. production.products
+
+Correct? (Y/N): Y
+2025-04-23 02:55:43 - interface - INFO - Confirmed tables for query 'list all products by categories and brand names': ['production.categories', 'production.brands', 'production.products']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.80it/s]
+2025-04-23 02:55:44 - analyzer - INFO - Confirmed tables for query: list all products by categories and brand names
+
+Enter query (or 'back'): how many orders were delivered in 2016
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.27it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 14.06it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.35it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 34.58it/s]
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.59it/s] 
+2025-04-23 02:55:50 - interface - INFO - Suggested tables for query 'how many orders were delivered in 2016': ['sales.orders'], confidence: 0.8
+
+Suggested Tables:
+1. sales.orders
+
+Correct? (Y/N): y
+2025-04-23 02:55:53 - interface - INFO - Confirmed tables for query 'how many orders were delivered in 2016': ['sales.orders']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.34it/s] 
+2025-04-23 02:55:53 - analyzer - INFO - Confirmed tables for query: how many orders were delivered in 2016
+
+Enter query (or 'back'): orders processed between Jan-15-2016 and Jan-14-2017
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  4.01it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.92it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.14it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 33.06it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 62.47it/s] 
+2025-04-23 02:56:04 - interface - INFO - Suggested tables for query 'orders processed between Jan-15-2016 and Jan-14-2017': ['sales.orders'], confidence: 0.8
+
+Suggested Tables:
+1. sales.orders
+
+Correct? (Y/N): y
+2025-04-23 02:56:07 - interface - INFO - Confirmed tables for query 'orders processed between Jan-15-2016 and Jan-14-2017': ['sales.orders']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 32.35it/s] 
+2025-04-23 02:56:07 - analyzer - INFO - Confirmed tables for query: orders processed between Jan-15-2016 and Jan-14-2017
+
+Enter query (or 'back'): how many employees works for all stores
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 77.11it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 15.12it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 143.26it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 33.80it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.18it/s] 
+2025-04-23 02:56:14 - interface - INFO - Suggested tables for query 'how many employees works for all stores': ['hr.employees', 'sales.stores'], confidence: 0.8
+
+Suggested Tables:
+1. hr.employees
+2. sales.stores
+
+Correct? (Y/N): N
+2025-04-23 02:56:31 - interface - INFO - User rejected tables for query 'how many employees works for all stores': ['hr.employees', 'sales.stores']
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): 7,6
+2025-04-23 02:56:59 - interface - INFO - Updated feedback with tables: ['sales.staffs', 'sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.98it/s] 
+2025-04-23 02:57:00 - analyzer - INFO - Updated feedback for query: how many employees works for all stores
+
+Enter query (or 'back'): how much staff works for all stores
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.29it/s]
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 15.41it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.79it/s] 
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 33.74it/s] 
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 100.29it/s]
+2025-04-23 02:57:08 - interface - INFO - Suggested tables for query 'how much staff works for all stores': ['sales.stores'], confidence: 0.8
+
+Suggested Tables:
+1. sales.stores
+
+Correct? (Y/N): n
+2025-04-23 02:57:11 - interface - INFO - User rejected tables for query 'how much staff works for all stores': ['sales.stores']
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): sales.staffs,sales.stores
+2025-04-23 02:57:20 - interface - INFO - Updated feedback with tables: ['sales.staffs', 'sales.stores']
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.35it/s] 
+2025-04-23 02:57:20 - analyzer - INFO - Updated feedback for query: how much staff works for all stores
+
+Enter query (or 'back'): back
 
 Main Menu:
 1. Connect to Database
@@ -82,7 +586,7 @@ Main Menu:
 4. Manage Feedback
 5. Exit
 Select option: 5
-2025-04-23 02:23:49 - interface - INFO - Exiting application
+2025-04-23 02:57:34 - interface - INFO - Exiting application
 Exiting...
-2025-04-23 02:23:49 - connection - INFO - Closing database connection
-2025-04-23 02:23:49 - analyzer - INFO - Application shutdown
+2025-04-23 02:57:34 - connection - INFO - Closing database connection
+2025-04-23 02:57:34 - analyzer - INFO - Application shutdown

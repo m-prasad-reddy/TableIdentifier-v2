@@ -1,96 +1,613 @@
-2025-04-23 02:22:31 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-23 02:22:31 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-23 02:22:36 - analyzer - DEBUG - Initialized DatabaseAnalyzer with spacy and SentenceTransformer
-2025-04-23 02:22:37 - interface - DEBUG - Initialized DatabaseAnalyzerCLI
-2025-04-23 02:22:37 - interface - INFO - Starting Database Schema Analyzer
-2025-04-23 02:22:56 - config - DEBUG - Initialized DBConfigManager
-2025-04-23 02:22:56 - config - DEBUG - Loaded configurations from app-config/database_configurations.json
-2025-04-23 02:22:56 - analyzer - DEBUG - Loaded 3 valid configurations
-2025-04-23 02:22:58 - analyzer - DEBUG - Set config: BikeStores
-2025-04-23 02:22:58 - interface - DEBUG - Selected configuration: BikeStores
-2025-04-23 02:22:58 - connection - DEBUG - Initialized DatabaseConnection
-2025-04-23 02:22:58 - connection - INFO - Connected to database: BikeStores
-2025-04-23 02:22:58 - analyzer - DEBUG - Initializing managers for BikeStores
-2025-04-23 02:22:58 - schema - DEBUG - Initialized SchemaManager for BikeStores
-2025-04-23 02:22:58 - schema - INFO - SchemaManager version: 2025-04-23 with enhanced 42S22 fix
-2025-04-23 02:22:58 - schema - DEBUG - Executing generic schema mtime query: 
-                    SELECT MAX(last_update) 
-                    FROM (
-                        SELECT MAX(create_date) as last_update 
-                        FROM information_schema.tables 
-                        WHERE table_schema NOT IN ('information_schema', 'sys')
-                    ) AS t
-                
-2025-04-23 02:22:58 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)"). Falling back to information_schema.tables
-2025-04-23 02:22:58 - schema - DEBUG - Executing fallback schema mtime query: 
-                    SELECT MAX(create_date) as last_update
-                    FROM information_schema.tables
-                    WHERE table_schema NOT IN ('information_schema', 'sys', 'pg_catalog')
-                
-2025-04-23 02:22:58 - schema - ERROR - Fallback schema mtime query failed: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
-2025-04-23 02:22:58 - schema - DEBUG - Latest schema change: inf, Cache mtime: 1745352404.1087322
-2025-04-23 02:22:58 - analyzer - DEBUG - Building fresh schema
-2025-04-23 02:22:58 - schema - DEBUG - Detected database type: sqlserver, version: microsoft sql server 2022 (rtm-gdr) (kb5046861) - 16.0.1135.2 (x64) 
+2025-04-23 02:43:53 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-23 02:43:53 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-23 02:43:57 - analyzer - DEBUG - Initialized DatabaseAnalyzer with spacy and SentenceTransformer
+2025-04-23 02:43:58 - interface - DEBUG - Initialized DatabaseAnalyzerCLI
+2025-04-23 02:43:58 - interface - INFO - Starting Database Schema Analyzer
+2025-04-23 02:44:06 - config - DEBUG - Initialized DBConfigManager
+2025-04-23 02:44:06 - config - DEBUG - Loaded configurations from app-config/database_configurations.json
+2025-04-23 02:44:06 - analyzer - DEBUG - Loaded 3 valid configurations
+2025-04-23 02:44:10 - analyzer - DEBUG - Set config: BikeStores
+2025-04-23 02:44:10 - interface - DEBUG - Selected configuration: BikeStores
+2025-04-23 02:44:10 - connection - DEBUG - Initialized DatabaseConnection
+2025-04-23 02:44:10 - connection - INFO - Connected to database: BikeStores
+2025-04-23 02:44:10 - analyzer - DEBUG - Initializing managers for BikeStores
+2025-04-23 02:44:10 - schema - DEBUG - Initialized SchemaManager for BikeStores
+2025-04-23 02:44:10 - schema - INFO - SchemaManager version: 2025-04-23 with 42S22 resolution
+2025-04-23 02:44:10 - schema - DEBUG - Detected database type: sqlserver, version: microsoft sql server 2022 (rtm-gdr) (kb5046861) - 16.0.1135.2 (x64) 
 	oct 18 2024 15:31:58 
 	copyright (c) 2022 microsoft corporation
 	developer edition (64-bit) on windows 10 pro for workstations 10.0 <x64> (build 19045: )
 
-2025-04-23 02:22:58 - schema - DEBUG - Schema validation completed
-2025-04-23 02:22:58 - schema - DEBUG - Saved schema to schema_cache\BikeStores\schema.json
-2025-04-23 02:22:58 - patterns - DEBUG - Loaded patterns from app-config/global_patterns.json
-2025-04-23 02:22:59 - patterns - DEBUG - Initialized PatternManager with 0 patterns
-2025-04-23 02:22:59 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-23 02:22:59 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-23 02:23:03 - nlp_pipeline - DEBUG - Loading patterns
-2025-04-23 02:23:03 - nlp_pipeline - DEBUG - Patterns loaded
-2025-04-23 02:23:03 - nlp_pipeline - DEBUG - Initialized NLPPipeline
-2025-04-23 02:23:03 - analyzer - ERROR - Connection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were given
-2025-04-23 02:23:03 - analyzer - DEBUG - Managers reset due to initialization failure
-2025-04-23 02:23:03 - interface - ERROR - Connection failed: Unable to establish database connection
-2025-04-23 02:23:17 - interface - ERROR - Feedback manager not initialized
-2025-04-23 02:23:34 - config - DEBUG - Initialized DBConfigManager
-2025-04-23 02:23:34 - config - DEBUG - Loaded configurations from app-config/database_configurations.json
-2025-04-23 02:23:34 - analyzer - DEBUG - Loaded 3 valid configurations
-2025-04-23 02:23:39 - analyzer - DEBUG - Set config: adventureworks
-2025-04-23 02:23:39 - interface - DEBUG - Selected configuration: adventureworks
-2025-04-23 02:23:39 - connection - DEBUG - Initialized DatabaseConnection
-2025-04-23 02:23:39 - connection - INFO - Connected to database: adventureworks
-2025-04-23 02:23:39 - analyzer - DEBUG - Initializing managers for adventureworks
-2025-04-23 02:23:39 - schema - DEBUG - Initialized SchemaManager for adventureworks
-2025-04-23 02:23:39 - schema - INFO - SchemaManager version: 2025-04-23 with enhanced 42S22 fix
-2025-04-23 02:23:39 - schema - DEBUG - Executing generic schema mtime query: 
-                    SELECT MAX(last_update) 
+2025-04-23 02:44:10 - schema - DEBUG - Executing SQL Server schema mtime query: 
+                    SELECT MAX(last_update)
                     FROM (
-                        SELECT MAX(create_date) as last_update 
-                        FROM information_schema.tables 
-                        WHERE table_schema NOT IN ('information_schema', 'sys')
+                        SELECT MAX(create_date) as last_update
+                        FROM sys.objects
+                        WHERE type = 'U' AND schema_name(schema_id) NOT IN ('information_schema', 'sys')
+                        UNION
+                        SELECT MAX(modify_date)
+                        FROM sys.objects
+                        WHERE type = 'U' AND schema_name(schema_id) NOT IN ('information_schema', 'sys')
                     ) AS t
                 
-2025-04-23 02:23:39 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)"). Falling back to information_schema.tables
-2025-04-23 02:23:39 - schema - DEBUG - Executing fallback schema mtime query: 
-                    SELECT MAX(create_date) as last_update
-                    FROM information_schema.tables
-                    WHERE table_schema NOT IN ('information_schema', 'sys', 'pg_catalog')
-                
-2025-04-23 02:23:39 - schema - ERROR - Fallback schema mtime query failed: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
-2025-04-23 02:23:39 - schema - DEBUG - Latest schema change: inf, Cache mtime: 0
-2025-04-23 02:23:39 - analyzer - DEBUG - Building fresh schema
-2025-04-23 02:23:39 - schema - DEBUG - Detected database type: sqlserver, version: microsoft sql server 2022 (rtm-gdr) (kb5046861) - 16.0.1135.2 (x64) 
-	oct 18 2024 15:31:58 
-	copyright (c) 2022 microsoft corporation
-	developer edition (64-bit) on windows 10 pro for workstations 10.0 <x64> (build 19045: )
-
-2025-04-23 02:23:40 - schema - DEBUG - Schema validation completed
-2025-04-23 02:23:40 - schema - DEBUG - Saved schema to schema_cache\adventureworks\schema.json
-2025-04-23 02:23:40 - patterns - DEBUG - Loaded patterns from app-config/global_patterns.json
-2025-04-23 02:23:40 - patterns - DEBUG - Initialized PatternManager with 0 patterns
-2025-04-23 02:23:43 - nlp_pipeline - DEBUG - Loading patterns
-2025-04-23 02:23:43 - nlp_pipeline - DEBUG - Patterns loaded
-2025-04-23 02:23:43 - nlp_pipeline - DEBUG - Initialized NLPPipeline
-2025-04-23 02:23:43 - analyzer - ERROR - Connection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were given
-2025-04-23 02:23:43 - analyzer - DEBUG - Managers reset due to initialization failure
-2025-04-23 02:23:43 - interface - ERROR - Connection failed: Unable to establish database connection
-2025-04-23 02:23:45 - interface - ERROR - Feedback manager not initialized
-2025-04-23 02:23:49 - interface - INFO - Exiting application
-2025-04-23 02:23:49 - connection - INFO - Closing database connection
-2025-04-23 02:23:49 - analyzer - INFO - Application shutdown
+2025-04-23 02:44:10 - schema - DEBUG - Schema mtime retrieved: 1744127195.583
+2025-04-23 02:44:10 - schema - DEBUG - Latest schema change: 1744127195.583, Cache mtime: 1745355178.4702048
+2025-04-23 02:44:10 - analyzer - DEBUG - Loading schema from cache
+2025-04-23 02:44:10 - schema - DEBUG - Schema validation completed
+2025-04-23 02:44:10 - schema - DEBUG - Loaded schema from schema_cache\BikeStores\schema.json
+2025-04-23 02:44:10 - patterns - DEBUG - Loaded patterns from app-config/global_patterns.json
+2025-04-23 02:44:11 - patterns - DEBUG - Initialized PatternManager with 0 patterns
+2025-04-23 02:44:11 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-23 02:44:11 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-23 02:44:16 - nlp_pipeline - DEBUG - Loading patterns
+2025-04-23 02:44:16 - nlp_pipeline - DEBUG - Patterns loaded
+2025-04-23 02:44:16 - nlp_pipeline - DEBUG - Initialized NLPPipeline
+2025-04-23 02:44:16 - name_match_manager - DEBUG - No synonym file found at models\BikeStores_synonyms.json
+2025-04-23 02:44:16 - name_match_manager - DEBUG - Initialized NameMatchManager for BikeStores
+2025-04-23 02:44:16 - table_identifier - WARNING - Training CSV not found at app-config\training_data.csv
+2025-04-23 02:44:16 - table_identifier - DEBUG - Initialized weights for 12 tables
+2025-04-23 02:44:17 - table_identifier - DEBUG - Cached embeddings for 73 table/column metadata entries
+2025-04-23 02:44:17 - table_identifier - DEBUG - Initialized TableIdentifier
+2025-04-23 02:44:17 - query_processor - DEBUG - Initialized QueryProcessor
+2025-04-23 02:44:17 - analyzer - DEBUG - Managers initialized successfully
+2025-04-23 02:44:17 - analyzer - INFO - Connected to BikeStores
+2025-04-23 02:44:17 - interface - INFO - Successfully connected to database
+2025-04-23 02:44:48 - interface - DEBUG - Validating query: what products can I look into
+2025-04-23 02:44:49 - query_processor - DEBUG - Processing query: what products can I look into
+2025-04-23 02:44:49 - query_processor - DEBUG - Preprocessing query: what products can I look into
+2025-04-23 02:44:49 - query_processor - DEBUG - Preprocessed query: products look
+2025-04-23 02:44:49 - table_identifier - DEBUG - Identifying tables for query: products look
+2025-04-23 02:44:49 - patterns - DEBUG - Matching patterns for query: products look
+2025-04-23 02:44:49 - patterns - DEBUG - Pattern matches: ['production.products']
+2025-04-23 02:44:49 - table_identifier - DEBUG - Pattern matched tables: ['production.products']
+2025-04-23 02:44:49 - query_processor - DEBUG - Identified tables: ['production.products'], confidence: 0.8
+2025-04-23 02:44:49 - analyzer - DEBUG - Query: what products can I look into, Tables: ['production.products'], Confidence: 0.8
+2025-04-23 02:44:49 - interface - INFO - Suggested tables for query 'what products can I look into': ['production.products'], confidence: 0.8
+2025-04-23 02:44:49 - interface - DEBUG - Handling feedback for query: what products can I look into
+2025-04-23 02:44:52 - interface - INFO - Confirmed tables for query 'what products can I look into': ['production.products']
+2025-04-23 02:44:52 - analyzer - DEBUG - Validated tables: Valid=['production.products'], Invalid=[]
+2025-04-23 02:44:52 - table_identifier - DEBUG - Increased weight for production.products to 1.1
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for production.categories to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for production.brands to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for sales.stores to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.95
+2025-04-23 02:44:52 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:44:52 - analyzer - INFO - Confirmed tables for query: what products can I look into
+2025-04-23 02:45:17 - interface - DEBUG - Validating query: which products are produced
+2025-04-23 02:45:17 - query_processor - DEBUG - Processing query: which products are produced
+2025-04-23 02:45:17 - query_processor - DEBUG - Preprocessing query: which products are produced
+2025-04-23 02:45:17 - query_processor - DEBUG - Preprocessed query: products produced
+2025-04-23 02:45:17 - table_identifier - DEBUG - Identifying tables for query: products produced
+2025-04-23 02:45:17 - patterns - DEBUG - Matching patterns for query: products produced
+2025-04-23 02:45:17 - patterns - DEBUG - Pattern matches: ['production.products']
+2025-04-23 02:45:17 - table_identifier - DEBUG - Pattern matched tables: ['production.products']
+2025-04-23 02:45:17 - query_processor - DEBUG - Identified tables: ['production.products'], confidence: 0.8
+2025-04-23 02:45:17 - analyzer - DEBUG - Query: which products are produced, Tables: ['production.products'], Confidence: 0.8
+2025-04-23 02:45:17 - interface - INFO - Suggested tables for query 'which products are produced': ['production.products'], confidence: 0.8
+2025-04-23 02:45:17 - interface - DEBUG - Handling feedback for query: which products are produced
+2025-04-23 02:45:19 - interface - INFO - Confirmed tables for query 'which products are produced': ['production.products']
+2025-04-23 02:45:19 - analyzer - DEBUG - Validated tables: Valid=['production.products'], Invalid=[]
+2025-04-23 02:45:19 - table_identifier - DEBUG - Increased weight for production.products to 1.2100000000000002
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for production.categories to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for production.brands to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for sales.stores to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.9025
+2025-04-23 02:45:19 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:45:19 - analyzer - INFO - Confirmed tables for query: which products are produced
+2025-04-23 02:45:38 - interface - DEBUG - Validating query: how many bike stores are available?
+2025-04-23 02:45:39 - query_processor - DEBUG - Processing query: how many bike stores are available?
+2025-04-23 02:45:39 - query_processor - DEBUG - Preprocessing query: how many bike stores are available?
+2025-04-23 02:45:39 - query_processor - DEBUG - Preprocessed query: bike stores available
+2025-04-23 02:45:39 - table_identifier - DEBUG - Identifying tables for query: bike stores available
+2025-04-23 02:45:39 - patterns - DEBUG - Matching patterns for query: bike stores available
+2025-04-23 02:45:39 - patterns - DEBUG - Pattern matches: ['sales.stores']
+2025-04-23 02:45:39 - table_identifier - DEBUG - Pattern matched tables: ['sales.stores']
+2025-04-23 02:45:39 - query_processor - DEBUG - Identified tables: ['sales.stores'], confidence: 0.8
+2025-04-23 02:45:39 - analyzer - DEBUG - Query: how many bike stores are available?, Tables: ['sales.stores'], Confidence: 0.8
+2025-04-23 02:45:39 - interface - INFO - Suggested tables for query 'how many bike stores are available?': ['sales.stores'], confidence: 0.8
+2025-04-23 02:45:39 - interface - DEBUG - Handling feedback for query: how many bike stores are available?
+2025-04-23 02:45:43 - interface - INFO - Confirmed tables for query 'how many bike stores are available?': ['sales.stores']
+2025-04-23 02:45:43 - analyzer - DEBUG - Validated tables: Valid=['sales.stores'], Invalid=[]
+2025-04-23 02:45:43 - table_identifier - DEBUG - Increased weight for sales.stores to 0.99275
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for production.categories to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for production.brands to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for production.products to 1.1495000000000002
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.8573749999999999
+2025-04-23 02:45:43 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:45:43 - analyzer - INFO - Confirmed tables for query: how many bike stores are available?
+2025-04-23 02:46:04 - interface - DEBUG - Validating query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES
+2025-04-23 02:46:05 - query_processor - DEBUG - Processing query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES
+2025-04-23 02:46:05 - query_processor - DEBUG - Preprocessing query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES
+2025-04-23 02:46:05 - query_processor - DEBUG - Preprocessed query: products stock availability stores
+2025-04-23 02:46:05 - table_identifier - DEBUG - Identifying tables for query: products stock availability stores
+2025-04-23 02:46:05 - patterns - DEBUG - Matching patterns for query: products stock availability stores
+2025-04-23 02:46:05 - patterns - DEBUG - Pattern matches: ['production.products', 'sales.stores']
+2025-04-23 02:46:05 - table_identifier - DEBUG - Pattern matched tables: ['production.products', 'sales.stores']
+2025-04-23 02:46:05 - query_processor - DEBUG - Identified tables: ['production.products', 'sales.stores'], confidence: 0.8
+2025-04-23 02:46:05 - analyzer - DEBUG - Query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES, Tables: ['production.products', 'sales.stores'], Confidence: 0.8
+2025-04-23 02:46:05 - interface - INFO - Suggested tables for query 'SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES': ['production.products', 'sales.stores'], confidence: 0.8
+2025-04-23 02:46:05 - interface - DEBUG - Handling feedback for query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES
+2025-04-23 02:47:01 - interface - INFO - User rejected tables for query 'SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES': ['production.products', 'sales.stores']
+2025-04-23 02:47:01 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
+2025-04-23 02:47:22 - interface - DEBUG - Selected manual tables: ['production.products', 'production.stocks', 'sales.stores']
+2025-04-23 02:47:22 - interface - INFO - Updated feedback with tables: ['production.products', 'production.stocks', 'sales.stores']
+2025-04-23 02:47:22 - analyzer - DEBUG - Validated tables: Valid=['production.products', 'production.stocks', 'sales.stores'], Invalid=[]
+2025-04-23 02:47:22 - table_identifier - DEBUG - Increased weight for production.products to 1.2644500000000003
+2025-04-23 02:47:22 - table_identifier - DEBUG - Increased weight for production.stocks to 0.9431124999999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Increased weight for sales.stores to 1.092025
+2025-04-23 02:47:22 - table_identifier - DEBUG - Decreased weight for production.categories to 0.8145062499999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Decreased weight for production.brands to 0.8145062499999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.8145062499999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.8145062499999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.8145062499999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.8145062499999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.8145062499999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.8145062499999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.8145062499999999
+2025-04-23 02:47:22 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:47:22 - analyzer - INFO - Updated feedback for query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES
+2025-04-23 02:47:45 - interface - DEBUG - Validating query: Show me customer names
+2025-04-23 02:47:46 - query_processor - DEBUG - Processing query: Show me customer names
+2025-04-23 02:47:46 - query_processor - DEBUG - Preprocessing query: Show me customer names
+2025-04-23 02:47:46 - query_processor - DEBUG - Preprocessed query: customer names
+2025-04-23 02:47:46 - table_identifier - DEBUG - Identifying tables for query: customer names
+2025-04-23 02:47:46 - patterns - DEBUG - Matching patterns for query: customer names
+2025-04-23 02:47:46 - patterns - DEBUG - Pattern matches: ['dbo.sysdiagrams']
+2025-04-23 02:47:46 - table_identifier - DEBUG - Pattern matched tables: ['dbo.sysdiagrams']
+2025-04-23 02:47:46 - query_processor - DEBUG - Identified tables: ['dbo.sysdiagrams'], confidence: 0.8
+2025-04-23 02:47:46 - analyzer - DEBUG - Query: Show me customer names, Tables: ['dbo.sysdiagrams'], Confidence: 0.8
+2025-04-23 02:47:46 - interface - INFO - Suggested tables for query 'Show me customer names': ['dbo.sysdiagrams'], confidence: 0.8
+2025-04-23 02:47:46 - interface - DEBUG - Handling feedback for query: Show me customer names
+2025-04-23 02:47:51 - interface - INFO - User rejected tables for query 'Show me customer names': ['dbo.sysdiagrams']
+2025-04-23 02:47:51 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
+2025-04-23 02:48:40 - interface - DEBUG - Selected manual tables: ['sales.customers']
+2025-04-23 02:48:40 - interface - INFO - Updated feedback with tables: ['sales.customers']
+2025-04-23 02:48:40 - analyzer - DEBUG - Validated tables: Valid=['sales.customers'], Invalid=[]
+2025-04-23 02:48:43 - table_identifier - DEBUG - Increased weight for sales.customers to 0.895956875
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for production.categories to 0.7737809374999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for production.brands to 0.7737809374999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for production.products to 1.2012275000000001
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.8959568749999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for sales.stores to 1.0374237499999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.7737809374999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.7737809374999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.7737809374999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.7737809374999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.7737809374999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.7737809374999999
+2025-04-23 02:48:43 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:48:43 - analyzer - INFO - Updated feedback for query: Show me customer names
+2025-04-23 02:49:33 - interface - DEBUG - Validating query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS
+2025-04-23 02:49:34 - query_processor - DEBUG - Processing query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS
+2025-04-23 02:49:34 - query_processor - DEBUG - Preprocessing query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS
+2025-04-23 02:49:34 - query_processor - DEBUG - Preprocessed query: products stock availability stores store details
+2025-04-23 02:49:34 - table_identifier - DEBUG - Identifying tables for query: products stock availability stores store details
+2025-04-23 02:49:34 - patterns - DEBUG - Matching patterns for query: products stock availability stores store details
+2025-04-23 02:49:34 - patterns - DEBUG - Pattern matches: ['production.products', 'sales.stores']
+2025-04-23 02:49:34 - table_identifier - DEBUG - Pattern matched tables: ['production.products', 'sales.stores']
+2025-04-23 02:49:34 - query_processor - DEBUG - Identified tables: ['production.products', 'sales.stores'], confidence: 0.8
+2025-04-23 02:49:34 - analyzer - DEBUG - Query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS, Tables: ['production.products', 'sales.stores'], Confidence: 0.8
+2025-04-23 02:49:34 - interface - INFO - Suggested tables for query 'SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS': ['production.products', 'sales.stores'], confidence: 0.8
+2025-04-23 02:49:34 - interface - DEBUG - Handling feedback for query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS
+2025-04-23 02:50:24 - interface - INFO - User rejected tables for query 'SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS': ['production.products', 'sales.stores']
+2025-04-23 02:50:24 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
+2025-04-23 02:50:43 - interface - DEBUG - Selected manual tables: ['production.products', 'production.stocks', 'sales.stores']
+2025-04-23 02:50:43 - interface - INFO - Updated feedback with tables: ['production.products', 'production.stocks', 'sales.stores']
+2025-04-23 02:50:43 - analyzer - DEBUG - Validated tables: Valid=['production.products', 'production.stocks', 'sales.stores'], Invalid=[]
+2025-04-23 02:50:43 - table_identifier - DEBUG - Increased weight for production.products to 1.3213502500000003
+2025-04-23 02:50:43 - table_identifier - DEBUG - Increased weight for production.stocks to 0.9855525624999999
+2025-04-23 02:50:43 - table_identifier - DEBUG - Increased weight for sales.stores to 1.141166125
+2025-04-23 02:50:43 - table_identifier - DEBUG - Decreased weight for production.categories to 0.7350918906249998
+2025-04-23 02:50:43 - table_identifier - DEBUG - Decreased weight for production.brands to 0.7350918906249998
+2025-04-23 02:50:43 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.8511590312499999
+2025-04-23 02:50:43 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.7350918906249998
+2025-04-23 02:50:43 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.7350918906249998
+2025-04-23 02:50:43 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.7350918906249998
+2025-04-23 02:50:43 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.7350918906249998
+2025-04-23 02:50:43 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.7350918906249998
+2025-04-23 02:50:43 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.7350918906249998
+2025-04-23 02:50:43 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:50:43 - analyzer - INFO - Updated feedback for query: SHOW ME PRODUCTS STOCK AVAILABILITY AT ALL STORES WITH STORE DETAILS
+2025-04-23 02:51:13 - interface - DEBUG - Validating query: Show me customer names
+2025-04-23 02:51:14 - query_processor - DEBUG - Processing query: Show me customer names
+2025-04-23 02:51:14 - query_processor - DEBUG - Preprocessing query: Show me customer names
+2025-04-23 02:51:14 - query_processor - DEBUG - Preprocessed query: customer names
+2025-04-23 02:51:14 - table_identifier - DEBUG - Identifying tables for query: customer names
+2025-04-23 02:51:14 - patterns - DEBUG - Matching patterns for query: customer names
+2025-04-23 02:51:14 - patterns - DEBUG - Pattern matches: ['dbo.sysdiagrams']
+2025-04-23 02:51:14 - table_identifier - DEBUG - Pattern matched tables: ['dbo.sysdiagrams']
+2025-04-23 02:51:14 - query_processor - DEBUG - Identified tables: ['dbo.sysdiagrams'], confidence: 0.8
+2025-04-23 02:51:14 - analyzer - DEBUG - Query: Show me customer names, Tables: ['dbo.sysdiagrams'], Confidence: 0.8
+2025-04-23 02:51:14 - interface - INFO - Suggested tables for query 'Show me customer names': ['dbo.sysdiagrams'], confidence: 0.8
+2025-04-23 02:51:14 - interface - DEBUG - Handling feedback for query: Show me customer names
+2025-04-23 02:51:21 - interface - INFO - User rejected tables for query 'Show me customer names': ['dbo.sysdiagrams']
+2025-04-23 02:51:21 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
+2025-04-23 02:51:27 - interface - DEBUG - Selected manual tables: ['sales.customers']
+2025-04-23 02:51:27 - interface - INFO - Updated feedback with tables: ['sales.customers']
+2025-04-23 02:51:27 - analyzer - DEBUG - Validated tables: Valid=['sales.customers'], Invalid=[]
+2025-04-23 02:51:27 - table_identifier - DEBUG - Increased weight for sales.customers to 0.936274934375
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for production.categories to 0.6983372960937497
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for production.brands to 0.6983372960937497
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for production.products to 1.2552827375000002
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.9362749343749999
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for sales.stores to 1.08410781875
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.6983372960937497
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.6983372960937497
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.6983372960937497
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.6983372960937497
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.6983372960937497
+2025-04-23 02:51:27 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.6983372960937497
+2025-04-23 02:51:27 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:51:27 - analyzer - INFO - Updated feedback for query: Show me customer names
+2025-04-23 02:51:40 - interface - DEBUG - Validating query: get me store details of Baldwin Bikes
+2025-04-23 02:51:41 - query_processor - DEBUG - Processing query: get me store details of Baldwin Bikes
+2025-04-23 02:51:41 - query_processor - DEBUG - Preprocessing query: get me store details of Baldwin Bikes
+2025-04-23 02:51:41 - query_processor - DEBUG - Preprocessed query: store details baldwin bikes
+2025-04-23 02:51:41 - table_identifier - DEBUG - Identifying tables for query: store details baldwin bikes
+2025-04-23 02:51:41 - table_identifier - DEBUG - Found similar feedback: ['sales.stores']
+2025-04-23 02:51:41 - query_processor - DEBUG - Identified tables: ['sales.stores'], confidence: 0.9
+2025-04-23 02:51:41 - analyzer - DEBUG - Query: get me store details of Baldwin Bikes, Tables: ['sales.stores'], Confidence: 0.9
+2025-04-23 02:51:41 - interface - INFO - Suggested tables for query 'get me store details of Baldwin Bikes': ['sales.stores'], confidence: 0.9
+2025-04-23 02:51:41 - interface - DEBUG - Handling feedback for query: get me store details of Baldwin Bikes
+2025-04-23 02:51:48 - interface - INFO - Confirmed tables for query 'get me store details of Baldwin Bikes': ['sales.stores']
+2025-04-23 02:51:48 - analyzer - DEBUG - Validated tables: Valid=['sales.stores'], Invalid=[]
+2025-04-23 02:51:48 - table_identifier - DEBUG - Increased weight for sales.stores to 1.1925186006250001
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for production.categories to 0.6634204312890623
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for production.brands to 0.6634204312890623
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for production.products to 1.1925186006250001
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.8894611876562498
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.8894611876562499
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.6634204312890623
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.6634204312890623
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.6634204312890623
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.6634204312890623
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.6634204312890623
+2025-04-23 02:51:48 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.6634204312890623
+2025-04-23 02:51:48 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:51:48 - analyzer - INFO - Confirmed tables for query: get me store details of Baldwin Bikes
+2025-04-23 02:51:51 - interface - DEBUG - Validating query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:51:51 - query_processor - DEBUG - Processing query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:51:51 - query_processor - DEBUG - Preprocessing query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:51:51 - query_processor - DEBUG - Preprocessed query: total sales storename baldwin bikes
+2025-04-23 02:51:51 - table_identifier - DEBUG - Identifying tables for query: total sales storename baldwin bikes
+2025-04-23 02:51:51 - table_identifier - DEBUG - Found similar feedback: ['sales.stores', 'sales.orders', 'sales.order_items']
+2025-04-23 02:51:51 - query_processor - DEBUG - Identified tables: ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+2025-04-23 02:51:51 - analyzer - DEBUG - Query: total sales amount at storename 'Baldwin Bikes', Tables: ['sales.stores', 'sales.orders', 'sales.order_items'], Confidence: 0.9
+2025-04-23 02:51:51 - interface - INFO - Suggested tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+2025-04-23 02:51:51 - interface - DEBUG - Handling feedback for query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:51:55 - interface - INFO - Confirmed tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items']
+2025-04-23 02:51:55 - analyzer - DEBUG - Validated tables: Valid=['sales.stores', 'sales.orders', 'sales.order_items'], Invalid=[]
+2025-04-23 02:51:55 - table_identifier - DEBUG - Increased weight for sales.stores to 1.3117704606875003
+2025-04-23 02:51:55 - table_identifier - DEBUG - Increased weight for sales.orders to 0.7297624744179685
+2025-04-23 02:51:55 - table_identifier - DEBUG - Increased weight for sales.order_items to 0.7297624744179685
+2025-04-23 02:51:55 - table_identifier - DEBUG - Decreased weight for production.categories to 0.6302494097246091
+2025-04-23 02:51:55 - table_identifier - DEBUG - Decreased weight for production.brands to 0.6302494097246091
+2025-04-23 02:51:55 - table_identifier - DEBUG - Decreased weight for production.products to 1.13289267059375
+2025-04-23 02:51:55 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.8449881282734373
+2025-04-23 02:51:55 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.8449881282734374
+2025-04-23 02:51:55 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.6302494097246091
+2025-04-23 02:51:55 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.6302494097246091
+2025-04-23 02:51:55 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.6302494097246091
+2025-04-23 02:51:55 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.6302494097246091
+2025-04-23 02:51:56 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:51:56 - analyzer - INFO - Confirmed tables for query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:52:02 - interface - DEBUG - Validating query: total sales amount at storename=Baldwin Bikes
+2025-04-23 02:52:02 - query_processor - DEBUG - Processing query: total sales amount at storename=Baldwin Bikes
+2025-04-23 02:52:02 - query_processor - DEBUG - Preprocessing query: total sales amount at storename=Baldwin Bikes
+2025-04-23 02:52:02 - query_processor - DEBUG - Preprocessed query: total sales storename baldwin bikes
+2025-04-23 02:52:02 - table_identifier - DEBUG - Identifying tables for query: total sales storename baldwin bikes
+2025-04-23 02:52:02 - table_identifier - DEBUG - Found similar feedback: ['sales.stores', 'sales.orders', 'sales.order_items']
+2025-04-23 02:52:02 - query_processor - DEBUG - Identified tables: ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+2025-04-23 02:52:02 - analyzer - DEBUG - Query: total sales amount at storename=Baldwin Bikes, Tables: ['sales.stores', 'sales.orders', 'sales.order_items'], Confidence: 0.9
+2025-04-23 02:52:02 - interface - INFO - Suggested tables for query 'total sales amount at storename=Baldwin Bikes': ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+2025-04-23 02:52:02 - interface - DEBUG - Handling feedback for query: total sales amount at storename=Baldwin Bikes
+2025-04-23 02:52:10 - interface - INFO - Confirmed tables for query 'total sales amount at storename=Baldwin Bikes': ['sales.stores', 'sales.orders', 'sales.order_items']
+2025-04-23 02:52:10 - analyzer - DEBUG - Validated tables: Valid=['sales.stores', 'sales.orders', 'sales.order_items'], Invalid=[]
+2025-04-23 02:52:10 - table_identifier - DEBUG - Increased weight for sales.stores to 1.4429475067562505
+2025-04-23 02:52:10 - table_identifier - DEBUG - Increased weight for sales.orders to 0.8027387218597654
+2025-04-23 02:52:10 - table_identifier - DEBUG - Increased weight for sales.order_items to 0.8027387218597654
+2025-04-23 02:52:10 - table_identifier - DEBUG - Decreased weight for production.categories to 0.5987369392383786
+2025-04-23 02:52:10 - table_identifier - DEBUG - Decreased weight for production.brands to 0.5987369392383786
+2025-04-23 02:52:10 - table_identifier - DEBUG - Decreased weight for production.products to 1.0762480370640626
+2025-04-23 02:52:10 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.8027387218597654
+2025-04-23 02:52:10 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.8027387218597655
+2025-04-23 02:52:10 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.5987369392383786
+2025-04-23 02:52:10 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.5987369392383786
+2025-04-23 02:52:10 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.5987369392383786
+2025-04-23 02:52:10 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.5987369392383786
+2025-04-23 02:52:10 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:52:10 - analyzer - INFO - Confirmed tables for query: total sales amount at storename=Baldwin Bikes
+2025-04-23 02:52:18 - interface - DEBUG - Validating query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:52:18 - query_processor - DEBUG - Processing query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:52:18 - query_processor - DEBUG - Preprocessing query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:52:18 - query_processor - DEBUG - Preprocessed query: total sales storename baldwin bikes
+2025-04-23 02:52:18 - table_identifier - DEBUG - Identifying tables for query: total sales storename baldwin bikes
+2025-04-23 02:52:18 - table_identifier - DEBUG - Found similar feedback: ['sales.stores', 'sales.orders', 'sales.order_items']
+2025-04-23 02:52:18 - query_processor - DEBUG - Identified tables: ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+2025-04-23 02:52:18 - analyzer - DEBUG - Query: total sales amount at storename 'Baldwin Bikes', Tables: ['sales.stores', 'sales.orders', 'sales.order_items'], Confidence: 0.9
+2025-04-23 02:52:18 - interface - INFO - Suggested tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items'], confidence: 0.9
+2025-04-23 02:52:18 - interface - DEBUG - Handling feedback for query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:52:20 - interface - INFO - Confirmed tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items']
+2025-04-23 02:52:20 - analyzer - DEBUG - Validated tables: Valid=['sales.stores', 'sales.orders', 'sales.order_items'], Invalid=[]
+2025-04-23 02:52:20 - table_identifier - DEBUG - Increased weight for sales.stores to 1.5872422574318756
+2025-04-23 02:52:20 - table_identifier - DEBUG - Increased weight for sales.orders to 0.883012594045742
+2025-04-23 02:52:20 - table_identifier - DEBUG - Increased weight for sales.order_items to 0.883012594045742
+2025-04-23 02:52:20 - table_identifier - DEBUG - Decreased weight for production.categories to 0.5688000922764596
+2025-04-23 02:52:20 - table_identifier - DEBUG - Decreased weight for production.brands to 0.5688000922764596
+2025-04-23 02:52:20 - table_identifier - DEBUG - Decreased weight for production.products to 1.0224356352108595
+2025-04-23 02:52:20 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.7626017857667771
+2025-04-23 02:52:20 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.7626017857667772
+2025-04-23 02:52:20 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.5688000922764596
+2025-04-23 02:52:20 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.5688000922764596
+2025-04-23 02:52:20 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.5688000922764596
+2025-04-23 02:52:20 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.5688000922764596
+2025-04-23 02:52:20 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:52:20 - analyzer - INFO - Confirmed tables for query: total sales amount at storename 'Baldwin Bikes'
+2025-04-23 02:52:27 - interface - DEBUG - Validating query: what
+2025-04-23 02:52:27 - interface - WARNING - Single-word query: what
+2025-04-23 02:52:27 - interface - WARNING - Invalid query: what
+2025-04-23 02:52:45 - interface - DEBUG - Validating query: chitti emi chestunnav
+2025-04-23 02:52:46 - analyzer - WARNING - Query not relevant to schema (max similarity: 0.2176271677017212): chitti emi chestunnav
+2025-04-23 02:52:46 - interface - WARNING - Query not relevant to schema: chitti emi chestunnav
+2025-04-23 02:52:46 - interface - WARNING - Invalid query: chitti emi chestunnav
+2025-04-23 02:53:08 - interface - DEBUG - Validating query: sonia
+2025-04-23 02:53:08 - interface - WARNING - Single-word query: sonia
+2025-04-23 02:53:08 - interface - WARNING - Invalid query: sonia
+2025-04-23 02:53:16 - interface - DEBUG - Validating query: I like you
+2025-04-23 02:53:16 - analyzer - WARNING - Query not relevant to schema (max similarity: 0.1577650010585785): I like you
+2025-04-23 02:53:16 - interface - WARNING - Query not relevant to schema: I like you
+2025-04-23 02:53:16 - interface - WARNING - Invalid query: I like you
+2025-04-23 02:53:38 - interface - DEBUG - Validating query: what you are doing now?
+2025-04-23 02:53:38 - analyzer - WARNING - No meaningful tokens in query: what you are doing now?
+2025-04-23 02:53:38 - interface - WARNING - Query not relevant to schema: what you are doing now?
+2025-04-23 02:53:38 - interface - WARNING - Invalid query: what you are doing now?
+2025-04-23 02:53:56 - interface - DEBUG - Validating query: what did you do last night at bike stores?
+2025-04-23 02:53:57 - query_processor - DEBUG - Processing query: what did you do last night at bike stores?
+2025-04-23 02:53:57 - query_processor - DEBUG - Preprocessing query: what did you do last night at bike stores?
+2025-04-23 02:53:57 - query_processor - DEBUG - Preprocessed query: night bike stores
+2025-04-23 02:53:57 - table_identifier - DEBUG - Identifying tables for query: night bike stores
+2025-04-23 02:53:57 - patterns - DEBUG - Matching patterns for query: night bike stores
+2025-04-23 02:53:57 - patterns - DEBUG - Pattern matches: ['sales.stores']
+2025-04-23 02:53:57 - table_identifier - DEBUG - Pattern matched tables: ['sales.stores']
+2025-04-23 02:53:57 - query_processor - DEBUG - Identified tables: ['sales.stores'], confidence: 0.8
+2025-04-23 02:53:57 - analyzer - DEBUG - Query: what did you do last night at bike stores?, Tables: ['sales.stores'], Confidence: 0.8
+2025-04-23 02:53:57 - interface - INFO - Suggested tables for query 'what did you do last night at bike stores?': ['sales.stores'], confidence: 0.8
+2025-04-23 02:53:57 - interface - DEBUG - Handling feedback for query: what did you do last night at bike stores?
+2025-04-23 02:54:21 - interface - INFO - User rejected tables for query 'what did you do last night at bike stores?': ['sales.stores']
+2025-04-23 02:54:21 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
+2025-04-23 02:54:27 - interface - DEBUG - No manual tables selected
+2025-04-23 02:54:35 - interface - DEBUG - Validating query: 12345
+2025-04-23 02:54:35 - interface - WARNING - Single-word query: 12345
+2025-04-23 02:54:35 - interface - WARNING - Invalid query: 12345
+2025-04-23 02:54:42 - interface - DEBUG - Validating query: 111 123 143
+2025-04-23 02:54:42 - interface - WARNING - Query lacks meaningful structure: 111 123 143
+2025-04-23 02:54:42 - interface - WARNING - Invalid query: 111 123 143
+2025-04-23 02:54:48 - interface - DEBUG - Validating query: +919666666201
+2025-04-23 02:54:48 - interface - WARNING - Single-word query: +919666666201
+2025-04-23 02:54:48 - interface - WARNING - Invalid query: +919666666201
+2025-04-23 02:54:54 - interface - DEBUG - Validating query: store
+2025-04-23 02:54:54 - interface - WARNING - Single-word query: store
+2025-04-23 02:54:54 - interface - WARNING - Invalid query: store
+2025-04-23 02:55:01 - interface - DEBUG - Validating query: stores in USA
+2025-04-23 02:55:02 - query_processor - DEBUG - Processing query: stores in USA
+2025-04-23 02:55:02 - query_processor - DEBUG - Preprocessing query: stores in USA
+2025-04-23 02:55:02 - query_processor - DEBUG - Preprocessed query: stores usa
+2025-04-23 02:55:02 - table_identifier - DEBUG - Identifying tables for query: stores usa
+2025-04-23 02:55:02 - table_identifier - DEBUG - Found similar feedback: ['sales.stores']
+2025-04-23 02:55:02 - query_processor - DEBUG - Identified tables: ['sales.stores'], confidence: 0.9
+2025-04-23 02:55:02 - analyzer - DEBUG - Query: stores in USA, Tables: ['sales.stores'], Confidence: 0.9
+2025-04-23 02:55:02 - interface - INFO - Suggested tables for query 'stores in USA': ['sales.stores'], confidence: 0.9
+2025-04-23 02:55:02 - interface - DEBUG - Handling feedback for query: stores in USA
+2025-04-23 02:55:04 - interface - INFO - Confirmed tables for query 'stores in USA': ['sales.stores']
+2025-04-23 02:55:04 - analyzer - DEBUG - Validated tables: Valid=['sales.stores'], Invalid=[]
+2025-04-23 02:55:04 - table_identifier - DEBUG - Increased weight for sales.stores to 1.7459664831750634
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for production.categories to 0.5403600876626365
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for production.brands to 0.5403600876626365
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for production.products to 0.9713138534503164
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.7244716964784381
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.7244716964784382
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.5403600876626365
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.8388619643434548
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.8388619643434548
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.5403600876626365
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.5403600876626365
+2025-04-23 02:55:04 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.5403600876626365
+2025-04-23 02:55:04 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:55:04 - analyzer - INFO - Confirmed tables for query: stores in USA
+2025-04-23 02:55:13 - interface - DEBUG - Validating query: India stores
+2025-04-23 02:55:14 - query_processor - DEBUG - Processing query: India stores
+2025-04-23 02:55:14 - query_processor - DEBUG - Preprocessing query: India stores
+2025-04-23 02:55:14 - query_processor - DEBUG - Preprocessed query: india stores
+2025-04-23 02:55:14 - table_identifier - DEBUG - Identifying tables for query: india stores
+2025-04-23 02:55:14 - table_identifier - DEBUG - Found similar feedback: ['sales.stores']
+2025-04-23 02:55:14 - query_processor - DEBUG - Identified tables: ['sales.stores'], confidence: 0.9
+2025-04-23 02:55:14 - analyzer - DEBUG - Query: India stores, Tables: ['sales.stores'], Confidence: 0.9
+2025-04-23 02:55:14 - interface - INFO - Suggested tables for query 'India stores': ['sales.stores'], confidence: 0.9
+2025-04-23 02:55:14 - interface - DEBUG - Handling feedback for query: India stores
+2025-04-23 02:55:18 - interface - INFO - Confirmed tables for query 'India stores': ['sales.stores']
+2025-04-23 02:55:18 - analyzer - DEBUG - Validated tables: Valid=['sales.stores'], Invalid=[]
+2025-04-23 02:55:19 - table_identifier - DEBUG - Increased weight for sales.stores to 1.92056313149257
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for production.categories to 0.5133420832795047
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for production.brands to 0.5133420832795047
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for production.products to 0.9227481607778005
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.6882481116545162
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.6882481116545163
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.5133420832795047
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.796918866126282
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.796918866126282
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.5133420832795047
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.5133420832795047
+2025-04-23 02:55:19 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.5133420832795047
+2025-04-23 02:55:19 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:55:19 - analyzer - INFO - Confirmed tables for query: India stores
+2025-04-23 02:55:30 - interface - DEBUG - Validating query: list all products by categories and brand names
+2025-04-23 02:55:31 - query_processor - DEBUG - Processing query: list all products by categories and brand names
+2025-04-23 02:55:31 - query_processor - DEBUG - Preprocessing query: list all products by categories and brand names
+2025-04-23 02:55:31 - query_processor - DEBUG - Preprocessed query: list products categories brand names
+2025-04-23 02:55:31 - table_identifier - DEBUG - Identifying tables for query: list products categories brand names
+2025-04-23 02:55:31 - table_identifier - DEBUG - Found similar feedback: ['production.categories', 'production.brands', 'production.products']
+2025-04-23 02:55:31 - query_processor - DEBUG - Identified tables: ['production.categories', 'production.brands', 'production.products'], confidence: 0.9
+2025-04-23 02:55:31 - analyzer - DEBUG - Query: list all products by categories and brand names, Tables: ['production.categories', 'production.brands', 'production.products'], Confidence: 0.9
+2025-04-23 02:55:31 - interface - INFO - Suggested tables for query 'list all products by categories and brand names': ['production.categories', 'production.brands', 'production.products'], confidence: 0.9
+2025-04-23 02:55:31 - interface - DEBUG - Handling feedback for query: list all products by categories and brand names
+2025-04-23 02:55:43 - interface - INFO - Confirmed tables for query 'list all products by categories and brand names': ['production.categories', 'production.brands', 'production.products']
+2025-04-23 02:55:43 - analyzer - DEBUG - Validated tables: Valid=['production.categories', 'production.brands', 'production.products'], Invalid=[]
+2025-04-23 02:55:44 - table_identifier - DEBUG - Increased weight for production.categories to 0.5646762916074552
+2025-04-23 02:55:44 - table_identifier - DEBUG - Increased weight for production.brands to 0.5646762916074552
+2025-04-23 02:55:44 - table_identifier - DEBUG - Increased weight for production.products to 1.0150229768555807
+2025-04-23 02:55:44 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.6538357060717903
+2025-04-23 02:55:44 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.6538357060717904
+2025-04-23 02:55:44 - table_identifier - DEBUG - Decreased weight for sales.stores to 1.8245349749179414
+2025-04-23 02:55:44 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.48767497911552943
+2025-04-23 02:55:44 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.7570729228199679
+2025-04-23 02:55:44 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.7570729228199679
+2025-04-23 02:55:44 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.48767497911552943
+2025-04-23 02:55:44 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.48767497911552943
+2025-04-23 02:55:44 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.48767497911552943
+2025-04-23 02:55:44 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:55:44 - analyzer - INFO - Confirmed tables for query: list all products by categories and brand names
+2025-04-23 02:55:50 - interface - DEBUG - Validating query: how many orders were delivered in 2016
+2025-04-23 02:55:50 - query_processor - DEBUG - Processing query: how many orders were delivered in 2016
+2025-04-23 02:55:50 - query_processor - DEBUG - Preprocessing query: how many orders were delivered in 2016
+2025-04-23 02:55:50 - query_processor - DEBUG - Preprocessed query: orders delivered
+2025-04-23 02:55:50 - table_identifier - DEBUG - Identifying tables for query: orders delivered
+2025-04-23 02:55:50 - patterns - DEBUG - Matching patterns for query: orders delivered
+2025-04-23 02:55:50 - patterns - DEBUG - Pattern matches: ['sales.orders']
+2025-04-23 02:55:50 - table_identifier - DEBUG - Pattern matched tables: ['sales.orders']
+2025-04-23 02:55:50 - query_processor - DEBUG - Identified tables: ['sales.orders'], confidence: 0.8
+2025-04-23 02:55:50 - analyzer - DEBUG - Query: how many orders were delivered in 2016, Tables: ['sales.orders'], Confidence: 0.8
+2025-04-23 02:55:50 - interface - INFO - Suggested tables for query 'how many orders were delivered in 2016': ['sales.orders'], confidence: 0.8
+2025-04-23 02:55:50 - interface - DEBUG - Handling feedback for query: how many orders were delivered in 2016
+2025-04-23 02:55:53 - interface - INFO - Confirmed tables for query 'how many orders were delivered in 2016': ['sales.orders']
+2025-04-23 02:55:53 - analyzer - DEBUG - Validated tables: Valid=['sales.orders'], Invalid=[]
+2025-04-23 02:55:53 - table_identifier - DEBUG - Increased weight for sales.orders to 0.8327802151019648
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for production.categories to 0.5364424770270825
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for production.brands to 0.5364424770270825
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for production.products to 0.9642718280128016
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.6211439207682008
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.6211439207682009
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for sales.stores to 1.7333082261720443
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.46329123015975293
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.7192192766789695
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.46329123015975293
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.46329123015975293
+2025-04-23 02:55:53 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.46329123015975293
+2025-04-23 02:55:53 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:55:53 - analyzer - INFO - Confirmed tables for query: how many orders were delivered in 2016
+2025-04-23 02:56:03 - interface - DEBUG - Validating query: orders processed between Jan-15-2016 and Jan-14-2017
+2025-04-23 02:56:04 - query_processor - DEBUG - Processing query: orders processed between Jan-15-2016 and Jan-14-2017
+2025-04-23 02:56:04 - query_processor - DEBUG - Preprocessing query: orders processed between Jan-15-2016 and Jan-14-2017
+2025-04-23 02:56:04 - query_processor - DEBUG - Preprocessed query: orders processed
+2025-04-23 02:56:04 - table_identifier - DEBUG - Identifying tables for query: orders processed
+2025-04-23 02:56:04 - patterns - DEBUG - Matching patterns for query: orders processed
+2025-04-23 02:56:04 - patterns - DEBUG - Pattern matches: ['sales.orders']
+2025-04-23 02:56:04 - table_identifier - DEBUG - Pattern matched tables: ['sales.orders']
+2025-04-23 02:56:04 - query_processor - DEBUG - Identified tables: ['sales.orders'], confidence: 0.8
+2025-04-23 02:56:04 - analyzer - DEBUG - Query: orders processed between Jan-15-2016 and Jan-14-2017, Tables: ['sales.orders'], Confidence: 0.8
+2025-04-23 02:56:04 - interface - INFO - Suggested tables for query 'orders processed between Jan-15-2016 and Jan-14-2017': ['sales.orders'], confidence: 0.8
+2025-04-23 02:56:04 - interface - DEBUG - Handling feedback for query: orders processed between Jan-15-2016 and Jan-14-2017
+2025-04-23 02:56:07 - interface - INFO - Confirmed tables for query 'orders processed between Jan-15-2016 and Jan-14-2017': ['sales.orders']
+2025-04-23 02:56:07 - analyzer - DEBUG - Validated tables: Valid=['sales.orders'], Invalid=[]
+2025-04-23 02:56:07 - table_identifier - DEBUG - Increased weight for sales.orders to 0.9160582366121613
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for production.categories to 0.5096203531757283
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for production.brands to 0.5096203531757283
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for production.products to 0.9160582366121616
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.5900867247297907
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.5900867247297908
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for sales.stores to 1.646642814863442
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for sales.staffs to 0.44012666865176525
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.6832583128450209
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.44012666865176525
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.44012666865176525
+2025-04-23 02:56:07 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.44012666865176525
+2025-04-23 02:56:07 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:56:07 - analyzer - INFO - Confirmed tables for query: orders processed between Jan-15-2016 and Jan-14-2017
+2025-04-23 02:56:14 - interface - DEBUG - Validating query: how many employees works for all stores
+2025-04-23 02:56:14 - query_processor - DEBUG - Processing query: how many employees works for all stores
+2025-04-23 02:56:14 - query_processor - DEBUG - Preprocessing query: how many employees works for all stores
+2025-04-23 02:56:14 - query_processor - DEBUG - Preprocessed query: employees works stores
+2025-04-23 02:56:14 - table_identifier - DEBUG - Identifying tables for query: employees works stores
+2025-04-23 02:56:14 - patterns - DEBUG - Matching patterns for query: employees works stores
+2025-04-23 02:56:14 - patterns - DEBUG - Pattern matches: ['hr.employees', 'sales.stores']
+2025-04-23 02:56:14 - table_identifier - DEBUG - Pattern matched tables: ['hr.employees', 'sales.stores']
+2025-04-23 02:56:14 - query_processor - DEBUG - Identified tables: ['hr.employees', 'sales.stores'], confidence: 0.8
+2025-04-23 02:56:14 - analyzer - DEBUG - Query: how many employees works for all stores, Tables: ['hr.employees', 'sales.stores'], Confidence: 0.8
+2025-04-23 02:56:14 - interface - INFO - Suggested tables for query 'how many employees works for all stores': ['hr.employees', 'sales.stores'], confidence: 0.8
+2025-04-23 02:56:14 - interface - DEBUG - Handling feedback for query: how many employees works for all stores
+2025-04-23 02:56:31 - interface - INFO - User rejected tables for query 'how many employees works for all stores': ['hr.employees', 'sales.stores']
+2025-04-23 02:56:31 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
+2025-04-23 02:56:59 - interface - DEBUG - Selected manual tables: ['sales.staffs', 'sales.stores']
+2025-04-23 02:56:59 - interface - INFO - Updated feedback with tables: ['sales.staffs', 'sales.stores']
+2025-04-23 02:56:59 - analyzer - DEBUG - Validated tables: Valid=['sales.staffs', 'sales.stores'], Invalid=[]
+2025-04-23 02:57:00 - table_identifier - DEBUG - Increased weight for sales.staffs to 0.4841393355169418
+2025-04-23 02:57:00 - table_identifier - DEBUG - Increased weight for sales.stores to 1.8113070963497864
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for production.categories to 0.4841393355169418
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for production.brands to 0.4841393355169418
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for production.products to 0.8702553247815534
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.5605823884933012
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.5605823884933013
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.8702553247815532
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.6490953972027699
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.41812033521917696
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.41812033521917696
+2025-04-23 02:57:00 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.41812033521917696
+2025-04-23 02:57:00 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:57:00 - analyzer - INFO - Updated feedback for query: how many employees works for all stores
+2025-04-23 02:57:08 - interface - DEBUG - Validating query: how much staff works for all stores
+2025-04-23 02:57:08 - query_processor - DEBUG - Processing query: how much staff works for all stores
+2025-04-23 02:57:08 - query_processor - DEBUG - Preprocessing query: how much staff works for all stores
+2025-04-23 02:57:08 - query_processor - DEBUG - Preprocessed query: staff works stores
+2025-04-23 02:57:08 - table_identifier - DEBUG - Identifying tables for query: staff works stores
+2025-04-23 02:57:08 - patterns - DEBUG - Matching patterns for query: staff works stores
+2025-04-23 02:57:08 - patterns - DEBUG - Pattern matches: ['sales.stores']
+2025-04-23 02:57:08 - table_identifier - DEBUG - Pattern matched tables: ['sales.stores']
+2025-04-23 02:57:08 - query_processor - DEBUG - Identified tables: ['sales.stores'], confidence: 0.8
+2025-04-23 02:57:08 - analyzer - DEBUG - Query: how much staff works for all stores, Tables: ['sales.stores'], Confidence: 0.8
+2025-04-23 02:57:08 - interface - INFO - Suggested tables for query 'how much staff works for all stores': ['sales.stores'], confidence: 0.8
+2025-04-23 02:57:08 - interface - DEBUG - Handling feedback for query: how much staff works for all stores
+2025-04-23 02:57:11 - interface - INFO - User rejected tables for query 'how much staff works for all stores': ['sales.stores']
+2025-04-23 02:57:11 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
+2025-04-23 02:57:20 - interface - DEBUG - Selected manual tables: ['sales.staffs', 'sales.stores']
+2025-04-23 02:57:20 - interface - INFO - Updated feedback with tables: ['sales.staffs', 'sales.stores']
+2025-04-23 02:57:20 - analyzer - DEBUG - Validated tables: Valid=['sales.staffs', 'sales.stores'], Invalid=[]
+2025-04-23 02:57:20 - table_identifier - DEBUG - Increased weight for sales.staffs to 0.5325532690686361
+2025-04-23 02:57:20 - table_identifier - DEBUG - Increased weight for sales.stores to 1.9924378059847652
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for production.categories to 0.4599323687410947
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for production.brands to 0.4599323687410947
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for production.products to 0.8267425585424757
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for production.stocks to 0.5325532690686361
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for sales.customers to 0.5325532690686362
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for sales.orders to 0.8267425585424755
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for sales.order_items to 0.6166406273426314
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for dbo.sysdiagrams to 0.3972143184582181
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for hr.candidates to 0.3972143184582181
+2025-04-23 02:57:20 - table_identifier - DEBUG - Decreased weight for hr.employees to 0.3972143184582181
+2025-04-23 02:57:20 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:57:20 - analyzer - INFO - Updated feedback for query: how much staff works for all stores
+2025-04-23 02:57:24 - interface - DEBUG - Exiting query mode
+2025-04-23 02:57:34 - interface - INFO - Exiting application
+2025-04-23 02:57:34 - table_identifier - DEBUG - Saved name matches to models\BikeStores_matches.json
+2025-04-23 02:57:34 - table_identifier - DEBUG - Saved model to models/BikeStores_model.json
+2025-04-23 02:57:34 - connection - INFO - Closing database connection
+2025-04-23 02:57:34 - analyzer - INFO - Application shutdown

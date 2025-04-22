@@ -54,8 +54,8 @@ class DatabaseAnalyzer:
                 handlers=[
                     logging.FileHandler('logs/app.log'),
                     logging.StreamHandler()
-                ]
-            )
+                    ]
+                )
             print(f"Error loading logging config: {e}")
 
         self.logger = logging.getLogger("analyzer")
@@ -71,8 +71,16 @@ class DatabaseAnalyzer:
         self.current_config = None
         self.schema_dict = {}
         self.query_history = []
-        self.nlp = spacy.load("en_core_web_sm")
-        self.embedder = SentenceTransformer("all-distilroberta-v1")
+        try:
+            self.nlp = spacy.load("en_core_web_sm")
+        except Exception as e:
+            self.logger.error(f"Failed to load spacy model: {e}")
+            self.nlp = None
+        try:
+            self.embedder = SentenceTransformer("all-distilroberta-v1")
+        except Exception as e:
+            self.logger.error(f"Failed to load SentenceTransformer: {e}")
+            self.embedder = None
         self.logger.debug("Initialized DatabaseAnalyzer with spacy and SentenceTransformer")
 
     def run(self):
@@ -199,7 +207,11 @@ class DatabaseAnalyzer:
         except Exception as e:
             self.logger.warning(f"NLPPipeline initialization failed: {e}")
             self.nlp_pipeline = None
-        self.name_matcher = NameMatchManager(db_name, self.embedder)
+        try:
+            self.name_matcher = NameMatchManager(db_name, self.embedder)
+        except Exception as e:
+            self.logger.warning(f"NameMatchManager initialization failed: {e}")
+            self.name_matcher = None
 
         # Initialize table identifier
         try:
@@ -260,7 +272,11 @@ class DatabaseAnalyzer:
             except Exception as e:
                 self.logger.warning(f"NLPPipeline initialization failed: {e}")
                 self.nlp_pipeline = None
-            self.name_matcher = NameMatchManager(db_name, self.embedder)
+            try:
+                self.name_matcher = NameMatchManager(db_name, self.embedder)
+            except Exception as e:
+                self.logger.warning(f"NameMatchManager initialization failed: {e}")
+                self.name_matcher = None
             self.table_identifier = TableIdentifier(
                 self.schema_dict,
                 self.feedback_manager,
@@ -330,6 +346,9 @@ class DatabaseAnalyzer:
             return False
 
         # Use spacy for intent analysis
+        if not self.nlp:
+            self.logger.warning("Spacy model not loaded, skipping intent analysis")
+            return True
         doc = self.nlp(query)
         query_tokens = [token.text.lower() for token in doc if not token.is_stop and token.is_alpha]
 
@@ -339,6 +358,9 @@ class DatabaseAnalyzer:
             return False
 
         # Compute semantic similarity with schema metadata
+        if not self.embedder:
+            self.logger.warning("SentenceTransformer not loaded, skipping semantic similarity")
+            return True
         metadata_texts = []
         for schema in self.schema_dict['tables']:
             for table in self.schema_dict['tables'][schema]:
