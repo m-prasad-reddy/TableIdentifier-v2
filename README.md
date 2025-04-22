@@ -74,7 +74,7 @@ The application is structured around three core modules and eight supporting mod
 ## Module Functionalities
 
 ### 1. DatabaseAnalyzer (`main.py`)
-**Path**: `C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\main.py`
+**Path**: `C:\Users\User1\Pythonworks\TableIdentifier-2\main.py`
 **Purpose**: Central orchestrator for database connections, schema management, query processing, and feedback integration.
 **Key Methods**:
 - `__init__`: Initializes logging, connection manager, configuration manager, and component placeholders.
@@ -99,7 +99,7 @@ The application is structured around three core modules and eight supporting mod
 - Handles `FileLock` timeouts in `process_query` with fallback to empty results.
 
 ### 2. SchemaManager (`schema/manager.py`)
-**Path**: `C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\schema\manager.py`
+**Path**: `C:\Users\User1\Pythonworks\TableIdentifier-2\schema\manager.py`
 **Purpose**: Extracts and caches schema metadata, supporting multiple database types.
 **Key Methods**:
 - `__init__`: Initializes logging, cache directory (`schema_cache/<db_name>`), and database type.
@@ -115,7 +115,7 @@ The application is structured around three core modules and eight supporting mod
 - Uses separate subqueries with LEFT JOINs in `build_data_dict` to avoid `21000` errors.
 
 ### 3. DatabaseAnalyzerCLI (`cli/interface.py`)
-**Path**: `C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\cli\interface.py`
+**Path**: `C:\Users\User1\Pythonworks\TableIdentifier-2\cli\interface.py`
 **Purpose**: Provides an interactive CLI for user operations across multiple databases.
 **Key Methods**:
 - `__init__`: Initializes logging and loads `spacy` model (`en_core_web_sm`).
@@ -234,7 +234,7 @@ python -m spacy download en_core_web_sm
 ## Project Structure
 
 ```
-C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\
+C:\Users\User1\Pythonworks\TableIdentifier-2\
 ├── main.py                           # DatabaseAnalyzer implementation
 ├── schema/
 │   ├── manager.py                    # SchemaManager implementation
@@ -274,14 +274,14 @@ C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\
 1. **Setup Environment**:
    - Activate the virtual environment:
      ```bash
-     C:\Users\varaprasad\Pythonworks\Text2SQl\venv\Scripts\activate
+     C:\Users\User1\Pythonworks\Text2SQl\venv\Scripts\activate
      ```
    - Ensure dependencies are installed.
 
 2. **Run the Application**:
    - Execute `main.py`:
      ```bash
-     python C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\main.py
+     python C:\Users\User1\Pythonworks\TableIdentifier-2\main.py
      ```
 
 3. **CLI Menu**:
@@ -319,7 +319,7 @@ C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\
 
 ## Debugging Tips
 
-- **Logs**: Check `app.log` and `Console.txt` in `C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\logs\` for errors.
+- **Logs**: Check `app.log` and `Console.txt` in `C:\Users\User1\Pythonworks\TableIdentifier-2\logs\` for errors.
 - **CSV Issue**: Inspect the CSV file used by `TableIdentifier`. Verify line 3 has 13 fields. Share the file or its structure for a specific fix.
 - **FileLock**: If hangs persist, reduce the timeout (e.g., 2 seconds) in `cli/interface.py` or disable `FileLock` temporarily in `FeedbackManager`.
 - **Schema Cache**: If schema errors occur, delete `schema_cache/<db_name>/schema.json` to force a rebuild.
@@ -340,7 +340,7 @@ C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\
   - Include `app.log` and `Console.txt` for context.
   - Optionally provide `database/connection.py`, `config/config_manager.py`, etc., if collaborators need the full codebase.
 - **Instructions**:
-  - Direct collaborators to save files in `C:\Users\varaprasad\Pythonworks\Text2SQl\EntityResolver\` with the appropriate directory structure.
+  - Direct collaborators to save files in `C:\Users\User1\Pythonworks\TableIdentifier-2\` with the appropriate directory structure.
   - Suggest running in the virtual environment and checking logs.
   - Highlight the "Known Issues and Fixes" section for debugging focus.
 - **External Hosting**:
