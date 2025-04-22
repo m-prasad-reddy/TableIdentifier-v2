@@ -1,0 +1,76 @@
+2025-04-22 13:53:17 - interface - INFO - Starting Database Schema Analyzer
+=== Database Schema Analyzer ===
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations
+4. Manage Feedback
+5. Exit
+Select option: 1
+Config path [default: app-config/database_configurations.json]: 
+
+Available Configurations:
+1. ADWORKS_DB
+2. ADWORKS2019_DB
+3. BIKES_DB
+4. Cancel
+Select configuration: 3
+2025-04-22 13:53:36 - connection - INFO - Connected to database: BikeStores
+2025-04-22 13:53:36 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'table_creation_date'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'column_modified_date'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'last_update'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]No column name was specified for column 1 of 't'. (8155)")
+2025-04-22 13:53:36 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 13:53:36 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 13:53:42 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 13:53:42 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 13:53:45 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 13:53:45 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 13:53:48 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 13:53:48 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 13:53:51 - table_identifier - ERROR - Error loading CSV: Error tokenizing data. C error: Expected 13 fields in line 3, saw 16
+
+2025-04-22 13:53:51 - analyzer - INFO - Connected to BikeStores
+2025-04-22 13:53:51 - interface - INFO - Successfully connected to database
+Successfully connected!
+
+=== BikeStores Schema Analyzer ===
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations
+4. Manage Feedback
+5. Exit
+Select option: 2
+
+No example queries available. Try these formats:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+
+Enter query (or 'back'): Show me all stores with store names
+Traceback (most recent call last):
+  File "c:\Users\varaprasad\Pythonworks\Text2SQl\TableIdentifier-1\main.py", line 363, in <module>
+    analyzer.run()
+  File "c:\Users\varaprasad\Pythonworks\Text2SQl\TableIdentifier-1\main.py", line 48, in run
+    cli.run()
+  File "c:\Users\varaprasad\Pythonworks\Text2SQl\TableIdentifier-1\cli\interface.py", line 58, in run
+    self._query_mode()
+  File "c:\Users\varaprasad\Pythonworks\Text2SQl\TableIdentifier-1\cli\interface.py", line 185, in _query_mode
+    results, confidence = self.analyzer.process_query(query)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\varaprasad\Pythonworks\Text2SQl\TableIdentifier-1\main.py", line 220, in process_query
+    tables, confidence = self.query_processor.process_query(query)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\varaprasad\Pythonworks\Text2SQl\TableIdentifier-1\nlp\query_processor.py", line 68, in process_query
+    tables, confidence = self.table_identifier.identify_tables(query)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\varaprasad\Pythonworks\Text2SQl\TableIdentifier-1\analysis\table_identifier.py", line 140, in identify_tables
+    feedback = self.feedback_manager.get_similar_feedback(query, threshold=0.7)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\varaprasad\Pythonworks\Text2SQl\TableIdentifier-1\feedback\feedback_manager.py", line 282, in get_similar_feedback
+    with filelock.FileLock(os.path.join(self.feedback_dir, "feedback.lock")):
+  File "C:\Users\varaprasad\Pythonworks\Text2SQl\venv\Lib\site-packages\filelock\_api.py", line 376, in __enter__
+    self.acquire()
+  File "C:\Users\varaprasad\Pythonworks\Text2SQl\venv\Lib\site-packages\filelock\_api.py", line 344, in acquire
+    time.sleep(poll_interval)
+KeyboardInterrupt
