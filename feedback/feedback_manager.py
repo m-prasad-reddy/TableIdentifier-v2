@@ -63,7 +63,7 @@ class FeedbackManager:
     def _load_feedback_cache(self):
         """Load feedback data from SQLite database."""
         try:
-            with sqlite3.connect(self.db_path) as conn:
+            with sqlite3.connect(self.db_path, timeout=3.0) as conn:
                 cursor = conn.cursor()
                 cursor.execute("SELECT id, query, tables, timestamp, embedding FROM feedback")
                 self.feedback_cache = [
@@ -94,7 +94,6 @@ class FeedbackManager:
                 self.logger.warning("Empty query or tables, skipping feedback storage")
                 return
             
-            # Validate tables
             valid_tables = []
             for table in tables:
                 schema, table_name = table.split('.', 1)
@@ -107,14 +106,9 @@ class FeedbackManager:
                 self.logger.warning("No valid tables in feedback")
                 return
             
-            # Generate embedding
-            embedding = None
-            if self.embedder:
-                embedding = self.embedder.encode([query])[0]
-            else:
-                embedding = np.zeros(768, dtype=np.float32)
+            embedding = self.embedder.encode([query])[0] if self.embedder else np.zeros(768, dtype=np.float32)
             
-            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+            with sqlite3.connect(self.db_path, timeout=3.0) as conn:
                 cursor = conn.cursor()
                 cursor.execute(
                     "INSERT INTO feedback (query, tables, timestamp, embedding) VALUES (?, ?, datetime('now'), ?)",
@@ -126,12 +120,12 @@ class FeedbackManager:
                 )
                 conn.commit()
             
-            self._load_feedback_cache()  # Refresh cache
+            self._load_feedback_cache()
             self.logger.debug(f"Stored feedback for query: {query}, tables: {valid_tables}")
         except Exception as e:
             self.logger.error(f"Error storing feedback: {e}")
 
-    def get_similar_feedback(self, query: str, threshold: float = 0.7) -> Optional[Dict]:
+    def get_similar_feedback(self, query: str, threshold: float = 0.8) -> Optional[Dict]:
         """Retrieve feedback for similar queries.
 
         Args:
@@ -178,7 +172,7 @@ class FeedbackManager:
             List of (query, count) tuples.
         """
         try:
-            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+            with sqlite3.connect(self.db_path, timeout=3.0) as conn:
                 cursor = conn.cursor()
                 cursor.execute(
                     "SELECT query, count FROM query_counts ORDER BY count DESC LIMIT ?",
@@ -194,7 +188,7 @@ class FeedbackManager:
     def clear_feedback(self):
         """Clear all feedback data."""
         try:
-            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+            with sqlite3.connect(self.db_path, timeout=3.0) as conn:
                 cursor = conn.cursor()
                 cursor.execute("DELETE FROM feedback")
                 cursor.execute("DELETE FROM query_counts")
@@ -212,7 +206,7 @@ class FeedbackManager:
         """
         try:
             os.makedirs(export_dir, exist_ok=True)
-            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+            with sqlite3.connect(self.db_path, timeout=3.0) as conn:
                 cursor = conn.cursor()
                 cursor.execute("SELECT id, query, tables, timestamp FROM feedback")
                 copied = False
@@ -245,7 +239,7 @@ class FeedbackManager:
                 self.logger.error(f"Import directory {import_dir} does not exist")
                 return
             
-            with sqlite3.connect(self.db_path, timeout=5.0) as conn:
+            with sqlite3.connect(self.db_path, timeout=3.0) as conn:
                 cursor = conn.cursor()
                 copied = False
                 for fname in os.listdir(import_dir):

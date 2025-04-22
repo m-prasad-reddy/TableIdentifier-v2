@@ -4,6 +4,10 @@ import os
 import shutil
 import json
 from filelock import Timeout
+from langdetect import detect, DetectorFactory
+
+# Ensure consistent language detection
+DetectorFactory.seed = 0
 
 class DatabaseAnalyzerCLI:
     """Command-line interface for interacting with the DatabaseAnalyzer."""
@@ -21,6 +25,13 @@ class DatabaseAnalyzerCLI:
         except Exception as e:
             self.logger.error(f"Failed to load spacy model: {e}")
             self.nlp = None
+        self.example_queries = [
+            "Show me all stores with store names",
+            "List all products with prices",
+            "Show customers from a specific city",
+            "Find orders placed in the last month",
+            "Show stock availability for all products"
+        ]
         self.logger.debug("Initialized DatabaseAnalyzerCLI")
 
     def run(self):
@@ -100,7 +111,7 @@ class DatabaseAnalyzerCLI:
             print("Invalid selection")
 
     def _validate_query(self, query):
-        """Validate if a query is meaningful.
+        """Validate if a query is meaningful and in English.
 
         Args:
             query: The query to validate.
@@ -109,26 +120,48 @@ class DatabaseAnalyzerCLI:
             bool: True if the query is valid, False otherwise.
         """
         if not query or query.isspace():
+            self.logger.warning(f"Empty query: {query}")
             return False
             
         tokens = query.strip().split()
         if len(tokens) <= 1:
+            self.logger.warning(f"Single-word query: {query}")
             return False
         if query.strip().isdigit():
+            self.logger.warning(f"Numeric query: {query}")
             return False
             
+        # Check if query is in English
+        try:
+            lang = detect(query)
+            if lang != 'en':
+                self.logger.warning(f"Non-English query detected: {query} (language: {lang})")
+                return False
+        except Exception as e:
+            self.logger.error(f"Error detecting language: {e}")
+            return False
+            
+        # Semantic validation with spacy
         if self.nlp:
             doc = self.nlp(query.lower())
             has_noun_chunk = any(chunk for chunk in doc.noun_chunks)
             has_verb = any(token.pos_ == "VERB" for token in doc)
             
             if not (has_noun_chunk or has_verb):
+                self.logger.warning(f"Query lacks meaningful structure: {query}")
                 return False
                 
             if len(doc) < 3 and not has_noun_chunk:
+                self.logger.warning(f"Query too short and lacks nouns: {query}")
                 return False
                 
         return True
+
+    def _display_example_queries(self):
+        """Display example queries to guide the user."""
+        print("\nPlease enter a meaningful query in English. Examples:")
+        for i, example in enumerate(self.example_queries, 1):
+            print(f"{i}. {example}")
 
     def _query_mode(self):
         """Enter query mode to process natural language queries."""
@@ -149,10 +182,7 @@ class DatabaseAnalyzerCLI:
                 for i, (query, count) in enumerate(example_queries, 1):
                     print(f"{i}. {query} (used {count} times)")
             else:
-                print("\nNo example queries available. Try these formats:")
-                print("1. Show me all stores with store names")
-                print("2. List all products with prices")
-                print("3. Show customers from a specific city")
+                self._display_example_queries()
         except Exception as e:
             self.logger.error(f"Error loading example queries: {str(e)}")
             print(f"Error loading example queries: {str(e)}")
@@ -165,8 +195,8 @@ class DatabaseAnalyzerCLI:
                 
             if not self._validate_query(query):
                 self.logger.warning(f"Invalid query: {query}")
-                print("Please enter a meaningful query (e.g., 'show me all stores with store names').")
-                print("Avoid single words, numbers, or vague phrases.")
+                print("Please enter a meaningful query in English.")
+                self._display_example_queries()
                 continue
                 
             max_retries = 3
@@ -178,15 +208,15 @@ class DatabaseAnalyzerCLI:
                         print("Unable to process query. Please try again or reconnect.")
                         continue
                         
-                    if confidence and results:
-                        self.logger.info(f"Suggested tables for query '{query}': {results}")
+                    if confidence and results and confidence >= 0.8:
+                        self.logger.info(f"Suggested tables for query '{query}': {results}, confidence: {confidence}")
                         print("\nSuggested Tables:")
                         for i, table in enumerate(results[:5], 1):
                             print(f"{i}. {table}")
                         self._handle_feedback(query, results)
                         break
                     else:
-                        self.logger.warning(f"Low confidence for query '{query}'")
+                        self.logger.warning(f"Low confidence ({confidence}) for query '{query}'")
                         print("\nLow confidence. Please select tables manually:")
                         self._manual_table_selection(query)
                         break
@@ -209,6 +239,7 @@ class DatabaseAnalyzerCLI:
             query: The query.
             results: Suggested tables.
         """
+        self.logger.debug(f"Handling feedback for query: {query}")
         while True:
             feedback = input("\nCorrect? (Y/N): ").strip().lower()
             if feedback in ('y', 'n'):
@@ -327,31 +358,9 @@ class DatabaseAnalyzerCLI:
             export_dir = os.path.join("feedback_cache", "export")
             
         try:
-            os.makedirs(export_dir, exist_ok=True)
-            feedback_dir = self.analyzer.feedback_manager.feedback_dir
-            copied = False
-            for fname in os.listdir(feedback_dir):
-                if fname.endswith("_meta.json"):
-                    src = os.path.join(feedback_dir, fname)
-                    with open(src) as f:
-                        meta = json.load(f)
-                    if 'query' not in meta or 'tables' not in meta or 'timestamp' not in meta:
-                        self.logger.warning(f"Skipping invalid feedback file: {fname}")
-                        print(f"Skipping invalid feedback file: {fname}")
-                        continue
-                    dst = os.path.join(export_dir, fname)
-                    shutil.copy2(src, dst)
-                    emb_fname = fname.replace("_meta.json", "_emb.npy")
-                    emb_src = os.path.join(feedback_dir, emb_fname)
-                    if os.path.exists(emb_src):
-                        shutil.copy2(emb_src, os.path.join(export_dir, emb_fname))
-                    copied = True
-            if copied:
-                self.logger.info(f"Feedback exported to {export_dir}")
-                print(f"Feedback exported to {export_dir}")
-            else:
-                self.logger.info("No valid feedback files to export")
-                print("No valid feedback files to export")
+            self.analyzer.feedback_manager.export_feedback(export_dir)
+            self.logger.info(f"Feedback exported to {export_dir}")
+            print(f"Feedback exported to {export_dir}")
         except Exception as e:
             self.logger.error(f"Error exporting feedback: {str(e)}")
             print(f"Error exporting feedback: {str(e)}")
@@ -365,32 +374,9 @@ class DatabaseAnalyzerCLI:
             return
             
         try:
-            feedback_dir = self.analyzer.feedback_manager.feedback_dir
-            os.makedirs(feedback_dir, exist_ok=True)
-            copied = False
-            for fname in os.listdir(import_dir):
-                if fname.endswith("_meta.json"):
-                    src = os.path.join(import_dir, fname)
-                    with open(src) as f:
-                        meta = json.load(f)
-                    if 'query' not in meta or 'tables' not in meta or 'timestamp' not in meta:
-                        self.logger.warning(f"Skipping invalid feedback file: {fname}")
-                        print(f"Skipping invalid feedback file: {fname}")
-                        continue
-                    dst = os.path.join(feedback_dir, fname)
-                    shutil.copy2(src, dst)
-                    emb_fname = fname.replace("_meta.json", "_emb.npy")
-                    emb_src = os.path.join(import_dir, emb_fname)
-                    if os.path.exists(emb_src):
-                        shutil.copy2(emb_src, os.path.join(feedback_dir, emb_fname))
-                    copied = True
-            if copied:
-                self.analyzer.feedback_manager._load_feedback_cache()
-                self.logger.info(f"Feedback imported from {import_dir}")
-                print(f"Feedback imported from {import_dir}")
-            else:
-                self.logger.info("No valid feedback files to import")
-                print("No valid feedback files to import")
+            self.analyzer.feedback_manager.import_feedback(import_dir)
+            self.logger.info(f"Feedback imported from {import_dir}")
+            print(f"Feedback imported from {import_dir}")
         except Exception as e:
             self.logger.error(f"Error importing feedback: {str(e)}")
             print(f"Error importing feedback: {str(e)}")

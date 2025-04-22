@@ -11,23 +11,24 @@ from sklearn.metrics.pairwise import cosine_similarity
 class TableIdentifier:
     """Identifies relevant tables from natural language queries using NLP and feedback."""
     
-    def __init__(self, schema_dict: Dict, feedback_manager, pattern_manager, db_name: str):
-        """Initialize with schema, feedback, and pattern manager.
+    def __init__(self, schema_dict: Dict, feedback_manager, pattern_manager, name_match_manager, db_name: str):
+        """Initialize with schema, feedback, pattern, and name match managers.
 
         Args:
             schema_dict: Schema dictionary from SchemaManager.
             feedback_manager: FeedbackManager instance.
             pattern_manager: PatternManager instance.
+            name_match_manager: NameMatchManager instance.
             db_name: Name of the database.
         """
         self.logger = logging.getLogger("table_identifier")
         self.schema_dict = schema_dict
         self.feedback_manager = feedback_manager
         self.pattern_manager = pattern_manager
+        self.name_match_manager = name_match_manager
         self.db_name = db_name
         self.training_data = []
         self.weights = {}
-        self.model = None
         self.embedder = None
         
         try:
@@ -71,10 +72,16 @@ class TableIdentifier:
         self.logger.debug(f"Identifying tables for query: {query}")
         try:
             # Check feedback for similar queries
-            feedback = self.feedback_manager.get_similar_feedback(query, threshold=0.7)
+            feedback = self.feedback_manager.get_similar_feedback(query, threshold=0.8)
             if feedback:
                 self.logger.debug(f"Found similar feedback: {feedback['tables']}")
                 return feedback['tables'], 0.9
+            
+            # Use name matching with synonyms
+            matched_tables = self.name_match_manager.match_names(query, self.schema_dict)
+            if matched_tables:
+                self.logger.debug(f"Name matched tables: {matched_tables}")
+                return matched_tables, 0.85
             
             # Use embeddings if available
             if self.embedder:
@@ -89,7 +96,7 @@ class TableIdentifier:
                 table_scores.sort(key=lambda x: x[1], reverse=True)
                 top_tables = [table for table, score in table_scores[:5]]
                 confidence = max(score for table, score in table_scores[:5]) if table_scores else 0.0
-                if top_tables:
+                if top_tables and confidence >= 0.8:
                     self.logger.debug(f"Embedding-based tables: {top_tables}, confidence: {confidence}")
                     return top_tables, confidence
             

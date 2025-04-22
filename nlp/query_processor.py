@@ -1,84 +1,87 @@
-import os
 import logging
-import logging.config
-from typing import Dict, List, Tuple
-from analysis.table_identifier import TableIdentifier
-from analysis.name_match_manager import NameMatchManager
-from analysis.processor import NLPPipeline
-from config.patterns import PatternManager
-from database.connection import DatabaseConnection
+import spacy
+from langdetect import detect, DetectorFactory
+from typing import List, Dict, Tuple
+
+# Ensure consistent language detection
+DetectorFactory.seed = 0
 
 class QueryProcessor:
-    """Processes natural language queries to identify relevant database tables.
-
-    Integrates NLP analysis, table identification, and name matching to process
-    queries and update feedback.
-    """
-
-    def __init__(
-        self,
-        connection_manager: DatabaseConnection,
-        schema_dict: Dict,
-        nlp_pipeline: NLPPipeline,
-        table_identifier: TableIdentifier,
-        name_matcher: NameMatchManager,
-        pattern_manager: PatternManager,
-        db_name: str
-    ):
-        """Initialize with required components.
+    """Processes natural language queries for database table identification."""
+    
+    def __init__(self, table_identifier):
+        """Initialize with table identifier.
 
         Args:
-            connection_manager (DatabaseConnection): Manages database connections.
-            schema_dict (Dict): Schema dictionary with table and column information.
-            nlp_pipeline (NLPPipeline): NLP pipeline for query analysis.
-            table_identifier (TableIdentifier): Identifies tables in queries.
-            name_matcher (NameMatchManager): Manages column name matching.
-            pattern_manager (PatternManager): Manages query patterns.
-            db_name (str): Name of the database.
+            table_identifier: TableIdentifier instance.
         """
-        # Ensure logs directory exists
-        os.makedirs("logs", exist_ok=True)
-        logging_config_path = "app-config/logging_config.ini"
-        if os.path.exists(logging_config_path):
-            try:
-                logging.config.fileConfig(logging_config_path, disable_existing_loggers=False)
-            except Exception as e:
-                print(f"Error loading logging config: {e}")
-        
         self.logger = logging.getLogger("query_processor")
-        self.connection_manager = connection_manager
-        self.schema_dict = schema_dict
-        self.nlp_pipeline = nlp_pipeline
         self.table_identifier = table_identifier
-        self.name_matcher = name_matcher
-        self.pattern_manager = pattern_manager
-        self.db_name = db_name
-        self.logger.debug(f"Initialized QueryProcessor for {db_name}")
+        try:
+            self.nlp = spacy.load("en_core_web_sm")
+        except Exception as e:
+            self.logger.error(f"Failed to load spacy model: {e}")
+            self.nlp = None
+        self.logger.debug("Initialized QueryProcessor")
 
-    def process_query(self, query: str) -> Tuple[List[str], bool]:
-        """Process a natural language query to identify tables.
+    def preprocess_query(self, query: str) -> str:
+        """Preprocess the query for analysis.
 
         Args:
-            query (str): The natural language query.
+            query: The query string.
 
         Returns:
-            Tuple[List[str], bool]: List of identified tables and confidence flag.
+            str: Preprocessed query or empty string if invalid.
+        """
+        try:
+            if not query or query.isspace():
+                self.logger.warning("Empty query")
+                return ""
+                
+            # Check if query is in English
+            try:
+                lang = detect(query)
+                if lang != 'en':
+                    self.logger.warning(f"Non-English query: {query} (language: {lang})")
+                    return ""
+            except Exception as e:
+                self.logger.error(f"Error detecting language: {e}")
+                return ""
+                
+            # Basic cleaning
+            query = query.strip().lower()
+            
+            # Semantic validation
+            if self.nlp:
+                doc = self.nlp(query)
+                if not any(chunk for chunk in doc.noun_chunks) and not any(token.pos_ == "VERB" for token in doc):
+                    self.logger.warning(f"Query lacks meaningful structure: {query}")
+                    return ""
+            
+            return query
+        except Exception as e:
+            self.logger.error(f"Error preprocessing query: {e}")
+            return ""
+
+    def process_query(self, query: str) -> Tuple[List[str], float]:
+        """Process a natural language query to identify relevant tables.
+
+        Args:
+            query: The query string.
+
+        Returns:
+            Tuple: List of table names and confidence score.
         """
         self.logger.debug(f"Processing query: {query}")
-        tables, confidence = self.table_identifier.identify_tables(query)
-        if not tables:
-            self.logger.warning("No tables identified")
-            return None, False
-
-        # Perform column matching
-        analysis = self.nlp_pipeline.analyze_query(query)
-        tokens = analysis["tokens"]
-        for token in tokens:
-            for table in tables:
-                schema, tbl = table.split('.')
-                columns = self.schema_dict['columns'][schema][tbl]
-                self.name_matcher.update_synonyms([token], self.name_matcher.get_token_embeddings([token]), columns)
-
-        self.table_identifier.update_weights_from_feedback(query, tables)
-        self.logger.info(f"Identified tables: {tables}, Confidence: {confidence}")
-        return tables, confidence
+        try:
+            preprocessed = self.preprocess_query(query)
+            if not preprocessed:
+                self.logger.warning(f"Invalid query after preprocessing: {query}")
+                return [], 0.0
+                
+            tables, confidence = self.table_identifier.identify_tables(preprocessed)
+            self.logger.debug(f"Identified tables: {tables}, confidence: {confidence}")
+            return tables, confidence
+        except Exception as e:
+            self.logger.error(f"Error processing query: {e}")
+            return [], 0.0
