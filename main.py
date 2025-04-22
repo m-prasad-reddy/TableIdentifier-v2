@@ -194,7 +194,11 @@ class DatabaseAnalyzer:
         # Initialize other managers
         self.pattern_manager = PatternManager(self.schema_dict)
         self.feedback_manager = FeedbackManager(db_name)
-        self.nlp_pipeline = NLPPipeline(self.pattern_manager, db_name, self.embedder)
+        try:
+            self.nlp_pipeline = NLPPipeline(self.pattern_manager, db_name)
+        except Exception as e:
+            self.logger.warning(f"NLPPipeline initialization failed: {e}")
+            self.nlp_pipeline = None
         self.name_matcher = NameMatchManager(db_name, self.embedder)
 
         # Initialize table identifier
@@ -251,7 +255,11 @@ class DatabaseAnalyzer:
             )
             self.pattern_manager = PatternManager(self.schema_dict)
             self.feedback_manager = FeedbackManager(db_name)
-            self.nlp_pipeline = NLPPipeline(self.pattern_manager, db_name, self.embedder)
+            try:
+                self.nlp_pipeline = NLPPipeline(self.pattern_manager, db_name)
+            except Exception as e:
+                self.logger.warning(f"NLPPipeline initialization failed: {e}")
+                self.nlp_pipeline = None
             self.name_matcher = NameMatchManager(db_name, self.embedder)
             self.table_identifier = TableIdentifier(
                 self.schema_dict,

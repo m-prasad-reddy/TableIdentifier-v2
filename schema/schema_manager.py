@@ -21,7 +21,7 @@ class SchemaManager:
         os.makedirs(self.cache_dir, exist_ok=True)
         self.db_type = None
         self.logger.debug(f"Initialized SchemaManager for {db_name}")
-        self.logger.info("SchemaManager version: 2025-04-22 with 42S22 fix")
+        self.logger.info("SchemaManager version: 2025-04-23 with enhanced 42S22 fix")
 
     def set_db_type(self, connection):
         """Detect database type from connection.
@@ -39,7 +39,7 @@ class SchemaManager:
                 self.db_type = "postgresql"
             else:
                 self.db_type = "generic"
-            self.logger.debug(f"Detected database type: {self.db_type}")
+            self.logger.debug(f"Detected database type: {self.db_type}, version: {version}")
         except Exception as e:
             self.logger.error(f"Error detecting database type: {e}")
             self.db_type = "generic"
@@ -80,14 +80,20 @@ class SchemaManager:
                     SELECT MAX(last_update) 
                     FROM (
                         SELECT MAX(create_date) as last_update 
-                        FROM sys.tables 
-                        WHERE schema_name(schema_id) NOT IN ('information_schema', 'sys')
+                        FROM sys.objects 
+                        WHERE type = 'U' AND schema_name(schema_id) NOT IN ('information_schema', 'sys')
                         UNION
                         SELECT MAX(modify_date) 
-                        FROM sys.tables 
-                        WHERE schema_name(schema_id) NOT IN ('information_schema', 'sys')
+                        FROM sys.objects 
+                        WHERE type = 'U' AND schema_name(schema_id) NOT IN ('information_schema', 'sys')
                     ) AS t
                 """
+                self.logger.debug(f"Executing SQL Server schema mtime query: {query}")
+                cursor.execute(query)
+                result = cursor.fetchone()
+                mtime = result[0].timestamp() if result[0] and isinstance(result[0], datetime) else 0
+                self.logger.debug(f"Schema mtime retrieved: {mtime}")
+                return mtime
             elif self.db_type == "postgresql":
                 query = """
                     SELECT MAX(last_update) 
@@ -101,6 +107,12 @@ class SchemaManager:
                         WHERE table_schema NOT IN ('information_schema', 'pg_catalog')
                     ) AS t
                 """
+                self.logger.debug(f"Executing PostgreSQL schema mtime query: {query}")
+                cursor.execute(query)
+                result = cursor.fetchone()
+                mtime = result[0].timestamp() if result[0] and isinstance(result[0], datetime) else 0
+                self.logger.debug(f"Schema mtime retrieved: {mtime}")
+                return mtime
             else:
                 query = """
                     SELECT MAX(last_update) 
@@ -110,14 +122,30 @@ class SchemaManager:
                         WHERE table_schema NOT IN ('information_schema', 'sys')
                     ) AS t
                 """
-            cursor.execute(query)
-            result = cursor.fetchone()
-            mtime = result[0].timestamp() if result[0] and isinstance(result[0], datetime) else 0
-            self.logger.debug(f"Schema mtime retrieved: {mtime}")
-            return mtime
+                self.logger.debug(f"Executing generic schema mtime query: {query}")
+                cursor.execute(query)
+                result = cursor.fetchone()
+                mtime = result[0].timestamp() if result[0] and isinstance(result[0], datetime) else 0
+                self.logger.debug(f"Schema mtime retrieved: {mtime}")
+                return mtime
         except Exception as e:
-            self.logger.error(f"Error getting schema mtime: {e}")
-            return float('inf')
+            self.logger.error(f"Error getting schema mtime: {e}. Falling back to information_schema.tables")
+            try:
+                # Fallback query
+                query = """
+                    SELECT MAX(create_date) as last_update
+                    FROM information_schema.tables
+                    WHERE table_schema NOT IN ('information_schema', 'sys', 'pg_catalog')
+                """
+                self.logger.debug(f"Executing fallback schema mtime query: {query}")
+                cursor.execute(query)
+                result = cursor.fetchone()
+                mtime = result[0].timestamp() if result[0] and isinstance(result[0], datetime) else 0
+                self.logger.debug(f"Fallback schema mtime retrieved: {mtime}")
+                return mtime
+            except Exception as fallback_e:
+                self.logger.error(f"Fallback schema mtime query failed: {fallback_e}")
+                return float('inf')
         finally:
             cursor.close()
 
@@ -273,7 +301,7 @@ class SchemaManager:
             cursor.close()
 
     def _validate_schema(self, schema_dict: Dict):
-        """Validate: Validate schema consistency.
+        """Validate schema consistency.
 
         Args:
             schema_dict: Schema dictionary to validate.
