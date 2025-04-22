@@ -1,14 +1,10 @@
 import logging
 import spacy
-from langdetect import detect, DetectorFactory
-from typing import List, Dict, Tuple
-
-# Ensure consistent language detection
-DetectorFactory.seed = 0
+from typing import List, Tuple
 
 class QueryProcessor:
     """Processes natural language queries for database table identification."""
-    
+
     def __init__(self, table_identifier):
         """Initialize with table identifier.
 
@@ -27,38 +23,48 @@ class QueryProcessor:
     def preprocess_query(self, query: str) -> str:
         """Preprocess the query for analysis.
 
+        Validates query relevance and language using spacy.
+
         Args:
             query: The query string.
 
         Returns:
             str: Preprocessed query or empty string if invalid.
         """
+        self.logger.debug(f"Preprocessing query: {query}")
         try:
             if not query or query.isspace():
                 self.logger.warning("Empty query")
                 return ""
-                
-            # Check if query is in English
-            try:
-                lang = detect(query)
-                if lang != 'en':
-                    self.logger.warning(f"Non-English query: {query} (language: {lang})")
-                    return ""
-            except Exception as e:
-                self.logger.error(f"Error detecting language: {e}")
-                return ""
-                
+
             # Basic cleaning
             query = query.strip().lower()
-            
-            # Semantic validation
-            if self.nlp:
-                doc = self.nlp(query)
-                if not any(chunk for chunk in doc.noun_chunks) and not any(token.pos_ == "VERB" for token in doc):
-                    self.logger.warning(f"Query lacks meaningful structure: {query}")
-                    return ""
-            
-            return query
+
+            # Semantic validation with spacy
+            if not self.nlp:
+                self.logger.warning("Spacy model not loaded, skipping semantic validation")
+                return query
+
+            doc = self.nlp(query)
+            # Check for meaningful structure
+            has_noun_chunk = any(chunk for chunk in doc.noun_chunks)
+            has_verb = any(token.pos_ == "VERB" for token in doc)
+            if not (has_noun_chunk or has_verb):
+                self.logger.warning(f"Query lacks meaningful structure: {query}")
+                return ""
+
+            # Check if query is likely English
+            # Count English-like tokens (basic heuristic)
+            english_tokens = sum(1 for token in doc if token.is_alpha and token.lang_ == "en")
+            if english_tokens < len([token for token in doc if token.is_alpha]) * 0.5:
+                self.logger.warning(f"Query may not be in English: {query}")
+                return ""
+
+            # Remove stop words and non-alphabetic tokens
+            query_tokens = [token.text for token in doc if not token.is_stop and token.is_alpha]
+            preprocessed = " ".join(query_tokens)
+            self.logger.debug(f"Preprocessed query: {preprocessed}")
+            return preprocessed
         except Exception as e:
             self.logger.error(f"Error preprocessing query: {e}")
             return ""
@@ -78,7 +84,7 @@ class QueryProcessor:
             if not preprocessed:
                 self.logger.warning(f"Invalid query after preprocessing: {query}")
                 return [], 0.0
-                
+
             tables, confidence = self.table_identifier.identify_tables(preprocessed)
             self.logger.debug(f"Identified tables: {tables}, confidence: {confidence}")
             return tables, confidence

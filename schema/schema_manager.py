@@ -3,10 +3,11 @@ import os
 import json
 from collections import defaultdict
 from typing import Dict
+from datetime import datetime
 
 class SchemaManager:
     """Manages database schema metadata extraction and caching for multiple database types."""
-    
+
     def __init__(self, db_name: str):
         """Initialize with database name and logging.
 
@@ -83,11 +84,7 @@ class SchemaManager:
                         WHERE schema_name(schema_id) NOT IN ('information_schema', 'sys')
                         UNION
                         SELECT MAX(modify_date) 
-                        FROM sys.columns 
-                        WHERE schema_name(schema_id) NOT IN ('information_schema', 'sys')
-                        UNION
-                        SELECT MAX(create_date) 
-                        FROM sys.views 
+                        FROM sys.tables 
                         WHERE schema_name(schema_id) NOT IN ('information_schema', 'sys')
                     ) AS t
                 """
@@ -95,16 +92,12 @@ class SchemaManager:
                 query = """
                     SELECT MAX(last_update) 
                     FROM (
-                        SELECT MAX(table_creation_date) as last_update 
+                        SELECT MAX(create_date) as last_update 
                         FROM information_schema.tables 
                         WHERE table_schema NOT IN ('information_schema', 'pg_catalog')
                         UNION
-                        SELECT MAX(column_modified_date) 
-                        FROM information_schema.columns 
-                        WHERE table_schema NOT IN ('information_schema', 'pg_catalog')
-                        UNION
-                        SELECT MAX(view_creation_date) 
-                        FROM information_schema.views 
+                        SELECT MAX(last_altered) 
+                        FROM information_schema.tables 
                         WHERE table_schema NOT IN ('information_schema', 'pg_catalog')
                     ) AS t
                 """
@@ -112,18 +105,14 @@ class SchemaManager:
                 query = """
                     SELECT MAX(last_update) 
                     FROM (
-                        SELECT MAX(table_creation_date) as last_update 
+                        SELECT MAX(create_date) as last_update 
                         FROM information_schema.tables 
-                        WHERE table_schema NOT IN ('information_schema', 'sys')
-                        UNION
-                        SELECT MAX(column_modified_date) 
-                        FROM information_schema.columns
                         WHERE table_schema NOT IN ('information_schema', 'sys')
                     ) AS t
                 """
             cursor.execute(query)
             result = cursor.fetchone()
-            mtime = result[0].timestamp() if result[0] else 0
+            mtime = result[0].timestamp() if result[0] and isinstance(result[0], datetime) else 0
             self.logger.debug(f"Schema mtime retrieved: {mtime}")
             return mtime
         except Exception as e:
@@ -284,7 +273,7 @@ class SchemaManager:
             cursor.close()
 
     def _validate_schema(self, schema_dict: Dict):
-        """Validate schema consistency.
+        """Validate: Validate schema consistency.
 
         Args:
             schema_dict: Schema dictionary to validate.

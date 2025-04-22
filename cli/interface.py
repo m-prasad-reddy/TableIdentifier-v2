@@ -4,14 +4,11 @@ import os
 import shutil
 import json
 from filelock import Timeout
-from langdetect import detect, DetectorFactory
-
-# Ensure consistent language detection
-DetectorFactory.seed = 0
+from typing import List
 
 class DatabaseAnalyzerCLI:
     """Command-line interface for interacting with the DatabaseAnalyzer."""
-    
+
     def __init__(self, analyzer):
         """Initialize with analyzer instance.
 
@@ -46,9 +43,9 @@ class DatabaseAnalyzerCLI:
             print("3. Reload Configurations")
             print("4. Manage Feedback")
             print("5. Exit")
-            
+
             choice = input("Select option: ").strip()
-            
+
             if choice == "1":
                 self._handle_connection()
                 db_name = self.analyzer.current_config.get('database', 'Database') if self.analyzer.current_config else 'Database'
@@ -71,7 +68,7 @@ class DatabaseAnalyzerCLI:
         config_path = input("Config path [default: app-config/database_configurations.json]: ").strip()
         if not config_path:
             config_path = "app-config/database_configurations.json"
-        
+
         try:
             configs = self.analyzer.load_configs(config_path)
             self._select_configuration(configs)
@@ -82,8 +79,8 @@ class DatabaseAnalyzerCLI:
                 self.logger.error("Connection failed: Unable to establish database connection")
                 print("Connection failed: Unable to establish database connection")
         except Exception as e:
-            self.logger.error(f"Connection failed: {str(e)}")
-            print(f"Connection failed: {str(e)}")
+            self.logger.error(f"Connection failed: {e}")
+            print(f"Connection failed: {e}")
 
     def _select_configuration(self, configs):
         """Select a database configuration from available options.
@@ -95,7 +92,7 @@ class DatabaseAnalyzerCLI:
         for i, name in enumerate(configs.keys(), 1):
             print(f"{i}. {name}")
         print(f"{len(configs)+1}. Cancel")
-        
+
         while True:
             choice = input("Select configuration: ").strip()
             if choice.isdigit():
@@ -110,8 +107,10 @@ class DatabaseAnalyzerCLI:
                     return
             print("Invalid selection")
 
-    def _validate_query(self, query):
-        """Validate if a query is meaningful and in English.
+    def _validate_query(self, query: str) -> bool:
+        """Validate if a query is meaningful and relevant to the database schema.
+
+        Uses spacy for semantic validation and analyzer for schema relevance.
 
         Args:
             query: The query to validate.
@@ -119,42 +118,38 @@ class DatabaseAnalyzerCLI:
         Returns:
             bool: True if the query is valid, False otherwise.
         """
+        self.logger.debug(f"Validating query: {query}")
         if not query or query.isspace():
-            self.logger.warning(f"Empty query: {query}")
+            self.logger.warning("Empty query")
             return False
-            
+
         tokens = query.strip().split()
         if len(tokens) <= 1:
             self.logger.warning(f"Single-word query: {query}")
             return False
-        if query.strip().isdigit():
-            self.logger.warning(f"Numeric query: {query}")
+        if query.strip().isdigit() or query.strip().startswith('+'):
+            self.logger.warning(f"Numeric or invalid query: {query}")
             return False
-            
-        # Check if query is in English
-        try:
-            lang = detect(query)
-            if lang != 'en':
-                self.logger.warning(f"Non-English query detected: {query} (language: {lang})")
-                return False
-        except Exception as e:
-            self.logger.error(f"Error detecting language: {e}")
-            return False
-            
+
         # Semantic validation with spacy
         if self.nlp:
             doc = self.nlp(query.lower())
             has_noun_chunk = any(chunk for chunk in doc.noun_chunks)
             has_verb = any(token.pos_ == "VERB" for token in doc)
-            
             if not (has_noun_chunk or has_verb):
                 self.logger.warning(f"Query lacks meaningful structure: {query}")
                 return False
-                
-            if len(doc) < 3 and not has_noun_chunk:
-                self.logger.warning(f"Query too short and lacks nouns: {query}")
+            # Check if query is likely English
+            english_tokens = sum(1 for token in doc if token.is_alpha and token.lang_ == "en")
+            if english_tokens < len([token for token in doc if token.is_alpha]) * 0.5:
+                self.logger.warning(f"Query may not be in English: {query}")
                 return False
-                
+
+        # Check relevance to schema using analyzer
+        if not self.analyzer._is_relevant_query(query):
+            self.logger.warning(f"Query not relevant to schema: {query}")
+            return False
+
         return True
 
     def _display_example_queries(self):
@@ -169,12 +164,12 @@ class DatabaseAnalyzerCLI:
             self.logger.error("Not connected to database")
             print("Not connected to database!")
             return
-            
+
         if not self.analyzer.feedback_manager:
             self.logger.error("Feedback manager not initialized")
             print("Feedback manager not initialized. Please reconnect to the database.")
             return
-            
+
         try:
             example_queries = self.analyzer.feedback_manager.get_top_queries(3)
             if example_queries:
@@ -184,21 +179,21 @@ class DatabaseAnalyzerCLI:
             else:
                 self._display_example_queries()
         except Exception as e:
-            self.logger.error(f"Error loading example queries: {str(e)}")
-            print(f"Error loading example queries: {str(e)}")
-            
+            self.logger.error(f"Error loading example queries: {e}")
+            print(f"Error loading example queries: {e}")
+
         while True:
             query = input("\nEnter query (or 'back'): ").strip()
             if query.lower() == 'back':
                 self.logger.debug("Exiting query mode")
                 return
-                
+
             if not self._validate_query(query):
                 self.logger.warning(f"Invalid query: {query}")
                 print("Please enter a meaningful query in English.")
                 self._display_example_queries()
                 continue
-                
+
             max_retries = 3
             for attempt in range(max_retries):
                 try:
@@ -207,8 +202,8 @@ class DatabaseAnalyzerCLI:
                         self.logger.error("Unable to process query")
                         print("Unable to process query. Please try again or reconnect.")
                         continue
-                        
-                    if confidence and results and confidence >= 0.8:
+
+                    if confidence >= 0.5 and results:
                         self.logger.info(f"Suggested tables for query '{query}': {results}, confidence: {confidence}")
                         print("\nSuggested Tables:")
                         for i, table in enumerate(results[:5], 1):
@@ -228,11 +223,11 @@ class DatabaseAnalyzerCLI:
                         self._manual_table_selection(query)
                         break
                 except Exception as e:
-                    self.logger.error(f"Error processing query: {str(e)}")
-                    print(f"Error processing query: {str(e)}")
+                    self.logger.error(f"Error processing query: {e}")
+                    print(f"Error processing query: {e}")
                     break
 
-    def _handle_feedback(self, query, results):
+    def _handle_feedback(self, query: str, results: List[str]):
         """Handle user feedback for suggested tables.
 
         Args:
@@ -245,7 +240,7 @@ class DatabaseAnalyzerCLI:
             if feedback in ('y', 'n'):
                 break
             print("Please enter 'Y' or 'N'.")
-        
+
         if feedback == 'y':
             self.logger.info(f"Confirmed tables for query '{query}': {results}")
             self.analyzer.confirm_tables(query, results)
@@ -256,7 +251,7 @@ class DatabaseAnalyzerCLI:
                 self.logger.info(f"Updated feedback with tables: {correct_tables}")
                 self.analyzer.update_feedback(query, correct_tables)
 
-    def _get_manual_tables(self):
+    def _get_manual_tables(self) -> List[str]:
         """Get manual table selections from the user.
 
         Returns:
@@ -266,15 +261,15 @@ class DatabaseAnalyzerCLI:
         tables = self.analyzer.get_all_tables()
         for i, table in enumerate(tables, 1):
             print(f"{i}. {table}")
-            
+
         selection = input("Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): ").strip()
         if not selection:
             self.logger.debug("No manual tables selected")
             return []
-            
+
         selected = []
         items = [s.strip() for s in selection.split(',')]
-        
+
         for item in items:
             if item.isdigit():
                 try:
@@ -287,7 +282,7 @@ class DatabaseAnalyzerCLI:
                 schema, table_name = item.split('.', 1)
                 if any(t.lower() == item.lower() for t in tables):
                     selected.append(item)
-        
+
         if not selected:
             self.logger.warning("Invalid manual table selection")
             print("Invalid selection, please try again")
@@ -295,7 +290,7 @@ class DatabaseAnalyzerCLI:
             self.logger.debug(f"Selected manual tables: {selected}")
         return selected
 
-    def _manual_table_selection(self, query):
+    def _manual_table_selection(self, query: str):
         """Handle manual table selection for a query.
 
         Args:
@@ -316,8 +311,8 @@ class DatabaseAnalyzerCLI:
                 self.logger.error("Reload failed: Unable to reload configurations")
                 print("Reload failed: Unable to reload configurations")
         except Exception as e:
-            self.logger.error(f"Reload failed: {str(e)}")
-            print(f"Reload failed: {str(e)}")
+            self.logger.error(f"Reload failed: {e}")
+            print(f"Reload failed: {e}")
 
     def _manage_feedback(self):
         """Manage feedback operations (export, import, clear)."""
@@ -325,18 +320,18 @@ class DatabaseAnalyzerCLI:
             self.logger.error("Not connected to database for feedback management")
             print("Please connect to a database to manage feedback.")
             return
-            
+
         if not self.analyzer.feedback_manager:
             self.logger.error("Feedback manager not initialized")
             print("Feedback manager not initialized. Please reconnect to the database.")
             return
-            
+
         print("\nFeedback Management:")
         print("1. Export feedback")
         print("2. Import feedback")
         print("3. Clear local feedback")
         choice = input("Select option: ").strip()
-        
+
         if choice == "1":
             self._export_feedback()
         elif choice == "2":
@@ -346,8 +341,8 @@ class DatabaseAnalyzerCLI:
                 self.analyzer.clear_feedback()
                 self.logger.info("Feedback cleared")
             except Exception as e:
-                self.logger.error(f"Error clearing feedback: {str(e)}")
-                print(f"Error clearing feedback: {str(e)}")
+                self.logger.error(f"Error clearing feedback: {e}")
+                print(f"Error clearing feedback: {e}")
         else:
             print("Invalid choice")
 
@@ -356,14 +351,14 @@ class DatabaseAnalyzerCLI:
         export_dir = input("Enter export directory path [default: feedback_cache/export]: ").strip()
         if not export_dir:
             export_dir = os.path.join("feedback_cache", "export")
-            
+
         try:
             self.analyzer.feedback_manager.export_feedback(export_dir)
             self.logger.info(f"Feedback exported to {export_dir}")
             print(f"Feedback exported to {export_dir}")
         except Exception as e:
-            self.logger.error(f"Error exporting feedback: {str(e)}")
-            print(f"Error exporting feedback: {str(e)}")
+            self.logger.error(f"Error exporting feedback: {e}")
+            print(f"Error exporting feedback: {e}")
 
     def _import_feedback(self):
         """Import feedback data from a specified directory."""
@@ -372,11 +367,11 @@ class DatabaseAnalyzerCLI:
             self.logger.error("Invalid or non-existent import directory")
             print("Invalid or non-existent directory")
             return
-            
+
         try:
             self.analyzer.feedback_manager.import_feedback(import_dir)
             self.logger.info(f"Feedback imported from {import_dir}")
             print(f"Feedback imported from {import_dir}")
         except Exception as e:
-            self.logger.error(f"Error importing feedback: {str(e)}")
-            print(f"Error importing feedback: {str(e)}")
+            self.logger.error(f"Error importing feedback: {e}")
+            print(f"Error importing feedback: {e}")

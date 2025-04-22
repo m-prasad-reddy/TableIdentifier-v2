@@ -3,6 +3,8 @@ import logging.config
 import os
 import json
 from typing import Dict, List, Tuple
+import spacy
+from sentence_transformers import SentenceTransformer
 from database.connection import DatabaseConnection
 from config.config_manager import DBConfigManager
 from config.patterns import PatternManager
@@ -18,19 +20,19 @@ class DatabaseAnalyzer:
     """Orchestrates database schema analysis and natural language query processing.
 
     This class integrates components for database connection, schema management,
-    feedback handling, and NLP-based query processing to enable natural language
-    interaction with database schemas.
+    feedback handling, and NLP-based query processing with advanced pattern matching
+    and semantic analysis for accurate table identification.
     """
-    
+
     def __init__(self):
-        """Initialize logging and core components with null states."""
-        # Ensure log directory exists
+        """Initialize logging, NLP models, and core components."""
+        # Ensure directories exist
         os.makedirs("logs", exist_ok=True)
         os.makedirs("schema_cache", exist_ok=True)
         os.makedirs("feedback_cache", exist_ok=True)
         os.makedirs("models", exist_ok=True)
-        
-        # Set up logging from configuration file
+
+        # Set up logging
         logging_config_path = "app-config/logging_config.ini"
         try:
             if os.path.exists(logging_config_path):
@@ -55,7 +57,7 @@ class DatabaseAnalyzer:
                 ]
             )
             print(f"Error loading logging config: {e}")
-        
+
         self.logger = logging.getLogger("analyzer")
         self.connection_manager = None
         self.config_manager = None
@@ -68,11 +70,13 @@ class DatabaseAnalyzer:
         self.query_processor = None
         self.current_config = None
         self.schema_dict = {}
-        self.query_history = []  # Track recent queries
-        self.logger.debug("Initialized DatabaseAnalyzer")
+        self.query_history = []
+        self.nlp = spacy.load("en_core_web_sm")
+        self.embedder = SentenceTransformer("all-distilroberta-v1")
+        self.logger.debug("Initialized DatabaseAnalyzer with spacy and SentenceTransformer")
 
     def run(self):
-        """Launch the command-line interface and manage application shutdown."""
+        """Launch the CLI and manage application shutdown."""
         try:
             cli = DatabaseAnalyzerCLI(self)
             cli.run()
@@ -80,7 +84,6 @@ class DatabaseAnalyzer:
             self.logger.error(f"Application error: {e}")
             print(f"Application error: {e}")
         finally:
-            # Save model and close connection
             if self.table_identifier and self.current_config:
                 self.table_identifier.save_name_matches()
                 self.table_identifier.save_model(f"models/{self.current_config['database']}_model.json")
@@ -89,13 +92,13 @@ class DatabaseAnalyzer:
             self.logger.info("Application shutdown")
 
     def load_configs(self, config_path: str = "app-config/database_configurations.json") -> Dict:
-        """Load and validate database configurations from a JSON file.
+        """Load and validate database configurations.
 
         Args:
             config_path (str): Path to the configuration file.
 
         Returns:
-            Dict: Dictionary of valid database configurations.
+            Dict: Valid database configurations.
         """
         if not os.path.exists(config_path):
             self.logger.warning(f"Config file not found at {config_path}")
@@ -103,7 +106,7 @@ class DatabaseAnalyzer:
             if not os.path.exists(config_path):
                 self.logger.error(f"Invalid config path: {config_path}")
                 return {}
-        
+
         try:
             self.config_manager = DBConfigManager()
             configs = self.config_manager.load_configs(config_path)
@@ -118,10 +121,10 @@ class DatabaseAnalyzer:
         """Validate database configurations for required keys.
 
         Args:
-            configs (Dict): Dictionary of configurations.
+            configs (Dict): Configuration dictionary.
 
         Returns:
-            Dict: Dictionary of valid configurations.
+            Dict: Valid configurations.
         """
         required_keys = ['database', 'server', 'driver']
         valid_configs = {}
@@ -136,22 +139,22 @@ class DatabaseAnalyzer:
         """Set the active database configuration.
 
         Args:
-            config (Dict): Configuration dictionary for the database.
+            config (Dict): Configuration dictionary.
         """
         self.current_config = config
         self.logger.debug(f"Set config: {config.get('database')}")
 
     def connect_to_database(self) -> bool:
-        """Establish connection to the selected database and initialize components.
+        """Establish database connection and initialize components.
 
         Returns:
-            bool: True if connection and initialization succeed, False otherwise.
+            bool: True if successful, False otherwise.
         """
         if not self.current_config:
             self.logger.error("No configuration selected")
             print("No configuration selected")
             return False
-        
+
         try:
             self.connection_manager = DatabaseConnection()
             if self.connection_manager.connect(self.current_config):
@@ -169,10 +172,10 @@ class DatabaseAnalyzer:
             return False
 
     def _initialize_managers(self):
-        """Initialize component managers for schema and query processing."""
+        """Initialize component managers."""
         db_name = self.current_config['database']
         self.logger.debug(f"Initializing managers for {db_name}")
-        
+
         # Initialize schema manager
         self.schema_manager = SchemaManager(db_name)
         try:
@@ -187,13 +190,13 @@ class DatabaseAnalyzer:
         except Exception as e:
             self.logger.error(f"Schema initialization failed: {e}")
             raise
-        
+
         # Initialize other managers
         self.pattern_manager = PatternManager(self.schema_dict)
         self.feedback_manager = FeedbackManager(db_name)
-        self.nlp_pipeline = NLPPipeline(self.pattern_manager, db_name)
-        self.name_matcher = NameMatchManager(db_name)
-        
+        self.nlp_pipeline = NLPPipeline(self.pattern_manager, db_name, self.embedder)
+        self.name_matcher = NameMatchManager(db_name, self.embedder)
+
         # Initialize table identifier
         try:
             self.table_identifier = TableIdentifier(
@@ -201,23 +204,24 @@ class DatabaseAnalyzer:
                 self.feedback_manager,
                 self.pattern_manager,
                 self.name_matcher,
-                db_name
+                db_name,
+                self.embedder
             )
         except Exception as e:
-            self.logger.warning(f"TableIdentifier initialization failed, likely due to CSV parsing: {e}")
-            self.table_identifier = None  # Allow partial initialization
-        
+            self.logger.warning(f"TableIdentifier initialization failed: {e}")
+            self.table_identifier = None
+
         # Initialize query processor
         try:
             self.query_processor = QueryProcessor(self.table_identifier)
         except Exception as e:
             self.logger.error(f"QueryProcessor initialization failed: {e}")
             raise
-        
+
         self.logger.debug("Managers initialized successfully")
 
     def _reset_managers(self):
-        """Reset managers to null states on initialization failure."""
+        """Reset managers to null states."""
         self.schema_manager = None
         self.pattern_manager = None
         self.feedback_manager = None
@@ -232,13 +236,13 @@ class DatabaseAnalyzer:
         """Reload configurations and reinitialize managers.
 
         Returns:
-            bool: True if reload is successful, False otherwise.
+            bool: True if successful, False otherwise.
         """
         if not self.connection_manager or not self.connection_manager.is_connected():
             self.logger.error("Not connected to database")
             print("Not connected to database!")
             return False
-        
+
         try:
             db_name = self.current_config['database']
             self.logger.debug(f"Reloading configurations for {db_name}")
@@ -247,14 +251,15 @@ class DatabaseAnalyzer:
             )
             self.pattern_manager = PatternManager(self.schema_dict)
             self.feedback_manager = FeedbackManager(db_name)
-            self.nlp_pipeline = NLPPipeline(self.pattern_manager, db_name)
-            self.name_matcher = NameMatchManager(db_name)
+            self.nlp_pipeline = NLPPipeline(self.pattern_manager, db_name, self.embedder)
+            self.name_matcher = NameMatchManager(db_name, self.embedder)
             self.table_identifier = TableIdentifier(
                 self.schema_dict,
                 self.feedback_manager,
                 self.pattern_manager,
                 self.name_matcher,
-                db_name
+                db_name,
+                self.embedder
             )
             self.query_processor = QueryProcessor(self.table_identifier)
             self.logger.info("Configurations reloaded successfully")
@@ -266,24 +271,30 @@ class DatabaseAnalyzer:
             return False
 
     def process_query(self, query: str) -> Tuple[List[str], float]:
-        """Process a natural language query to identify relevant tables.
+        """Process a natural language query to identify tables.
 
         Args:
-            query (str): The natural language query.
+            query (str): The query text.
 
         Returns:
-            Tuple[List[str], float]: List of identified tables and confidence score.
+            Tuple[List[str], float]: Identified tables and confidence score.
         """
         if not self.connection_manager or not self.connection_manager.is_connected():
             self.logger.error("Not connected to database")
             print("Not connected to database!")
             return [], 0.0
-        
+
         if self.query_processor is None:
             self.logger.error("Query processor not initialized")
             print("Query processor not initialized. Please connect to the database.")
             return [], 0.0
-        
+
+        # Validate query relevance
+        if not self._is_relevant_query(query):
+            self.logger.warning(f"Query not relevant to schema: {query}")
+            print("Please enter a meaningful query in English.")
+            return [], 0.0
+
         try:
             tables, confidence = self.query_processor.process_query(query)
             self.query_history.append(query)
@@ -296,67 +307,112 @@ class DatabaseAnalyzer:
             print(f"Query processing error: {e}")
             return [], 0.0
 
-    def validate_tables_exist(self, tables: List[str]) -> Tuple[List[str], List[str]]:
-        """Validate tables against the current schema.
+    def _is_relevant_query(self, query: str) -> bool:
+        """Check if the query is relevant to the database schema.
 
         Args:
-            tables (List[str]): List of table names (schema.table).
+            query (str): The query text.
 
         Returns:
-            Tuple[List[str], List[str]]: Valid and invalid table lists.
+            bool: True if relevant, False otherwise.
+        """
+        # Check for single-word or numeric queries
+        if len(query.strip().split()) <= 1 or query.strip().isdigit() or query.strip().startswith('+'):
+            self.logger.warning(f"Invalid query: {query}")
+            return False
+
+        # Use spacy for intent analysis
+        doc = self.nlp(query)
+        query_tokens = [token.text.lower() for token in doc if not token.is_stop and token.is_alpha]
+
+        # Check for non-English or irrelevant queries
+        if not query_tokens:
+            self.logger.warning(f"No meaningful tokens in query: {query}")
+            return False
+
+        # Compute semantic similarity with schema metadata
+        metadata_texts = []
+        for schema in self.schema_dict['tables']:
+            for table in self.schema_dict['tables'][schema]:
+                metadata_texts.append(f"{schema}.{table}")
+                for col_name in self.schema_dict['columns'][schema][table]:
+                    metadata_texts.append(col_name)
+
+        if not metadata_texts:
+            return True  # No metadata to compare, proceed cautiously
+
+        query_embedding = self.embedder.encode(query, convert_to_tensor=True)
+        metadata_embeddings = self.embedder.encode(metadata_texts, convert_to_tensor=True)
+        similarities = (query_embedding @ metadata_embeddings.T).cpu().numpy()
+        max_similarity = similarities.max()
+
+        if max_similarity < 0.3:  # Threshold for relevance
+            self.logger.warning(f"Query not relevant to schema (max similarity: {max_similarity}): {query}")
+            return False
+
+        return True
+
+    def validate_tables_exist(self, tables: List[str]) -> Tuple[List[str], List[str]]:
+        """Validate tables against the schema.
+
+        Args:
+            tables (List[str]): Table names (schema.table).
+
+        Returns:
+            Tuple[List[str], List[str]]: Valid and invalid tables.
         """
         valid = []
         invalid = []
         schema_map = {s.lower(): s for s in self.schema_dict['tables']}
-        
+
         for table in tables:
             parts = table.split('.')
             if len(parts) != 2:
                 invalid.append(table)
                 self.logger.warning(f"Invalid table format: {table}")
                 continue
-                
+
             schema, table_name = parts
             schema_lower = schema.lower()
-            
-            if (schema_lower in schema_map and 
-                table_name.lower() in {t.lower() for t in self.schema_dict['tables'][schema_map[schema_lower]]}):
+
+            if (schema_lower in schema_map and
+                    table_name.lower() in {t.lower() for t in self.schema_dict['tables'][schema_map[schema_lower]]}):
                 valid.append(f"{schema_map[schema_lower]}.{table_name}")
             else:
                 invalid.append(table)
                 self.logger.warning(f"Table not found: {table}")
-        
+
         self.logger.debug(f"Validated tables: Valid={valid}, Invalid={invalid}")
         return valid, invalid
 
     def generate_ddl(self, tables: List[str]):
-        """Generate DDL statements for specified tables.
+        """Generate DDL statements for tables.
 
         Args:
-            tables (List[str]): List of table names (schema.table).
+            tables (List[str]): Table names (schema.table).
         """
         for table in tables:
             if '.' not in table:
                 print(f"Invalid format: {table}")
                 self.logger.warning(f"Invalid table format for DDL: {table}")
                 continue
-                
+
             schema, table_name = table.split('.')
             if schema not in self.schema_dict['tables']:
                 print(f"Schema not found: {schema}")
                 self.logger.warning(f"Schema not found for DDL: {schema}")
                 continue
-                
+
             if table_name not in self.schema_dict['tables'][schema]:
                 print(f"Table not found: {table_name} in schema {schema}")
                 self.logger.warning(f"Table not found for DDL: {table_name} in {schema}")
                 continue
-                
+
             self.logger.debug(f"Generating DDL for {schema}.{table_name}")
             print(f"\n-- DDL for {schema}.{table_name}")
             columns = self.schema_dict['columns'][schema][table_name]
             col_defs = []
-            
+
             for col_name, col_info in columns.items():
                 col_def = f"    [{col_name}] {col_info['type']}"
                 if col_info.get('is_primary_key'):
@@ -364,7 +420,7 @@ class DatabaseAnalyzer:
                 if not col_info.get('nullable'):
                     col_def += " NOT NULL"
                 col_defs.append(col_def)
-                
+
             print("CREATE TABLE [{}].[{}] (\n{}\n);".format(
                 schema, table_name, ",\n".join(col_defs)
             ))
@@ -384,10 +440,10 @@ class DatabaseAnalyzer:
         return self.connection_manager and self.connection_manager.is_connected()
 
     def get_all_tables(self) -> List[str]:
-        """Get a list of all tables in the schema.
+        """Get all tables in the schema.
 
         Returns:
-            List[str]: List of table names (schema.table).
+            List[str]: Table names (schema.table).
         """
         tables = []
         for schema in self.schema_dict['tables']:
@@ -396,22 +452,22 @@ class DatabaseAnalyzer:
         return tables
 
     def get_recent_queries(self, limit: int = 5) -> List[str]:
-        """Get the most recent queries processed.
+        """Get recent queries.
 
         Args:
-            limit (int): Maximum number of queries to return.
+            limit (int): Maximum number of queries.
 
         Returns:
-            List[str]: List of recent queries.
+            List[str]: Recent queries.
         """
         return self.query_history[-limit:][::-1]
 
     def confirm_tables(self, query: str, tables: List[str]):
-        """Confirm correct tables for a query and update feedback.
+        """Confirm tables for a query and update feedback.
 
         Args:
-            query (str): The natural language query.
-            tables (List[str]): List of confirmed tables.
+            query (str): The query.
+            tables (List[str]): Confirmed tables.
         """
         if self.feedback_manager:
             valid_tables, _ = self.validate_tables_exist(tables)
@@ -429,8 +485,8 @@ class DatabaseAnalyzer:
         """Update feedback with corrected tables.
 
         Args:
-            query (str): The natural language query.
-            tables (List[str]): List of corrected tables.
+            query (str): The query.
+            tables (List[str]): Corrected tables.
         """
         if self.feedback_manager:
             valid_tables, _ = self.validate_tables_exist(tables)
