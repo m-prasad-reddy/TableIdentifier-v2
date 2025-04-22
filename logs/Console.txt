@@ -1,4 +1,4 @@
-2025-04-22 15:40:07 - interface - INFO - Starting Database Schema Analyzer
+2025-04-22 15:49:56 - interface - INFO - Starting Database Schema Analyzer
 === Database Schema Analyzer ===
 
 Main Menu:
@@ -16,15 +16,156 @@ Available Configurations:
 3. BIKES_DB
 4. Cancel
 Select configuration: 3
-2025-04-22 15:40:18 - connection - INFO - Connected to database: BikeStores
-2025-04-22 15:40:18 - schema - INFO - SchemaManager version: 2025-04-22 with 42S22 fix
-2025-04-22 15:40:18 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'table_creation_date'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'column_modified_date'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'last_update'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]No column name was specified for column 1 of 't'. (8155)")
-2025-04-22 15:40:18 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-22 15:40:18 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-22 15:40:24 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-22 15:40:24 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-22 15:40:26 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-22 15:40:26 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-22 15:40:29 - table_identifier - WARNING - Training CSV not found at app-config\training_data.csv
-2025-04-22 15:40:29 - analyzer - INFO - Connected to BikeStores
+2025-04-22 15:50:23 - connection - ERROR - Connection failed: ('28000', "[28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user 'sa'. (18456) (SQLDriverConnect); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user 'sa'. (18456)")
+Connection failed: ('28000', "[28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user 'sa'. (18456) (SQLDriverConnect); [28000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user 'sa'. (18456)")
+2025-04-22 15:50:23 - analyzer - ERROR - Database connection failed
+2025-04-22 15:50:23 - interface - ERROR - Connection failed: Unable to establish database connection
+Connection failed: Unable to establish database connection
 
+=== BikeStores Schema Analyzer ===
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+4. Manage Feedback
+5. Exit
+Select option: 2
+2025-04-22 15:50:27 - interface - ERROR - Not connected to database
+Not connected to database!
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations
+4. Manage Feedback
+5. Exit
+Select option: 5
+2025-04-22 15:51:38 - interface - INFO - Exiting application
+Exiting...
+2025-04-22 15:51:38 - analyzer - INFO - Application shutdown
+(C:\Users\varaprasad\Pythonworks\Text2SQl\venv) PS D:\Github\TableIdentifier-v2> & C:/Users/varaprasad/Pythonworks/Text2SQl/venv/python.exe 
+d:/Github/TableIdentifier-v2/main.py
+2025-04-22 15:52:49 - interface - INFO - Starting Database Schema Analyzer
+=== Database Schema Analyzer ===
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations
+4. Manage Feedback
+5. Exit
+Select option: 1
+Config path [default: app-config/database_configurations.json]: 
+
+Available Configurations:
+1. ADWORKS_DB
+2. ADWORKS2019_DB
+3. BIKES_DB
+4. Cancel
+Select configuration: 3
+2025-04-22 15:53:03 - connection - INFO - Connected to database: BikeStores
+2025-04-22 15:53:03 - schema - INFO - SchemaManager version: 2025-04-22 with 42S22 fix
+2025-04-22 15:53:03 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'table_creation_date'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'column_modified_date'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'last_update'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]No column name was specified for column 1 of 't'. (8155)")
+2025-04-22 15:53:04 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 15:53:04 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 15:53:10 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 15:53:10 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 15:53:12 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 15:53:12 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 15:53:16 - table_identifier - WARNING - Training CSV not found at app-config\training_data.csv
+2025-04-22 15:53:16 - analyzer - INFO - Connected to BikeStores
+2025-04-22 15:53:16 - interface - INFO - Successfully connected to database
+Successfully connected!
+
+=== BikeStores Schema Analyzer ===
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations
+4. Manage Feedback
+5. Exit
+Select option: 2
+
+No example queries available. Try these formats:
+1. Show me all stores with store names
+2. List all products with prices
+3. Show customers from a specific city
+
+Enter query (or 'back'): show me the products
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  1.54it/s]
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 35.77it/s] 
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.61it/s] 
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 33.44it/s] 
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 43.53it/s]
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.05it/s] 
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.94it/s] 
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.32it/s]
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.81it/s] 
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 99.95it/s] 
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 111.37it/s] 
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 142.66it/s] 
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 124.97it/s] 
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 125.33it/s] 
+d:\Github\TableIdentifier-v2\analysis\processor.py:66: UserWarning: [W036] The component 'matcher' does not have any patterns defined.
+  matches = self.matcher(doc)
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 35.81it/s]
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 1
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 35.81it/s] 
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 1
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 35.81it/s] 
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 1
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 34.57it/s] 
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 1
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 91.15it/s] 
+2025-04-22 15:53:51 - name_match_manager - ERROR - Error updating synonyms: 4
+2025-04-22 15:53:51 - query_processor - INFO - Identified tables: ['production.products', 'production.brands', 'production.stocks', 'sales.stores', 'sales.orders'], Confidence: 0.49236905574798584
+2025-04-22 15:53:51 - interface - INFO - Suggested tables for query 'show me the products': ['production.products', 'production.brands', 'production.stocks', 'sales.stores', 'sales.orders']
+
+Suggested Tables:
+1. production.products
+2. production.brands
+3. production.stocks
+4. sales.stores
+5. sales.orders
+
+Correct? (Y/N): N
+2025-04-22 15:54:13 - interface - INFO - User rejected tables for query 'show me the products': ['production.products', 'production.brands', 'production.stocks', 'sales.stores', 'sales.orders']
+Available Tables:
+1. production.categories
+2. production.brands
+3. production.products
+4. production.stocks
+5. sales.customers
+6. sales.stores
+7. sales.staffs
+8. sales.orders
+9. sales.order_items
+10. dbo.sysdiagrams
+11. hr.candidates
+12. hr.employees
+Enter table numbers or names (comma-separated, e.g., '6' or 'sales.stores'): production.products
+2025-04-22 15:54:24 - interface - INFO - Updated feedback with tables: ['production.products']
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.91it/s] 
+Traceback (most recent call last):
+  File "d:\Github\TableIdentifier-v2\main.py", line 363, in <module>
+    analyzer.run()
+  File "d:\Github\TableIdentifier-v2\main.py", line 48, in run
+    cli.run()
+  File "d:\Github\TableIdentifier-v2\cli\interface.py", line 46, in run
+    self._query_mode()
+  File "d:\Github\TableIdentifier-v2\cli\interface.py", line 186, in _query_mode
+    self._handle_feedback(query, results)
+  File "d:\Github\TableIdentifier-v2\cli\interface.py", line 226, in _handle_feedback
+    self.analyzer.update_feedback(query, correct_tables)
+  File "d:\Github\TableIdentifier-v2\main.py", line 344, in update_feedback
+    self.feedback_manager.store_feedback(query, tables, self.schema_dict)
+  File "d:\Github\TableIdentifier-v2\feedback\feedback_manager.py", line 154, in store_feedback
+    self._load_feedback_cache()
+  File "d:\Github\TableIdentifier-v2\feedback\feedback_manager.py", line 50, in _load_feedback_cache
+    with filelock.FileLock(os.path.join(self.feedback_dir, "feedback.lock")):
+  File "C:\Users\varaprasad\Pythonworks\Text2SQl\venv\Lib\site-packages\filelock\_api.py", line 376, in __enter__
+    self.acquire()
+  File "C:\Users\varaprasad\Pythonworks\Text2SQl\venv\Lib\site-packages\filelock\_api.py", line 344, in acquire
+    time.sleep(poll_interval)
+KeyboardInterrupt
