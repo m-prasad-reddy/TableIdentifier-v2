@@ -1,28 +1,18 @@
-# Package Path: EntityResolver/schema/manager.py
-
+import logging
 import os
 import json
 from collections import defaultdict
-from typing import Dict, Optional
-import logging
-import logging.config
+from typing import Dict
 
 class SchemaManager:
-    """Manages database schema metadata extraction and caching."""
+    """Manages database schema metadata extraction and caching for multiple database types."""
     
     def __init__(self, db_name: str):
         """Initialize with database name and logging.
 
         Args:
-            db_name (str): Name of the database.
+            db_name: Name of the database.
         """
-        logging_config_path = "app-config/logging_config.ini"
-        if os.path.exists(logging_config_path):
-            try:
-                logging.config.fileConfig(logging_config_path, disable_existing_loggers=False)
-            except Exception as e:
-                print(f"Error loading logging config: {e}")
-        
         self.logger = logging.getLogger("schema")
         self.db_name = db_name
         self.cache_dir = os.path.join("schema_cache", db_name)
@@ -30,6 +20,7 @@ class SchemaManager:
         os.makedirs(self.cache_dir, exist_ok=True)
         self.db_type = None
         self.logger.debug(f"Initialized SchemaManager for {db_name}")
+        self.logger.info("SchemaManager version: 2025-04-22 with 42S22 fix")
 
     def set_db_type(self, connection):
         """Detect database type from connection.
@@ -98,7 +89,7 @@ class SchemaManager:
                         SELECT MAX(create_date) 
                         FROM sys.views 
                         WHERE schema_name(schema_id) NOT IN ('information_schema', 'sys')
-                    ) t
+                    ) AS t
                 """
             elif self.db_type == "postgresql":
                 query = """
@@ -115,7 +106,7 @@ class SchemaManager:
                         SELECT MAX(view_creation_date) 
                         FROM information_schema.views 
                         WHERE table_schema NOT IN ('information_schema', 'pg_catalog')
-                    ) t
+                    ) AS t
                 """
             else:
                 query = """
@@ -128,11 +119,12 @@ class SchemaManager:
                         SELECT MAX(column_modified_date) 
                         FROM information_schema.columns
                         WHERE table_schema NOT IN ('information_schema', 'sys')
-                    ) t
+                    ) AS t
                 """
             cursor.execute(query)
             result = cursor.fetchone()
             mtime = result[0].timestamp() if result[0] else 0
+            self.logger.debug(f"Schema mtime retrieved: {mtime}")
             return mtime
         except Exception as e:
             self.logger.error(f"Error getting schema mtime: {e}")
@@ -295,7 +287,7 @@ class SchemaManager:
         """Validate schema consistency.
 
         Args:
-            schema_dict (Dict): Schema dictionary to validate.
+            schema_dict: Schema dictionary to validate.
         """
         for schema, tables in schema_dict["tables"].items():
             for table in tables:

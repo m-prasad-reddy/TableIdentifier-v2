@@ -1,12 +1,8 @@
-# Package Path: EntityResolver/cli/interface.py
-
-import os
-from typing import Dict, List
+import logging
 import spacy
+import os
 import shutil
 import json
-import logging
-import logging.config
 from filelock import Timeout
 
 class DatabaseAnalyzerCLI:
@@ -18,14 +14,6 @@ class DatabaseAnalyzerCLI:
         Args:
             analyzer: DatabaseAnalyzer instance.
         """
-        os.makedirs("logs", exist_ok=True)
-        logging_config_path = "app-config/logging_config.ini"
-        if os.path.exists(logging_config_path):
-            try:
-                logging.config.fileConfig(logging_config_path, disable_existing_loggers=False)
-            except Exception as e:
-                print(f"Error loading logging config: {e}")
-        
         self.logger = logging.getLogger("interface")
         self.analyzer = analyzer
         try:
@@ -86,11 +74,11 @@ class DatabaseAnalyzerCLI:
             self.logger.error(f"Connection failed: {str(e)}")
             print(f"Connection failed: {str(e)}")
 
-    def _select_configuration(self, configs: Dict):
+    def _select_configuration(self, configs):
         """Select a database configuration from available options.
 
         Args:
-            configs (Dict): Dictionary of available configurations.
+            configs: Dictionary of available configurations.
         """
         print("\nAvailable Configurations:")
         for i, name in enumerate(configs.keys(), 1):
@@ -111,11 +99,11 @@ class DatabaseAnalyzerCLI:
                     return
             print("Invalid selection")
 
-    def _validate_query(self, query: str) -> bool:
+    def _validate_query(self, query):
         """Validate if a query is meaningful.
 
         Args:
-            query (str): The query to validate.
+            query: The query to validate.
 
         Returns:
             bool: True if the query is valid, False otherwise.
@@ -181,37 +169,45 @@ class DatabaseAnalyzerCLI:
                 print("Avoid single words, numbers, or vague phrases.")
                 continue
                 
-            try:
-                results, confidence = self.analyzer.process_query(query)
-                if results is None:
-                    self.logger.error("Unable to process query")
-                    print("Unable to process query. Please try again or reconnect.")
-                    continue
-                    
-                if confidence and results:
-                    self.logger.info(f"Suggested tables for query '{query}': {results}")
-                    print("\nSuggested Tables:")
-                    for i, table in enumerate(results[:5], 1):
-                        print(f"{i}. {table}")
-                    self._handle_feedback(query, results)
-                else:
-                    self.logger.warning(f"Low confidence for query '{query}'")
-                    print("\nLow confidence. Please select tables manually:")
-                    self._manual_table_selection(query)
-            except Timeout:
-                self.logger.error("Feedback lock timeout during query processing")
-                print("Feedback system is busy. Please try again or select tables manually.")
-                self._manual_table_selection(query)
-            except Exception as e:
-                self.logger.error(f"Error processing query: {str(e)}")
-                print(f"Error processing query: {str(e)}")
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    results, confidence = self.analyzer.process_query(query)
+                    if results is None:
+                        self.logger.error("Unable to process query")
+                        print("Unable to process query. Please try again or reconnect.")
+                        continue
+                        
+                    if confidence and results:
+                        self.logger.info(f"Suggested tables for query '{query}': {results}")
+                        print("\nSuggested Tables:")
+                        for i, table in enumerate(results[:5], 1):
+                            print(f"{i}. {table}")
+                        self._handle_feedback(query, results)
+                        break
+                    else:
+                        self.logger.warning(f"Low confidence for query '{query}'")
+                        print("\nLow confidence. Please select tables manually:")
+                        self._manual_table_selection(query)
+                        break
+                except Timeout:
+                    self.logger.warning(f"Feedback lock timeout on attempt {attempt + 1}/{max_retries}")
+                    if attempt == max_retries - 1:
+                        self.logger.error("Feedback lock timeout after max retries")
+                        print("Feedback system is busy. Please select tables manually.")
+                        self._manual_table_selection(query)
+                        break
+                except Exception as e:
+                    self.logger.error(f"Error processing query: {str(e)}")
+                    print(f"Error processing query: {str(e)}")
+                    break
 
-    def _handle_feedback(self, query: str, results: List[str]):
+    def _handle_feedback(self, query, results):
         """Handle user feedback for suggested tables.
 
         Args:
-            query (str): The query.
-            results (List[str]): Suggested tables.
+            query: The query.
+            results: Suggested tables.
         """
         while True:
             feedback = input("\nCorrect? (Y/N): ").strip().lower()
@@ -229,11 +225,11 @@ class DatabaseAnalyzerCLI:
                 self.logger.info(f"Updated feedback with tables: {correct_tables}")
                 self.analyzer.update_feedback(query, correct_tables)
 
-    def _get_manual_tables(self) -> List[str]:
+    def _get_manual_tables(self):
         """Get manual table selections from the user.
 
         Returns:
-            List[str]: List of selected tables.
+            List of selected tables.
         """
         print("Available Tables:")
         tables = self.analyzer.get_all_tables()
@@ -268,11 +264,11 @@ class DatabaseAnalyzerCLI:
             self.logger.debug(f"Selected manual tables: {selected}")
         return selected
 
-    def _manual_table_selection(self, query: str):
+    def _manual_table_selection(self, query):
         """Handle manual table selection for a query.
 
         Args:
-            query (str): The query.
+            query: The query.
         """
         selected_tables = self._get_manual_tables()
         if selected_tables:
@@ -326,11 +322,6 @@ class DatabaseAnalyzerCLI:
 
     def _export_feedback(self):
         """Export feedback data to a specified directory."""
-        if not self.analyzer.feedback_manager:
-            self.logger.error("Feedback manager not initialized")
-            print("Feedback manager not initialized. Please connect to a database.")
-            return
-            
         export_dir = input("Enter export directory path [default: feedback_cache/export]: ").strip()
         if not export_dir:
             export_dir = os.path.join("feedback_cache", "export")
@@ -367,11 +358,6 @@ class DatabaseAnalyzerCLI:
 
     def _import_feedback(self):
         """Import feedback data from a specified directory."""
-        if not self.analyzer.feedback_manager:
-            self.logger.error("Feedback manager not initialized")
-            print("Feedback manager not initialized. Please connect to a database.")
-            return
-            
         import_dir = input("Enter import directory path: ").strip()
         if not import_dir or not os.path.exists(import_dir):
             self.logger.error("Invalid or non-existent import directory")
@@ -394,9 +380,9 @@ class DatabaseAnalyzerCLI:
                     dst = os.path.join(feedback_dir, fname)
                     shutil.copy2(src, dst)
                     emb_fname = fname.replace("_meta.json", "_emb.npy")
-                    emb_src = os.path.join(import_dir, emb_fname)
-                    if os.path.exists(emb_src):
-                        shutil.copy2(emb_src, os.path.join(feedback_dir, emb_fname))
+                    emp_src = os.path.join(import_dir, emb_fname)
+                    if os.path.exists(emp_src):
+                        shutil.copy2(emp_src, os.path.join(feedback_dir, emb_fname))
                     copied = True
             if copied:
                 self.analyzer.feedback_manager._load_feedback_cache()
