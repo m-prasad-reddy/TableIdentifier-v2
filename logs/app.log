@@ -1,81 +1,37 @@
-2025-04-22 16:33:53 - connection - DEBUG - Initialized DatabaseConnection
-2025-04-22 16:33:53 - config - DEBUG - Initialized DBConfigManager
-2025-04-22 16:33:53 - analyzer - DEBUG - Initialized DatabaseAnalyzer
-2025-04-22 16:33:54 - interface - DEBUG - Initialized DatabaseAnalyzerCLI
-2025-04-22 16:33:54 - interface - INFO - Starting Database Schema Analyzer
-2025-04-22 16:34:02 - config - DEBUG - Loaded configurations from app-config/database_configurations.json
-2025-04-22 16:34:02 - analyzer - DEBUG - Loaded 3 configurations
-2025-04-22 16:34:04 - analyzer - DEBUG - Set config: BikeStores
-2025-04-22 16:34:04 - interface - DEBUG - Selected configuration: BikeStores
-2025-04-22 16:34:04 - connection - INFO - Connected to database: BikeStores
-2025-04-22 16:34:04 - analyzer - DEBUG - Initializing managers for BikeStores
-2025-04-22 16:34:04 - schema - DEBUG - Initialized SchemaManager for BikeStores
-2025-04-22 16:34:04 - schema - INFO - SchemaManager version: 2025-04-22 with 42S22 fix
-2025-04-22 16:34:04 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'table_creation_date'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'column_modified_date'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'last_update'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]No column name was specified for column 1 of 't'. (8155)")
-2025-04-22 16:34:04 - schema - DEBUG - Latest schema change: inf, Cache mtime: 1745317384.040766
-2025-04-22 16:34:04 - analyzer - DEBUG - Building fresh schema
-2025-04-22 16:34:04 - schema - DEBUG - Detected database type: sqlserver
-2025-04-22 16:34:04 - schema - DEBUG - Schema validation completed
-2025-04-22 16:34:04 - schema - DEBUG - Saved schema to schema_cache\BikeStores\schema.json
-2025-04-22 16:34:04 - patterns - DEBUG - Loaded patterns from app-config/global_patterns.json
-2025-04-22 16:34:04 - patterns - DEBUG - Initialized PatternManager with 0 patterns
-2025-04-22 16:34:04 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-22 16:34:04 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-22 16:34:12 - nlp_pipeline - DEBUG - Loading patterns
-2025-04-22 16:34:12 - nlp_pipeline - DEBUG - Patterns loaded
-2025-04-22 16:34:12 - nlp_pipeline - DEBUG - Initialized NLPPipeline
-2025-04-22 16:34:12 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-22 16:34:12 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-22 16:34:15 - name_match_manager - DEBUG - Initialized NameMatchManager for BikeStores
-2025-04-22 16:34:15 - analyzer - WARNING - TableIdentifier initialization failed, likely due to CSV parsing: TableIdentifier.__init__() missing 1 required positional argument: 'db_name'
-2025-04-22 16:34:15 - query_processor - DEBUG - Initialized QueryProcessor for BikeStores
-2025-04-22 16:34:15 - analyzer - DEBUG - Managers initialized
-2025-04-22 16:34:15 - analyzer - INFO - Connected to BikeStores
-2025-04-22 16:34:15 - interface - INFO - Successfully connected to database
-2025-04-22 16:34:30 - query_processor - DEBUG - Processing query: show me the products
-2025-04-22 16:34:30 - analyzer - ERROR - Query processing error: 'NoneType' object has no attribute 'identify_tables'
-2025-04-22 16:34:30 - interface - WARNING - Low confidence for query 'show me the products'
-2025-04-22 16:34:30 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
-2025-04-22 16:34:48 - interface - DEBUG - Selected manual tables: ['production.products']
-2025-04-22 16:34:48 - interface - INFO - Manually selected tables for query 'show me the products': ['production.products']
-2025-04-22 16:34:49 - analyzer - INFO - Updated feedback for query: show me the products
-2025-04-22 16:35:04 - query_processor - DEBUG - Processing query: what production categories are available
-2025-04-22 16:35:04 - analyzer - ERROR - Query processing error: 'NoneType' object has no attribute 'identify_tables'
-2025-04-22 16:35:04 - interface - WARNING - Low confidence for query 'what production categories are available'
-2025-04-22 16:35:04 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
-2025-04-22 16:35:43 - interface - DEBUG - Selected manual tables: ['production.categories']
-2025-04-22 16:35:43 - interface - INFO - Manually selected tables for query 'what production categories are available': ['production.categories']
-2025-04-22 16:35:46 - analyzer - INFO - Updated feedback for query: what production categories are available
-2025-04-22 16:35:56 - query_processor - DEBUG - Processing query: get me store details of Baldwin Bikes
-2025-04-22 16:35:56 - analyzer - ERROR - Query processing error: 'NoneType' object has no attribute 'identify_tables'
-2025-04-22 16:35:56 - interface - WARNING - Low confidence for query 'get me store details of Baldwin Bikes'
-2025-04-22 16:35:56 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
-2025-04-22 16:36:06 - interface - DEBUG - Selected manual tables: ['sales.stores']
-2025-04-22 16:36:06 - interface - INFO - Manually selected tables for query 'get me store details of Baldwin Bikes': ['sales.stores']
-2025-04-22 16:36:07 - analyzer - INFO - Updated feedback for query: get me store details of Baldwin Bikes
-2025-04-22 16:36:14 - query_processor - DEBUG - Processing query: total sales amount at storename 'Baldwin Bikes'
-2025-04-22 16:36:14 - analyzer - ERROR - Query processing error: 'NoneType' object has no attribute 'identify_tables'
-2025-04-22 16:36:14 - interface - WARNING - Low confidence for query 'total sales amount at storename 'Baldwin Bikes''
-2025-04-22 16:36:14 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
-2025-04-22 16:36:44 - interface - DEBUG - Selected manual tables: ['sales.stores', 'sales.orders', 'sales.order_items']
-2025-04-22 16:36:44 - interface - INFO - Manually selected tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items']
-2025-04-22 16:36:45 - analyzer - INFO - Updated feedback for query: total sales amount at storename 'Baldwin Bikes'
-2025-04-22 16:36:58 - query_processor - DEBUG - Processing query: total sales amount at storename=Baldwin Bikes
-2025-04-22 16:36:58 - analyzer - ERROR - Query processing error: 'NoneType' object has no attribute 'identify_tables'
-2025-04-22 16:36:58 - interface - WARNING - Low confidence for query 'total sales amount at storename=Baldwin Bikes'
-2025-04-22 16:36:58 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
-2025-04-22 16:37:16 - interface - DEBUG - Selected manual tables: ['sales.stores', 'sales.orders', 'sales.order_items']
-2025-04-22 16:37:16 - interface - INFO - Manually selected tables for query 'total sales amount at storename=Baldwin Bikes': ['sales.stores', 'sales.orders', 'sales.order_items']
-2025-04-22 16:37:17 - analyzer - INFO - Updated feedback for query: total sales amount at storename=Baldwin Bikes
-2025-04-22 16:37:25 - query_processor - DEBUG - Processing query: total sales amount at storename 'Baldwin Bikes'
-2025-04-22 16:37:25 - analyzer - ERROR - Query processing error: 'NoneType' object has no attribute 'identify_tables'
-2025-04-22 16:37:25 - interface - WARNING - Low confidence for query 'total sales amount at storename 'Baldwin Bikes''
-2025-04-22 16:37:25 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
-2025-04-22 16:37:42 - interface - DEBUG - Selected manual tables: ['sales.stores', 'sales.orders', 'sales.order_items']
-2025-04-22 16:37:42 - interface - INFO - Manually selected tables for query 'total sales amount at storename 'Baldwin Bikes'': ['sales.stores', 'sales.orders', 'sales.order_items']
-2025-04-22 16:37:43 - analyzer - INFO - Updated feedback for query: total sales amount at storename 'Baldwin Bikes'
-2025-04-22 16:37:50 - interface - WARNING - Invalid query: what
-2025-04-22 16:38:04 - query_processor - DEBUG - Processing query: chitti emchestunnav
-2025-04-22 16:38:04 - analyzer - ERROR - Query processing error: 'NoneType' object has no attribute 'identify_tables'
-2025-04-22 16:38:04 - interface - WARNING - Low confidence for query 'chitti emchestunnav'
-2025-04-22 16:38:04 - analyzer - DEBUG - All tables: ['production.categories', 'production.brands', 'production.products', 'production.stocks', 'sales.customers', 'sales.stores', 'sales.staffs', 'sales.orders', 'sales.order_items', 'dbo.sysdiagrams', 'hr.candidates', 'hr.employees']
+2025-04-22 17:47:56 - connection - DEBUG - Initialized DatabaseConnection
+2025-04-22 17:47:56 - config - DEBUG - Initialized DBConfigManager
+2025-04-22 17:47:56 - analyzer - DEBUG - Initialized DatabaseAnalyzer
+2025-04-22 17:47:56 - interface - DEBUG - Initialized DatabaseAnalyzerCLI
+2025-04-22 17:47:56 - interface - INFO - Starting Database Schema Analyzer
+2025-04-22 17:48:01 - config - DEBUG - Loaded configurations from app-config/database_configurations.json
+2025-04-22 17:48:01 - analyzer - DEBUG - Loaded 3 configurations
+2025-04-22 17:48:03 - analyzer - DEBUG - Set config: BikeStores
+2025-04-22 17:48:03 - interface - DEBUG - Selected configuration: BikeStores
+2025-04-22 17:48:03 - connection - INFO - Connected to database: BikeStores
+2025-04-22 17:48:03 - analyzer - DEBUG - Initializing managers for BikeStores
+2025-04-22 17:48:03 - schema - DEBUG - Initialized SchemaManager for BikeStores
+2025-04-22 17:48:03 - schema - INFO - SchemaManager version: 2025-04-22 with 42S22 fix
+2025-04-22 17:48:03 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'table_creation_date'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'column_modified_date'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'last_update'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]No column name was specified for column 1 of 't'. (8155)")
+2025-04-22 17:48:03 - schema - DEBUG - Latest schema change: inf, Cache mtime: 1745319844.3658876
+2025-04-22 17:48:03 - analyzer - DEBUG - Building fresh schema
+2025-04-22 17:48:03 - schema - DEBUG - Detected database type: sqlserver
+2025-04-22 17:48:03 - schema - DEBUG - Schema validation completed
+2025-04-22 17:48:03 - schema - DEBUG - Saved schema to schema_cache\BikeStores\schema.json
+2025-04-22 17:48:03 - patterns - DEBUG - Loaded patterns from app-config/global_patterns.json
+2025-04-22 17:48:03 - patterns - DEBUG - Initialized PatternManager with 0 patterns
+2025-04-22 17:48:03 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 17:48:03 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 17:48:09 - nlp_pipeline - DEBUG - Loading patterns
+2025-04-22 17:48:09 - nlp_pipeline - DEBUG - Patterns loaded
+2025-04-22 17:48:09 - nlp_pipeline - DEBUG - Initialized NLPPipeline
+2025-04-22 17:48:09 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-22 17:48:09 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-22 17:48:12 - name_match_manager - DEBUG - Loaded SentenceTransformer for name matching
+2025-04-22 17:48:12 - name_match_manager - DEBUG - Initialized NameMatchManager for BikeStores
+2025-04-22 17:48:12 - analyzer - WARNING - TableIdentifier initialization failed, likely due to CSV parsing: TableIdentifier.__init__() missing 2 required positional arguments: 'name_match_manager' and 'db_name'
+2025-04-22 17:48:12 - analyzer - ERROR - Initialization error: QueryProcessor.__init__() takes 2 positional arguments but 8 were given
+2025-04-22 17:48:12 - interface - ERROR - Connection failed: QueryProcessor.__init__() takes 2 positional arguments but 8 were given
+2025-04-22 17:48:19 - interface - ERROR - Feedback manager not initialized
+2025-04-22 17:48:28 - interface - INFO - Exiting application
+2025-04-22 17:48:28 - connection - INFO - Closing database connection
+2025-04-22 17:48:28 - analyzer - INFO - Application shutdown
