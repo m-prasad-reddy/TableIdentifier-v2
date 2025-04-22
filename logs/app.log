@@ -1,32 +1,96 @@
-2025-04-23 01:36:19 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-23 01:36:19 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-23 01:36:24 - analyzer - DEBUG - Initialized DatabaseAnalyzer with spacy and SentenceTransformer
-2025-04-23 01:36:27 - interface - DEBUG - Initialized DatabaseAnalyzerCLI
-2025-04-23 01:36:27 - interface - INFO - Starting Database Schema Analyzer
-2025-04-23 01:36:41 - config - DEBUG - Initialized DBConfigManager
-2025-04-23 01:36:41 - config - DEBUG - Loaded configurations from app-config/database_configurations.json
-2025-04-23 01:36:41 - analyzer - DEBUG - Loaded 3 valid configurations
-2025-04-23 01:36:43 - analyzer - DEBUG - Set config: BikeStores
-2025-04-23 01:36:43 - interface - DEBUG - Selected configuration: BikeStores
-2025-04-23 01:36:43 - connection - DEBUG - Initialized DatabaseConnection
-2025-04-23 01:36:43 - connection - INFO - Connected to database: BikeStores
-2025-04-23 01:36:44 - analyzer - DEBUG - Initializing managers for BikeStores
-2025-04-23 01:36:44 - schema - DEBUG - Initialized SchemaManager for BikeStores
-2025-04-23 01:36:44 - schema - INFO - SchemaManager version: 2025-04-22 with 42S22 fix
-2025-04-23 01:36:44 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
-2025-04-23 01:36:44 - schema - DEBUG - Latest schema change: inf, Cache mtime: 1745344733.6356332
-2025-04-23 01:36:44 - analyzer - DEBUG - Building fresh schema
-2025-04-23 01:36:44 - schema - DEBUG - Detected database type: sqlserver
-2025-04-23 01:36:44 - schema - DEBUG - Schema validation completed
-2025-04-23 01:36:44 - schema - DEBUG - Saved schema to schema_cache\BikeStores\schema.json
-2025-04-23 01:36:44 - patterns - DEBUG - Loaded patterns from app-config/global_patterns.json
-2025-04-23 01:36:44 - patterns - DEBUG - Initialized PatternManager with 0 patterns
-2025-04-23 01:36:44 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-23 01:36:44 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-23 01:36:49 - analyzer - ERROR - Connection or initialization error: NLPPipeline.__init__() takes from 2 to 3 positional arguments but 4 were given
-2025-04-23 01:36:49 - analyzer - DEBUG - Managers reset due to initialization failure
-2025-04-23 01:36:49 - interface - ERROR - Connection failed: Unable to establish database connection
-2025-04-23 01:37:16 - interface - ERROR - Feedback manager not initialized
-2025-04-23 01:37:22 - interface - INFO - Exiting application
-2025-04-23 01:37:22 - connection - INFO - Closing database connection
-2025-04-23 01:37:22 - analyzer - INFO - Application shutdown
+2025-04-23 02:22:31 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-23 02:22:31 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-23 02:22:36 - analyzer - DEBUG - Initialized DatabaseAnalyzer with spacy and SentenceTransformer
+2025-04-23 02:22:37 - interface - DEBUG - Initialized DatabaseAnalyzerCLI
+2025-04-23 02:22:37 - interface - INFO - Starting Database Schema Analyzer
+2025-04-23 02:22:56 - config - DEBUG - Initialized DBConfigManager
+2025-04-23 02:22:56 - config - DEBUG - Loaded configurations from app-config/database_configurations.json
+2025-04-23 02:22:56 - analyzer - DEBUG - Loaded 3 valid configurations
+2025-04-23 02:22:58 - analyzer - DEBUG - Set config: BikeStores
+2025-04-23 02:22:58 - interface - DEBUG - Selected configuration: BikeStores
+2025-04-23 02:22:58 - connection - DEBUG - Initialized DatabaseConnection
+2025-04-23 02:22:58 - connection - INFO - Connected to database: BikeStores
+2025-04-23 02:22:58 - analyzer - DEBUG - Initializing managers for BikeStores
+2025-04-23 02:22:58 - schema - DEBUG - Initialized SchemaManager for BikeStores
+2025-04-23 02:22:58 - schema - INFO - SchemaManager version: 2025-04-23 with enhanced 42S22 fix
+2025-04-23 02:22:58 - schema - DEBUG - Executing generic schema mtime query: 
+                    SELECT MAX(last_update) 
+                    FROM (
+                        SELECT MAX(create_date) as last_update 
+                        FROM information_schema.tables 
+                        WHERE table_schema NOT IN ('information_schema', 'sys')
+                    ) AS t
+                
+2025-04-23 02:22:58 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)"). Falling back to information_schema.tables
+2025-04-23 02:22:58 - schema - DEBUG - Executing fallback schema mtime query: 
+                    SELECT MAX(create_date) as last_update
+                    FROM information_schema.tables
+                    WHERE table_schema NOT IN ('information_schema', 'sys', 'pg_catalog')
+                
+2025-04-23 02:22:58 - schema - ERROR - Fallback schema mtime query failed: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
+2025-04-23 02:22:58 - schema - DEBUG - Latest schema change: inf, Cache mtime: 1745352404.1087322
+2025-04-23 02:22:58 - analyzer - DEBUG - Building fresh schema
+2025-04-23 02:22:58 - schema - DEBUG - Detected database type: sqlserver, version: microsoft sql server 2022 (rtm-gdr) (kb5046861) - 16.0.1135.2 (x64) 
+	oct 18 2024 15:31:58 
+	copyright (c) 2022 microsoft corporation
+	developer edition (64-bit) on windows 10 pro for workstations 10.0 <x64> (build 19045: )
+
+2025-04-23 02:22:58 - schema - DEBUG - Schema validation completed
+2025-04-23 02:22:58 - schema - DEBUG - Saved schema to schema_cache\BikeStores\schema.json
+2025-04-23 02:22:58 - patterns - DEBUG - Loaded patterns from app-config/global_patterns.json
+2025-04-23 02:22:59 - patterns - DEBUG - Initialized PatternManager with 0 patterns
+2025-04-23 02:22:59 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-23 02:22:59 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-23 02:23:03 - nlp_pipeline - DEBUG - Loading patterns
+2025-04-23 02:23:03 - nlp_pipeline - DEBUG - Patterns loaded
+2025-04-23 02:23:03 - nlp_pipeline - DEBUG - Initialized NLPPipeline
+2025-04-23 02:23:03 - analyzer - ERROR - Connection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were given
+2025-04-23 02:23:03 - analyzer - DEBUG - Managers reset due to initialization failure
+2025-04-23 02:23:03 - interface - ERROR - Connection failed: Unable to establish database connection
+2025-04-23 02:23:17 - interface - ERROR - Feedback manager not initialized
+2025-04-23 02:23:34 - config - DEBUG - Initialized DBConfigManager
+2025-04-23 02:23:34 - config - DEBUG - Loaded configurations from app-config/database_configurations.json
+2025-04-23 02:23:34 - analyzer - DEBUG - Loaded 3 valid configurations
+2025-04-23 02:23:39 - analyzer - DEBUG - Set config: adventureworks
+2025-04-23 02:23:39 - interface - DEBUG - Selected configuration: adventureworks
+2025-04-23 02:23:39 - connection - DEBUG - Initialized DatabaseConnection
+2025-04-23 02:23:39 - connection - INFO - Connected to database: adventureworks
+2025-04-23 02:23:39 - analyzer - DEBUG - Initializing managers for adventureworks
+2025-04-23 02:23:39 - schema - DEBUG - Initialized SchemaManager for adventureworks
+2025-04-23 02:23:39 - schema - INFO - SchemaManager version: 2025-04-23 with enhanced 42S22 fix
+2025-04-23 02:23:39 - schema - DEBUG - Executing generic schema mtime query: 
+                    SELECT MAX(last_update) 
+                    FROM (
+                        SELECT MAX(create_date) as last_update 
+                        FROM information_schema.tables 
+                        WHERE table_schema NOT IN ('information_schema', 'sys')
+                    ) AS t
+                
+2025-04-23 02:23:39 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)"). Falling back to information_schema.tables
+2025-04-23 02:23:39 - schema - DEBUG - Executing fallback schema mtime query: 
+                    SELECT MAX(create_date) as last_update
+                    FROM information_schema.tables
+                    WHERE table_schema NOT IN ('information_schema', 'sys', 'pg_catalog')
+                
+2025-04-23 02:23:39 - schema - ERROR - Fallback schema mtime query failed: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
+2025-04-23 02:23:39 - schema - DEBUG - Latest schema change: inf, Cache mtime: 0
+2025-04-23 02:23:39 - analyzer - DEBUG - Building fresh schema
+2025-04-23 02:23:39 - schema - DEBUG - Detected database type: sqlserver, version: microsoft sql server 2022 (rtm-gdr) (kb5046861) - 16.0.1135.2 (x64) 
+	oct 18 2024 15:31:58 
+	copyright (c) 2022 microsoft corporation
+	developer edition (64-bit) on windows 10 pro for workstations 10.0 <x64> (build 19045: )
+
+2025-04-23 02:23:40 - schema - DEBUG - Schema validation completed
+2025-04-23 02:23:40 - schema - DEBUG - Saved schema to schema_cache\adventureworks\schema.json
+2025-04-23 02:23:40 - patterns - DEBUG - Loaded patterns from app-config/global_patterns.json
+2025-04-23 02:23:40 - patterns - DEBUG - Initialized PatternManager with 0 patterns
+2025-04-23 02:23:43 - nlp_pipeline - DEBUG - Loading patterns
+2025-04-23 02:23:43 - nlp_pipeline - DEBUG - Patterns loaded
+2025-04-23 02:23:43 - nlp_pipeline - DEBUG - Initialized NLPPipeline
+2025-04-23 02:23:43 - analyzer - ERROR - Connection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were given
+2025-04-23 02:23:43 - analyzer - DEBUG - Managers reset due to initialization failure
+2025-04-23 02:23:43 - interface - ERROR - Connection failed: Unable to establish database connection
+2025-04-23 02:23:45 - interface - ERROR - Feedback manager not initialized
+2025-04-23 02:23:49 - interface - INFO - Exiting application
+2025-04-23 02:23:49 - connection - INFO - Closing database connection
+2025-04-23 02:23:49 - analyzer - INFO - Application shutdown

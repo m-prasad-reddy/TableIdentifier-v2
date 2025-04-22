@@ -1,0 +1,1336 @@
+{
+  "tables": {
+    "SalesLT": [
+      "Customer",
+      "ProductModel",
+      "ProductDescription",
+      "Product",
+      "ProductModelProductDescription",
+      "ProductCategory",
+      "Address",
+      "CustomerAddress",
+      "SalesOrderDetail",
+      "SalesOrderHeader"
+    ],
+    "dbo": [
+      "BuildVersion",
+      "ErrorLog"
+    ]
+  },
+  "columns": {
+    "SalesLT": {
+      "Customer": {
+        "CustomerID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "NameStyle": {
+          "type": "bit",
+          "nullable": false,
+          "default": "((0))",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Title": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "FirstName": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "MiddleName": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "LastName": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Suffix": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "CompanyName": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "SalesPerson": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "EmailAddress": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Phone": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "PasswordHash": {
+          "type": "varchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "PasswordSalt": {
+          "type": "varchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "ProductModel": {
+        "ProductModelID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "Name": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "CatalogDescription": {
+          "type": "xml",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "vProductModelCatalogDescription": {
+        "ProductModelID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Name": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Summary": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Manufacturer": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Copyright": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ProductURL": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "WarrantyPeriod": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "WarrantyDescription": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "NoOfYears": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "MaintenanceDescription": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Wheel": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Saddle": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Pedal": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "BikeFrame": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Crankset": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "PictureAngle": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "PictureSize": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ProductPhotoID": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Material": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Color": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ProductLine": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Style": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "RiderExperience": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "ProductDescription": {
+        "ProductDescriptionID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "Description": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "Product": {
+        "ProductID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "Name": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ProductNumber": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Color": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "StandardCost": {
+          "type": "money",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ListPrice": {
+          "type": "money",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Size": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Weight": {
+          "type": "decimal",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ProductCategoryID": {
+          "type": "int",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        "ProductModelID": {
+          "type": "int",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        "SellStartDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "SellEndDate": {
+          "type": "datetime",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "DiscontinuedDate": {
+          "type": "datetime",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ThumbNailPhoto": {
+          "type": "varbinary",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ThumbnailPhotoFileName": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "ProductModelProductDescription": {
+        "ProductModelID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "ProductDescriptionID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "Culture": {
+          "type": "nchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "vProductAndDescription": {
+        "ProductID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Name": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ProductModel": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Culture": {
+          "type": "nchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Description": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "ProductCategory": {
+        "ProductCategoryID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "ParentProductCategoryID": {
+          "type": "int",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        "Name": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "vGetAllCategories": {
+        "ParentProductCategoryName": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ProductCategoryName": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ProductCategoryID": {
+          "type": "int",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "Address": {
+        "AddressID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "AddressLine1": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "AddressLine2": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "City": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "StateProvince": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "CountryRegion": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "PostalCode": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "CustomerAddress": {
+        "CustomerID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "AddressID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "AddressType": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "SalesOrderDetail": {
+        "SalesOrderID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "SalesOrderDetailID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "OrderQty": {
+          "type": "smallint",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ProductID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        "UnitPrice": {
+          "type": "money",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "UnitPriceDiscount": {
+          "type": "money",
+          "nullable": false,
+          "default": "((0.0))",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "LineTotal": {
+          "type": "numeric",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "SalesOrderHeader": {
+        "SalesOrderID": {
+          "type": "int",
+          "nullable": false,
+          "default": "(NEXT VALUE FOR [SalesLT].[SalesOrderNumber])",
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "RevisionNumber": {
+          "type": "tinyint",
+          "nullable": false,
+          "default": "((0))",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "OrderDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "DueDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ShipDate": {
+          "type": "datetime",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Status": {
+          "type": "tinyint",
+          "nullable": false,
+          "default": "((1))",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "OnlineOrderFlag": {
+          "type": "bit",
+          "nullable": false,
+          "default": "((1))",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "SalesOrderNumber": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "PurchaseOrderNumber": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "AccountNumber": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "CustomerID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        "ShipToAddressID": {
+          "type": "int",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        "BillToAddressID": {
+          "type": "int",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        "ShipMethod": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "CreditCardApprovalCode": {
+          "type": "varchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "SubTotal": {
+          "type": "money",
+          "nullable": false,
+          "default": "((0.00))",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "TaxAmt": {
+          "type": "money",
+          "nullable": false,
+          "default": "((0.00))",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Freight": {
+          "type": "money",
+          "nullable": false,
+          "default": "((0.00))",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "TotalDue": {
+          "type": "money",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "Comment": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "rowguid": {
+          "type": "uniqueidentifier",
+          "nullable": false,
+          "default": "(newid())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      }
+    },
+    "dbo": {
+      "BuildVersion": {
+        "SystemInformationID": {
+          "type": "tinyint",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "Database Version": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "VersionDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ModifiedDate": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      },
+      "ErrorLog": {
+        "ErrorLogID": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        "ErrorTime": {
+          "type": "datetime",
+          "nullable": false,
+          "default": "(getdate())",
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "UserName": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ErrorNumber": {
+          "type": "int",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ErrorSeverity": {
+          "type": "int",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ErrorState": {
+          "type": "int",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ErrorProcedure": {
+          "type": "nvarchar",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ErrorLine": {
+          "type": "int",
+          "nullable": true,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        "ErrorMessage": {
+          "type": "nvarchar",
+          "nullable": false,
+          "default": null,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      }
+    }
+  },
+  "indexes": {
+    "SalesLT": {
+      "Customer": [
+        {
+          "index_name": "PK_Customer_CustomerID",
+          "column": "CustomerID"
+        },
+        {
+          "index_name": "AK_Customer_rowguid",
+          "column": "rowguid"
+        },
+        {
+          "index_name": "IX_Customer_EmailAddress",
+          "column": "EmailAddress"
+        }
+      ],
+      "ProductModel": [
+        {
+          "index_name": "PK_ProductModel_ProductModelID",
+          "column": "ProductModelID"
+        },
+        {
+          "index_name": "AK_ProductModel_Name",
+          "column": "Name"
+        },
+        {
+          "index_name": "AK_ProductModel_rowguid",
+          "column": "rowguid"
+        }
+      ],
+      "ProductDescription": [
+        {
+          "index_name": "PK_ProductDescription_ProductDescriptionID",
+          "column": "ProductDescriptionID"
+        },
+        {
+          "index_name": "AK_ProductDescription_rowguid",
+          "column": "rowguid"
+        }
+      ],
+      "Product": [
+        {
+          "index_name": "PK_Product_ProductID",
+          "column": "ProductID"
+        },
+        {
+          "index_name": "AK_Product_Name",
+          "column": "Name"
+        },
+        {
+          "index_name": "AK_Product_ProductNumber",
+          "column": "ProductNumber"
+        },
+        {
+          "index_name": "AK_Product_rowguid",
+          "column": "rowguid"
+        }
+      ],
+      "ProductModelProductDescription": [
+        {
+          "index_name": "PK_ProductModelProductDescription_ProductModelID_ProductDescriptionID_Culture",
+          "column": "ProductModelID"
+        },
+        {
+          "index_name": "PK_ProductModelProductDescription_ProductModelID_ProductDescriptionID_Culture",
+          "column": "ProductDescriptionID"
+        },
+        {
+          "index_name": "PK_ProductModelProductDescription_ProductModelID_ProductDescriptionID_Culture",
+          "column": "Culture"
+        },
+        {
+          "index_name": "AK_ProductModelProductDescription_rowguid",
+          "column": "rowguid"
+        }
+      ],
+      "ProductCategory": [
+        {
+          "index_name": "PK_ProductCategory_ProductCategoryID",
+          "column": "ProductCategoryID"
+        },
+        {
+          "index_name": "AK_ProductCategory_Name",
+          "column": "Name"
+        },
+        {
+          "index_name": "AK_ProductCategory_rowguid",
+          "column": "rowguid"
+        }
+      ],
+      "Address": [
+        {
+          "index_name": "PK_Address_AddressID",
+          "column": "AddressID"
+        },
+        {
+          "index_name": "AK_Address_rowguid",
+          "column": "rowguid"
+        },
+        {
+          "index_name": "IX_Address_AddressLine1_AddressLine2_City_StateProvince_PostalCode_CountryRegion",
+          "column": "AddressLine1"
+        },
+        {
+          "index_name": "IX_Address_AddressLine1_AddressLine2_City_StateProvince_PostalCode_CountryRegion",
+          "column": "AddressLine2"
+        },
+        {
+          "index_name": "IX_Address_AddressLine1_AddressLine2_City_StateProvince_PostalCode_CountryRegion",
+          "column": "City"
+        },
+        {
+          "index_name": "IX_Address_AddressLine1_AddressLine2_City_StateProvince_PostalCode_CountryRegion",
+          "column": "StateProvince"
+        },
+        {
+          "index_name": "IX_Address_AddressLine1_AddressLine2_City_StateProvince_PostalCode_CountryRegion",
+          "column": "PostalCode"
+        },
+        {
+          "index_name": "IX_Address_AddressLine1_AddressLine2_City_StateProvince_PostalCode_CountryRegion",
+          "column": "CountryRegion"
+        },
+        {
+          "index_name": "IX_Address_StateProvince",
+          "column": "StateProvince"
+        }
+      ],
+      "CustomerAddress": [
+        {
+          "index_name": "PK_CustomerAddress_CustomerID_AddressID",
+          "column": "CustomerID"
+        },
+        {
+          "index_name": "PK_CustomerAddress_CustomerID_AddressID",
+          "column": "AddressID"
+        },
+        {
+          "index_name": "AK_CustomerAddress_rowguid",
+          "column": "rowguid"
+        }
+      ],
+      "SalesOrderDetail": [
+        {
+          "index_name": "PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID",
+          "column": "SalesOrderID"
+        },
+        {
+          "index_name": "PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID",
+          "column": "SalesOrderDetailID"
+        },
+        {
+          "index_name": "AK_SalesOrderDetail_rowguid",
+          "column": "rowguid"
+        },
+        {
+          "index_name": "IX_SalesOrderDetail_ProductID",
+          "column": "ProductID"
+        }
+      ],
+      "SalesOrderHeader": [
+        {
+          "index_name": "PK_SalesOrderHeader_SalesOrderID",
+          "column": "SalesOrderID"
+        },
+        {
+          "index_name": "AK_SalesOrderHeader_rowguid",
+          "column": "rowguid"
+        },
+        {
+          "index_name": "AK_SalesOrderHeader_SalesOrderNumber",
+          "column": "SalesOrderNumber"
+        },
+        {
+          "index_name": "IX_SalesOrderHeader_CustomerID",
+          "column": "CustomerID"
+        }
+      ]
+    },
+    "dbo": {
+      "BuildVersion": [
+        {
+          "index_name": "PK__BuildVer__35E58ECAC15B6192",
+          "column": "SystemInformationID"
+        }
+      ],
+      "ErrorLog": [
+        {
+          "index_name": "PK_ErrorLog_ErrorLogID",
+          "column": "ErrorLogID"
+        }
+      ]
+    }
+  },
+  "foreign_keys": {
+    "SalesLT": {
+      "CustomerAddress": [
+        {
+          "column": "AddressID",
+          "referenced_table": "SalesLT.CustomerAddress",
+          "referenced_column": "AddressID"
+        },
+        {
+          "column": "CustomerID",
+          "referenced_table": "SalesLT.CustomerAddress",
+          "referenced_column": "CustomerID"
+        }
+      ],
+      "Product": [
+        {
+          "column": "ProductCategoryID",
+          "referenced_table": "SalesLT.Product",
+          "referenced_column": "ProductCategoryID"
+        },
+        {
+          "column": "ProductModelID",
+          "referenced_table": "SalesLT.Product",
+          "referenced_column": "ProductModelID"
+        }
+      ],
+      "ProductCategory": [
+        {
+          "column": "ParentProductCategoryID",
+          "referenced_table": "SalesLT.ProductCategory",
+          "referenced_column": "ParentProductCategoryID"
+        }
+      ],
+      "ProductModelProductDescription": [
+        {
+          "column": "ProductDescriptionID",
+          "referenced_table": "SalesLT.ProductModelProductDescription",
+          "referenced_column": "ProductDescriptionID"
+        },
+        {
+          "column": "ProductModelID",
+          "referenced_table": "SalesLT.ProductModelProductDescription",
+          "referenced_column": "ProductModelID"
+        }
+      ],
+      "SalesOrderDetail": [
+        {
+          "column": "ProductID",
+          "referenced_table": "SalesLT.SalesOrderDetail",
+          "referenced_column": "ProductID"
+        },
+        {
+          "column": "SalesOrderID",
+          "referenced_table": "SalesLT.SalesOrderDetail",
+          "referenced_column": "SalesOrderID"
+        }
+      ],
+      "SalesOrderHeader": [
+        {
+          "column": "BillToAddressID",
+          "referenced_table": "SalesLT.SalesOrderHeader",
+          "referenced_column": "BillToAddressID"
+        },
+        {
+          "column": "ShipToAddressID",
+          "referenced_table": "SalesLT.SalesOrderHeader",
+          "referenced_column": "ShipToAddressID"
+        },
+        {
+          "column": "CustomerID",
+          "referenced_table": "SalesLT.SalesOrderHeader",
+          "referenced_column": "CustomerID"
+        }
+      ],
+      "Customer": [],
+      "ProductModel": [],
+      "ProductDescription": [],
+      "Address": []
+    },
+    "dbo": {
+      "BuildVersion": [],
+      "ErrorLog": []
+    }
+  },
+  "views": {
+    "SalesLT": [
+      "vProductModelCatalogDescription",
+      "vProductAndDescription",
+      "vGetAllCategories"
+    ]
+  },
+  "version": "1.0"
+}

@@ -1,6 +1,6 @@
-2025-04-23 01:36:19 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-23 01:36:19 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-23 01:36:27 - interface - INFO - Starting Database Schema Analyzer
+2025-04-23 02:22:31 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-23 02:22:31 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-23 02:22:37 - interface - INFO - Starting Database Schema Analyzer
 === Database Schema Analyzer ===
 
 Main Menu:
@@ -14,19 +14,18 @@ Config path [default: app-config/database_configurations.json]:
 
 Available Configurations:
 1. ADWORKS_DB
-2. ADWORKS2019_DB        
+2. ADWORKS2019_DB
 3. BIKES_DB
 4. Cancel
 Select configuration: 3
-2025-04-23 01:36:43 - connection - INFO - Connected to database: BikeStores
-2025-04-23 01:36:44 - schema - INFO - SchemaManager version: 2025-04-22 with 42S22 fix
-2025-04-23 01:36:44 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
-2025-04-23 01:36:44 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
-2025-04-23 01:36:44 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
-2025-04-23 01:36:49 - analyzer - ERROR - Connection or initialization error: NLPPipeline.__init__() takes from 2 to 3 positional arguments but 4 were 
-given
-Connection or initialization error: NLPPipeline.__init__() takes from 2 to 3 positional arguments but 4 were given
-2025-04-23 01:36:49 - interface - ERROR - Connection failed: Unable to establish database connection
+2025-04-23 02:22:58 - connection - INFO - Connected to database: BikeStores
+2025-04-23 02:22:58 - schema - INFO - SchemaManager version: 2025-04-23 with enhanced 42S22 fix
+2025-04-23 02:22:58 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)"). Falling back to information_schema.tables
+2025-04-23 02:22:58 - schema - ERROR - Fallback schema mtime query failed: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
+2025-04-23 02:22:59 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-04-23 02:22:59 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-distilroberta-v1
+2025-04-23 02:23:03 - analyzer - ERROR - Connection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were givenConnection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were given
+2025-04-23 02:23:03 - interface - ERROR - Connection failed: Unable to establish database connection
 Connection failed: Unable to establish database connection
 
 === BikeStores Schema Analyzer ===
@@ -38,7 +37,42 @@ Main Menu:
 4. Manage Feedback
 5. Exit
 Select option: 2
-2025-04-23 01:37:16 - interface - ERROR - Feedback manager not initialized
+2025-04-23 02:23:17 - interface - ERROR - Feedback manager not initialized
+Feedback manager not initialized. Please reconnect to the database.
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations
+4. Manage Feedback
+5. Exit
+Select option: 1
+Config path [default: app-config/database_configurations.json]: 
+
+Available Configurations:
+1. ADWORKS_DB
+2. ADWORKS2019_DB
+3. BIKES_DB
+4. Cancel
+Select configuration: 1
+2025-04-23 02:23:39 - connection - INFO - Connected to database: adventureworks
+2025-04-23 02:23:39 - schema - INFO - SchemaManager version: 2025-04-23 with enhanced 42S22 fix
+2025-04-23 02:23:39 - schema - ERROR - Error getting schema mtime: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)"). Falling back to information_schema.tables
+2025-04-23 02:23:39 - schema - ERROR - Fallback schema mtime query failed: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'create_date'. (207) (SQLExecDirectW)")
+2025-04-23 02:23:43 - analyzer - ERROR - Connection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were givenConnection or initialization error: NameMatchManager.__init__() takes 2 positional arguments but 3 were given
+2025-04-23 02:23:43 - interface - ERROR - Connection failed: Unable to establish database connection
+Connection failed: Unable to establish database connection
+
+=== adventureworks Schema Analyzer ===
+
+Main Menu:
+1. Connect to Database
+2. Query Mode
+3. Reload Configurations
+4. Manage Feedback
+5. Exit
+Select option: 2
+2025-04-23 02:23:45 - interface - ERROR - Feedback manager not initialized
 Feedback manager not initialized. Please reconnect to the database.
 
 Main Menu:
@@ -48,7 +82,7 @@ Main Menu:
 4. Manage Feedback
 5. Exit
 Select option: 5
-2025-04-23 01:37:22 - interface - INFO - Exiting application
+2025-04-23 02:23:49 - interface - INFO - Exiting application
 Exiting...
-2025-04-23 01:37:22 - connection - INFO - Closing database connection
-2025-04-23 01:37:22 - analyzer - INFO - Application shutdown
+2025-04-23 02:23:49 - connection - INFO - Closing database connection
+2025-04-23 02:23:49 - analyzer - INFO - Application shutdown
